@@ -127,16 +127,17 @@ def mineshaft():
     elif level < 2:
         _clear_screen.clear()
         print(Fore.RED + "Чтобы пойти в шахту нужен 2 уровень")
+    _profile.profile()
 
 def well():
     global items, progress, player, tools
     if level >= 5 and tools["Ведро"]["Количество"] >= 1:
 
-        progress_count = random.uniform(0.1, 5.0)
+        progress_count = random.uniform(5.0, 10.0)
         progress += progress_count
 
         water_count = random.randint(10, 30)
-        tools["Ведро"]["Прочность"] -= 5
+        tools["Ведро"]["Прочность"] -= random.randint(10, 15)
         items["Вода"] += water_count
         player["Голод"] += random.randint(10, 20)
         player["Жажда"] += random.randint(10, 20)
@@ -155,7 +156,7 @@ def lake():
     global items, progress, player, tools
     if level >= 10 and tools["Лодка"]["Количество"] >= 1 and tools["Удочка"]["Количество"] >= 1:
         
-        progress_count = random.uniform(0.1, 10.0)
+        progress_count = random.uniform(10.0, 20.0)
         progress += progress_count
 
         fish_count = random.randint(10, 30)

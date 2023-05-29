@@ -17,6 +17,8 @@ def craft():
     2. Кирка
     3. Меч
     4. Ведро
+    5. Лодка
+    6. Удочка
     """)
     choice = input()
     if choice == "0":
@@ -67,6 +69,27 @@ def craft():
             _profile.autosave_game()
         else:
             print(Fore.RED + "Недостаточно материалов для создания ведра")
+    elif choice == "5":
+        if items["Железо"] >= 2 and items["Дерево"] >= 5:
+            print(Fore.GREEN + "Вы создали лодку")
+            tools["Лодка"]["Количество"] += 1
+            items["Дерево"] -= 5
+            items["Железо"] -= 2
+            progress_count = random.uniform(5.0, 9.0)
+            progress += progress_count
+            _profile.autosave_game()
+        else:
+            print(Fore.RED + "Недостаточно материалов для создания лодки")
+    elif choice == "6":
+        if items["Железо"] >= 5:
+            print(Fore.GREEN + "Вы создали удочку")
+            tools["Удочка"]["Количество"] += 1
+            items["Железо"] -= 5
+            progress_count = random.uniform(5.0, 9.0)
+            progress += progress_count
+            _profile.autosave_game()
+        else:
+            print(Fore.RED + "Недостаточно материалов для создания удочки")
     else:
         print(Fore.RED + "Неверный ввод. Попробуйте еще раз.")
         craft()

@@ -37,7 +37,7 @@ def fight():
         items["Монеты"] += coin_count
         items["Еда"]["Яблоко"] += food_count
 
-        tools["Мечь"]["Прочность"] -= 5
+        tools["Мечь"]["Прочность"] -= random.randint(10, 25)
         _profile.autosave_game()
         print(Fore.YELLOW + f"Вы теряете {damage_taken} здоровья.")
         print(Fore.LIGHTGREEN_EX + f"Вы получили {coin_count} ед. монет и {food_count} ед. еды")
