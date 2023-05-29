@@ -139,7 +139,7 @@ def profile():
     print(Fore.GREEN + "ПРОФИЛЬ: ")
     print(player)
     print("-------------")
-    print(Fore.GREEN + "ТВОИ РЕСУРСЫ: ")
+    print(Fore.GREEN + "РЕСУРСЫ: ")
     print(f'Монеты: {items["Монеты"]}')
     print(f'Дерево: {items["Дерево"]}')
     print(f'Вода: {items["Вода"]}')
