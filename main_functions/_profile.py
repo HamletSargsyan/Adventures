@@ -18,7 +18,7 @@ from parts.drink import *
 init(autoreset=True)
 
 def autosave_game():
-    global username, user_id, version, tick, health_max, level, progress, player, items, tools
+    global version, health_max, level, progress, player, items, tools
     game_data = {
         "health_max": health_max,
         "level": level,
@@ -33,7 +33,7 @@ def autosave_game():
 
 
 def load_game():
-    global version, tick, health_max, level, progress, player, items, tools
+    global version, health_max, level, progress, player, items, tools
     clear()
     try:
         with open("game_data.json", "r", encoding='utf-8') as f:
