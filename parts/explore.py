@@ -77,7 +77,7 @@ def forest():
 
         items["Монеты"] += coin_count
         items["Еда"]["Яблоко"] += food_count
-        tools["Топор"]["Прочность"] -= 5
+        tools["Топор"]["Прочность"] -= random.randint(5, 10)
         items["Вода"] += water_count
         items["Дерево"] += wood_count
         _clear_screen.clear()
@@ -87,42 +87,46 @@ def forest():
 
 def mineshaft():
     global items, progress, player, tools
-    progress_count = random.uniform(2.0, 5.0)
-    progress += progress_count
-    if tools["Кирка"]["Количество"] == 0:
-        iron_count = random.randint(1, 5)
-        coal_count = random.randint(1, 5)
-        coin_count = random.randint(1, 3)
-        items["Железо"] += iron_count
-        items["Уголь"] += coal_count
-        
-        player["Усталость"] += random.randint(10, 20)
-        player["Голод"] += random.randint(10, 15)
-        player["Жажда"] += random.randint(10, 15)
-        
-        items["Монеты"] += coin_count
-        _profile.autosave_game()
+    if level >= 2:
+        progress_count = random.uniform(2.0, 5.0)
+        progress += progress_count
+        if tools["Кирка"]["Количество"] == 0:
+            iron_count = random.randint(1, 5)
+            coal_count = random.randint(1, 5)
+            coin_count = random.randint(5, 10)
+            items["Железо"] += iron_count
+            items["Уголь"] += coal_count
+
+            player["Усталость"] += random.randint(10, 20)
+            player["Голод"] += random.randint(10, 15)
+            player["Жажда"] += random.randint(10, 15)
+
+            items["Монеты"] += coin_count
+            _profile.autosave_game()
+            _clear_screen.clear()
+            print(Fore.GREEN + f"Вы добили {iron_count} ед. железа и {coal_count} ед. угля")
+            _profile.profile()
+        elif tools["Кирка"]["Количество"] > 0:
+            iron_count = random.randint(20, 30)
+            coal_count = random.randint(20, 30)
+            coin_count = random.randint(5, 15)
+
+            items["Железо"] += iron_count
+            items["Уголь"] += coal_count
+            tools["Кирка"]["Прочность"] -= random.randint(5, 1)
+
+            player["Усталость"] += random.randint(10, 20)
+            player["Голод"] += random.randint(10, 15)
+            player["Жажда"] += random.randint(10, 15)
+
+            items["Монеты"] += coin_count
+            _profile.autosave_game()
+            _clear_screen.clear()
+            print(Fore.GREEN + f'Вы добили {coal_count} ед. железа и {iron_count} ед. железа, прочность кирки: {tools["Кирка"]["Прочность"]}%')
+            _profile.profile()
+    elif level < 2:
         _clear_screen.clear()
-        print(Fore.GREEN + f"Вы добили {iron_count} ед. железа и {coal_count} ед. угля")
-        _profile.profile()
-    elif tools["Кирка"]["Количество"] > 0:
-        iron_count = random.randint(20, 30)
-        coal_count = random.randint(20, 30)
-        coin_count = random.randint(1, 3)
-
-        items["Железо"] += iron_count
-        items["Уголь"] += coal_count
-        tools["Кирка"]["Прочность"] -= 15
-
-        player["Усталость"] += random.randint(10, 20)
-        player["Голод"] += random.randint(10, 15)
-        player["Жажда"] += random.randint(10, 15)
-
-        items["Монеты"] += coin_count
-        _profile.autosave_game()
-        _clear_screen.clear()
-        print(Fore.GREEN + f'Вы добили {coal_count} ед. железа и {iron_count} ед. железа, прочность кирки: {tools["Кирка"]["Прочность"]}%')
-        _profile.profile()
+        print(Fore.RED + "Чтобы пойти в шахту нужен 2 уровень")
 
 def well():
     global items, progress, player, tools
