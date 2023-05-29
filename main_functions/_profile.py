@@ -136,7 +136,7 @@ def profile():
     autosave_game()
 
     print()
-    print(Fore.GREEN + "ПЕРСОНАЖ: ")
+    print(Fore.GREEN + "ПРОФИЛЬ: ")
     print(player)
     print("-------------")
     print(Fore.GREEN + "ТВОИ РЕСУРСЫ: ")
