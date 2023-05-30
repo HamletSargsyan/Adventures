@@ -1,3 +1,3 @@
-import main_functions._start_menu as _start_menu 
+import parts
 
-_start_menu.start_menu()
+parts._start_menu.start_menu()

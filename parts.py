@@ -8,9 +8,11 @@ from colorama import init, Fore, Style, Back
 init(autoreset=True)
 
 def clear():
+    _checks.check()
     os.system('cls' if os.name=='nt' else 'clear')
 
 def autosave_game():
+    _checks.check()
     global version, health_max, level, progress, player, items, tools
     game_data = {
         "health_max": health_max,
@@ -31,97 +33,30 @@ def load_game():
     try:
         with open("game_data.json", "r", encoding='utf-8') as f:
             game_data = json.load(f)
-            health_max = game_data[health_max]
-            level = game_data[level]
-            progress = game_data[progress]
-            player = game_data[player]
-            items = game_data[items]
-            tools = game_data[tools]
+            health_max = game_data['health_max']
+            level = game_data['level']
+            progress = game_data['progress']
+            player = game_data['player']
+            items = game_data['items']
+            tools = game_data['tools']
             
 
         print(Fore.GREEN + "Игра загружена.")
+        _checks.check()
     except FileNotFoundError:
         print(Fore.RED + "Файл сохранения не найден.")
     _profile.profile()
 
 def die():
+    _checks.check()
     autosave_game()
     input("Нажмите Enter, чтобы выйти из игры.")
     sys.exit()
 
-class _start_menu:
-    def start_menu():
-        clear()
-        print(Back.WHITE + Fore.BLACK + "\n Добро пожаловать в Adventures! " + Back.RESET)
-        print("""
+class _checks:
+    def check():
+        global items, progress, level, player, tools
 
-        1. Играть
-        2. Обновления
-        3. Помощь
-        
-        """)
-        print(Fore.LIGHTBLACK_EX + 'Версия: ' + version)
-        print()
-        choice = input(Fore.WHITE + "Введите номер опции: ")
-
-        if choice == "1":
-            clear()
-            _profile.profile()
-        elif choice == "2":
-            clear()
-            _start_menu.updates()
-
-        elif choice == "3":
-            clear()
-            help()
-        else:
-            clear()
-            print(Fore.RED + "Неправильный выбор. Попробуйте снова.")
-            _start_menu.start_menu()
-
-    def updates():
-        clear()
-        print(Fore.GREEN + "ОБНОВЛЕНИЯ:")
-        print()
-        print("Тут пока что пусто...")
-        
-        print("""
-
-        1. Назад
-
-        """)
-
-        choice = input(Fore.LIGHTBLACK_EX + "Введите номер опции: ")
-        if choice == "1":
-            # Здесь вызываем функцию для начала игры
-            _start_menu.start_menu()
-        else:
-            print(Fore.RED + "Неправильный выбор. Попробуйте снова.")
-            _start_menu.start_menu()
-
-    def help():
-        clear()
-        print(Fore.GREEN + "ПОМОЩЬ:")
-        print()
-        print("Тут пока что пусто...")
-        
-        print("""
-
-        1. Назад
-
-        """)
-
-        choice = input(Fore.LIGHTBLACK_EX + "Введите номер опции: ")
-        if choice == "1":
-            # Здесь вызываем функцию для начала игры
-            _start_menu.start_menu()
-        else:
-            print(Fore.RED + "Неправильный выбор. Попробуйте снова.")
-            _start_menu.start_menu()
-
-class _profile:
-    def profile():
-        global items, progress, player, tools
         if player["Усталость"] < 0:
             player["Усталость"] = 0
         if player["Жажда"] < 0:
@@ -171,8 +106,7 @@ class _profile:
         if tools["Удочка"]["Прочность"] <= 0:
             tools["Удочка"]["Количество"] -= 1
             tools["Удочка"]["Прочность"] = 100
-
-        if progress >= 100.0:
+        if progress >= 100:
             level += 1
             progress = 0.0
             items["Лутбокс"] += 1
@@ -183,7 +117,6 @@ class _profile:
             input("Нажми ENTER, чтобы продолжить...")
             clear()
             _profile.profile()
-
         if tools["Топор"]["Количество"] <= 0:
             tools["Топор"]["Количество"] = 0
         if tools["Кирка"]["Количество"] <= 0:
@@ -197,6 +130,87 @@ class _profile:
         if tools["Удочка"]["Количество"] <= 0:
             tools["Удочка"]["Количество"] = 0
         
+        # parts.autosave_game()
+
+class _start_menu:
+    def start_menu():
+        clear()
+        print(Back.WHITE + Fore.BLACK + "\n Добро пожаловать в Adventures! " + Back.RESET)
+        print("""
+
+        1. Играть
+        2. Обновления
+        3. Помощь
+        4. Выгрузить
+
+        """)
+        print(Fore.LIGHTBLACK_EX + 'Версия: ' + version)
+        print()
+        choice = input(Fore.WHITE + "Введите номер опции: ")
+
+        if choice == "1":
+            clear()
+            _profile.profile()
+        elif choice == "2":
+            clear()
+            _start_menu.updates()
+
+        elif choice == "3":
+            clear()
+            help()
+        elif choice == "4":
+            clear()
+            load_game()
+        else:
+            clear()
+            print(Fore.RED + "Неправильный выбор. Попробуйте снова.")
+            _start_menu.start_menu()
+
+    def updates():
+        clear()
+        print(Fore.GREEN + "ОБНОВЛЕНИЯ:")
+        print()
+        print("Тут пока что пусто...")
+        
+        print("""
+
+        1. Назад
+
+        """)
+
+        choice = input(Fore.LIGHTBLACK_EX + "Введите номер опции: ")
+        if choice == "1":
+            # Здесь вызываем функцию для начала игры
+            _start_menu.start_menu()
+        else:
+            print(Fore.RED + "Неправильный выбор. Попробуйте снова.")
+            _start_menu.start_menu()
+
+    def help():
+        clear()
+        print(Fore.GREEN + "ПОМОЩЬ:")
+        print()
+        print("Тут пока что пусто...")
+        
+        print("""
+
+        1. Назад
+
+        """)
+
+        choice = input(Fore.LIGHTBLACK_EX + "Введите номер опции: ")
+        if choice == "1":
+            # Здесь вызываем функцию для начала игры
+            _start_menu.start_menu()
+        else:
+            print(Fore.RED + "Неправильный выбор. Попробуйте снова.")
+            _start_menu.start_menu()
+
+class _profile:
+    def profile():
+        global items, progress, level, player, tools
+        _checks.check()
+        
         autosave_game()
 
         print()
@@ -205,6 +219,8 @@ class _profile:
         print(f'Голод: {player["Голод"]}')
         print(f'Жажда: {player["Жажда"]}')
         print(f'Усталость: {player["Усталость"]}')
+        print(f'Уровень: {level}')
+        print(f'Опыт: {progress:.1f}')
         print("-------------")
         print(Fore.GREEN + "РЕСУРСЫ: ")
         print(f'Монеты: {items["Монеты"]}')
