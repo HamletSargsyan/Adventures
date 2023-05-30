@@ -862,7 +862,6 @@ class _shop:
             print(Fore.RED + "Неправильный ввод. Попробуйте ещё\n")
             _shop.buy()
 
-
     def sell():
         global items, progress, player, tools
         
