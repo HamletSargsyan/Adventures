@@ -130,8 +130,6 @@ class _checks:
         if tools["Удочка"]["Количество"] <= 0:
             tools["Удочка"]["Количество"] = 0
         
-        # parts.autosave_game()
-
 class _start_menu:
     def start_menu():
         clear()
@@ -226,7 +224,7 @@ class _profile:
         print(f'Монеты: {items["Монеты"]}')
         print(f'Дерево: {items["Дерево"]}')
         print(f'Вода: {items["Вода"]}')
-        print(f'яблоко: {items["Еда"]["Яблоко"]}')
+        print(f'Яблоко: {items["Еда"]["Яблоко"]}')
         print(f'Угол: {items["Уголь"]}')
         print(f'Железо: {items["Железо"]}')
         print(f'Лутбокс: {items["Лутбокс"]}')
