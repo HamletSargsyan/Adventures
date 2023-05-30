@@ -220,13 +220,13 @@ class _profile:
         print(f'Жажда: {player["Жажда"]}')
         print(f'Усталость: {player["Усталость"]}')
         print(f'Уровень: {level}')
-        print(f'Опыт: {progress:.1f}')
+        print(f'Опыт: {progress:.1f}%/100%')
         print("-------------")
         print(Fore.GREEN + "РЕСУРСЫ: ")
         print(f'Монеты: {items["Монеты"]}')
         print(f'Дерево: {items["Дерево"]}')
         print(f'Вода: {items["Вода"]}')
-        print(f'Еда: {items["Еда"]["Яблоко"]}')
+        print(f'яблоко: {items["яблоко"]["Яблоко"]}')
         print(f'Угол: {items["Уголь"]}')
         print(f'Железо: {items["Железо"]}')
         print(f'Лутбокс: {items["Лутбокс"]}')
@@ -380,7 +380,7 @@ class _drink:
         global items, progress, player, tools
         clear()
         if items["Вода"] < 1:
-            print(Fore.RED + "Недастатично воды")
+            print(Fore.RED + "Няблокостатично воды")
         elif items["Вода"] >= 1:
             if player["Жажда"] == 0:
                 print(Fore.YELLOW + "Тебе ненужно пить")
@@ -397,15 +397,15 @@ class _eat:
     def eat():
         global items, progress, player, tools
         clear()
-        if items["Еда"]["Яблоко"] < 10:
-            print(Fore.RED + "Недастатично еды")
-        elif items["Еда"]["Яблоко"] >= 10:
+        if items["яблоко"]["Яблоко"] < 10:
+            print(Fore.RED + "Няблокостатично еды")
+        elif items["яблоко"]["Яблоко"] >= 10:
             if player["Голод"] == 0:
                 print(Fore.YELLOW + "Ты уже сыт")
             else:
                 player["Голод"] -= 10
-                items["Еда"]["Яблоко"] -= 1
-                print(Fore.LIGHTGREEN_EX + "Вы съедаете еду и уменьшаете голод")
+                items["яблоко"]["Яблоко"] -= 1
+                print(Fore.LIGHTGREEN_EX + "Вы съяблокоете еду и уменьшаете голод")
         if player["Голод"] < 0:
             player["Голод"] = 0
         autosave_game()
@@ -444,7 +444,7 @@ class _explore:
         else:
             clear()
             print(Fore.RED + "Неверный ввод. Попробуйте еще раз.")
-            _explore()
+            _explore.explore()
 
     def forest():
         global items, progress, player, tools
@@ -464,7 +464,7 @@ class _explore:
             items["Монеты"] += coin_count
             items["Дерево"] += wood_count
             items["Вода"] += water_count
-            items["Еда"]["Яблоко"] += food_count
+            items["яблоко"]["Яблоко"] += food_count
             clear()
             print(Fore.GREEN + f"Вы добили {wood_count} ед. дерево, {water_count} ед. воды и {food_count} ед. еды")
             autosave_game()
@@ -480,7 +480,7 @@ class _explore:
             coin_count = random.randint(1, 3)
 
             items["Монеты"] += coin_count
-            items["Еда"]["Яблоко"] += food_count
+            items["яблоко"]["Яблоко"] += food_count
             tools["Топор"]["Прочность"] -= random.randint(5, 10)
             items["Вода"] += water_count
             items["Дерево"] += wood_count
@@ -595,7 +595,7 @@ class _fight:
 
             player["Здоровие"] -= damage_taken
             items["Монеты"] += coin_count
-            items["Еда"]["Яблоко"] += food_count
+            items["яблоко"]["Яблоко"] += food_count
 
             autosave_game()
             print(Fore.YELLOW + f"Вы теряете {damage_taken} здоровья")
@@ -609,7 +609,7 @@ class _fight:
 
             player["Здоровие"] -= damage_taken
             items["Монеты"] += coin_count
-            items["Еда"]["Яблоко"] += food_count
+            items["яблоко"]["Яблоко"] += food_count
 
             tools["Мечь"]["Прочность"] -= random.randint(10, 25)
             autosave_game()
@@ -621,47 +621,38 @@ class _fight:
 class _lootbox:
     def lootbox_open():
         global items, progress, player, tools
-        items = ["монеты", "дерево", "вода", "еда", "железо", "уголь", "топор", "кирка", "меч"]
+        loots = ["монеты", "дерево", "вода", "яблоко", "железо", "уголь", "топор", "кирка", "меч"]
 
         items["Лутбокс"] -= 1
         print(Fore.LIGHTGREEN_EX + "Ты открыл лутбокс и получил:")
         print()
-        for i in range(3):
-            item = random.choice(items)
+        for i in range(random.randint(1, 5)):
+            loot = random.choice(loots)
             quantity = random.randint(1, 10)
-            print(f"{item}: {quantity}".capitalize())
-            if item == "монеты":
+            print(f"{loot}: {quantity}".capitalize())
+            if loot == "монеты":
                 items["Монеты"] += quantity
-                autosave_game()
-            elif item == "дерево":
+            elif loot == "дерево":
                 items["Дерево"] += quantity
-                autosave_game()
-            elif item == "вода":
+            elif loot == "вода":
                 items["Вода"] += quantity
-                autosave_game()
-            elif item == "еда":
-                items["Еда"]["Яблоко"] += quantity
-                autosave_game()
-            elif item == "железо":
+            elif loot == "яблоко":
+                items["яблоко"]["Яблоко"] += quantity
+            elif loot == "железо":
                 items["Железо"] += quantity
-                autosave_game()
-            elif item == "уголь":
+            elif loot == "уголь":
                 items["Уголь"] += quantity
-                autosave_game()
-            elif item == "топор":
-                tools["Топор"]["Количество"] += quantity
-                autosave_game()
-            elif item == "кирка":
-                tools["Кирка"]["Количество"] += quantity
-                autosave_game()
-            elif item == "меч":
-                tools["Мечь"]["Количество"] += quantity
-                autosave_game()
+            elif loot == "топор":
+                tools["Топор"]["Количество"] += 1
+            elif loot == "кирка":
+                tools["Кирка"]["Количество"] += 1
+            elif loot == "меч":
+                tools["Мечь"]["Количество"] += 1
+            autosave_game()
         print()
         input("Нажми ENTER, чтобы продолжить...")
         clear()
         _profile.profile()
-
 
     def lootbox_menu():
         clear()
@@ -740,7 +731,7 @@ class _shop:
         print(Fore.GREEN + f'Твои монеты: {items["Монеты"]}\n\n')
         print("Что хочешь купить?\n\n"
             f"0. назад\n"
-            f"1. еда - {food_price} монет\n"
+            f"1. яблоко - {food_price} монет\n"
             f"2. вода - {water_price} монет\n"
             f"3. уголь - {coal_price} монет\n"
             f"4. дерево - {wood_price} монет\n"
@@ -758,7 +749,7 @@ class _shop:
             if items["Монеты"] >= food_price:
                 clear()
                 items["Монеты"] -= food_price 
-                items["Еда"]["Яблоко"] += 5 
+                items["яблоко"]["Яблоко"] += 5 
                 print(Fore.GREEN + f"Ты купил 5 еды за {food_price} монет\n")
                 _shop.buy()
             else:
@@ -857,7 +848,7 @@ class _shop:
     def sell():
         global items, progress, player, tools
         
-        food_sell_price, water_sell_price, coal_sell_price, wood_sell_price, iron_sell_price = 3, 3, 5, 10, 15
+        food_sell_price, water_sell_price, coal_sell_price, wood_sell_price, iron_sell_price = 5, 5, 10, 10, 15
         axe_sell_price, pickaxe_sell_price, sword_sell_price = 20, 20, 20
 
         progress_count = random.uniform(0.1, 5.0)
@@ -866,7 +857,7 @@ class _shop:
     У тебя есть:
 
     0. назад
-    1. еда - {items["Еда"]["Яблоко"]} | {food_sell_price} монет
+    1. яблоко - {items["яблоко"]["Яблоко"]} | {food_sell_price} монет
     2. вода - {items["Вода"]} | {water_sell_price} монет
     3. уголь - {items["Уголь"]} | {coal_sell_price} монет
     4. дерево - {items["Дерево"]} | {wood_sell_price} монет
@@ -881,10 +872,10 @@ class _shop:
             clear()
             _shop()
         elif choice == "1":
-            if items["Еда"]["Яблоко"] > 0:
+            if items["яблоко"]["Яблоко"] > 0:
                 clear()
                 items["Монеты"] += food_sell_price
-                items["Еда"]["Яблоко"] -= 1
+                items["яблоко"]["Яблоко"] -= 1
                 print(Fore.GREEN + f"Ты продал 1 еду за {food_sell_price} монет")
                 autosave_game()
                 _shop.sell()
@@ -975,3 +966,7 @@ class _shop:
             clear()
             print(Fore.RED + "Неправылный ввод. Попробуйте ещё")
             _shop.sell()
+
+
+if __name__ == "__main__":
+    _start_menu.start_menu()
