@@ -201,14 +201,16 @@ class _profile:
 
         print()
         print(Fore.GREEN + "ПРОФИЛЬ: ")
-        print(player)
+        print(f'Здоровие: {player["Здоровие"]}')
+        print(f'Голод: {player["Голод"]}')
+        print(f'Жажда: {player["Жажда"]}')
+        print(f'Усталость: {player["Усталость"]}')
         print("-------------")
         print(Fore.GREEN + "РЕСУРСЫ: ")
         print(f'Монеты: {items["Монеты"]}')
         print(f'Дерево: {items["Дерево"]}')
         print(f'Вода: {items["Вода"]}')
         print(f'Еда: {items["Еда"]["Яблоко"]}')
-
         print(f'Угол: {items["Уголь"]}')
         print(f'Железо: {items["Железо"]}')
         print(f'Лутбокс: {items["Лутбокс"]}')
