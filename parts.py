@@ -379,14 +379,14 @@ class _drink:
     def drink():
         global items, progress, player, tools
         clear()
-        if items["Вода"] < 10:
+        if items["Вода"] < 1:
             print(Fore.RED + "Недастатично воды")
-        elif items["Вода"] >= 10:
+        elif items["Вода"] >= 1:
             if player["Жажда"] == 0:
                 print(Fore.YELLOW + "Тебе ненужно пить")
             else:
                 player["Жажда"] -= 10
-                items["Вода"] -= 10
+                items["Вода"] -= 1
                 print(Fore.LIGHTGREEN_EX + "Вы пьете воду и уменьшаете жажду")
         if player["Жажда"] < 0:
             player["Жажда"] = 0
@@ -404,7 +404,7 @@ class _eat:
                 print(Fore.YELLOW + "Ты уже сыт")
             else:
                 player["Голод"] -= 10
-                items["Еда"]["Яблоко"] -= 10
+                items["Еда"]["Яблоко"] -= 1
                 print(Fore.LIGHTGREEN_EX + "Вы съедаете еду и уменьшаете голод")
         if player["Голод"] < 0:
             player["Голод"] = 0
