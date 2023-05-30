@@ -94,9 +94,9 @@ class _checks:
         if tools["Кирка"]["Прочность"] <= 0:
             tools["Кирка"]["Количество"] -= 1
             tools["Кирка"]["Прочность"] = 100
-        if tools["Мечь"]["Прочность"] <= 0:
-            tools["Мечь"]["Количество"] -= 1
-            tools["Мечь"]["Прочность"] = 100
+        if tools["Меч"]["Прочность"] <= 0:
+            tools["Меч"]["Количество"] -= 1
+            tools["Меч"]["Прочность"] = 100
         if tools["Ведро"]["Прочность"] <= 0:
             tools["Ведро"]["Количество"] -= 1
             tools["Ведро"]["Прочность"] = 100
@@ -121,8 +121,8 @@ class _checks:
             tools["Топор"]["Количество"] = 0
         if tools["Кирка"]["Количество"] <= 0:
             tools["Кирка"]["Количество"] = 0
-        if tools["Мечь"]["Количество"] <= 0:
-            tools["Мечь"]["Количество"] = 0
+        if tools["Меч"]["Количество"] <= 0:
+            tools["Меч"]["Количество"] = 0
         if tools["Ведро"]["Количество"] <= 0:
             tools["Ведро"]["Количество"] = 0
         if tools["Лодка"]["Количество"] <= 0:
@@ -226,7 +226,7 @@ class _profile:
         print(f'Монеты: {items["Монеты"]}')
         print(f'Дерево: {items["Дерево"]}')
         print(f'Вода: {items["Вода"]}')
-        print(f'яблоко: {items["яблоко"]["Яблоко"]}')
+        print(f'яблоко: {items["Еда"]["Яблоко"]}')
         print(f'Угол: {items["Уголь"]}')
         print(f'Железо: {items["Железо"]}')
         print(f'Лутбокс: {items["Лутбокс"]}')
@@ -235,7 +235,7 @@ class _profile:
         print(Fore.GREEN + "ИНСТРУМЕНТЫ: ")
         print(f'Топор: {tools["Топор"]["Количество"]} прочность: {tools["Топор"]["Прочность"]}%')
         print(f'Кирка: {tools["Кирка"]["Количество"]} прочность: {tools["Кирка"]["Прочность"]}%')
-        print(f'Меч: {tools["Мечь"]["Количество"]} прочность: {tools["Мечь"]["Прочность"]}%')
+        print(f'Меч: {tools["Меч"]["Количество"]} прочность: {tools["Меч"]["Прочность"]}%')
         print(f'Ведро: {tools["Ведро"]["Количество"]} прочность: {tools["Ведро"]["Прочность"]}%')
         print(f'Лодка: {tools["Лодка"]["Количество"]} прочность: {tools["Лодка"]["Прочность"]}%')
         print(f'Удочка: {tools["Удочка"]["Количество"]} прочность: {tools["Удочка"]["Прочность"]}%')
@@ -330,7 +330,7 @@ class _craft:
         elif choice == "3":
             if items["Железо"] >= 2 and items["Дерево"] >= 1:
                 print(Fore.GREEN + "Вы создали меч")
-                tools["Мечь"]["Количество"] += 1
+                tools["Меч"]["Количество"] += 1
                 items["Железо"] -= 2
                 items["Дерево"] -= 1
                 progress_count = random.uniform(5.0, 9.0)
@@ -380,7 +380,7 @@ class _drink:
         global items, progress, player, tools
         clear()
         if items["Вода"] < 1:
-            print(Fore.RED + "Няблокостатично воды")
+            print(Fore.RED + "Недостатично воды")
         elif items["Вода"] >= 1:
             if player["Жажда"] == 0:
                 print(Fore.YELLOW + "Тебе ненужно пить")
@@ -397,15 +397,15 @@ class _eat:
     def eat():
         global items, progress, player, tools
         clear()
-        if items["яблоко"]["Яблоко"] < 10:
-            print(Fore.RED + "Няблокостатично еды")
-        elif items["яблоко"]["Яблоко"] >= 10:
+        if items["Еда"]["Яблоко"] < 10:
+            print(Fore.RED + "Недостатично еды")
+        elif items["Еда"]["Яблоко"] >= 10:
             if player["Голод"] == 0:
                 print(Fore.YELLOW + "Ты уже сыт")
             else:
                 player["Голод"] -= 10
-                items["яблоко"]["Яблоко"] -= 1
-                print(Fore.LIGHTGREEN_EX + "Вы съяблокоете еду и уменьшаете голод")
+                items["Еда"]["Яблоко"] -= 1
+                print(Fore.LIGHTGREEN_EX + "Вы съедаете еду и уменьшаете голод")
         if player["Голод"] < 0:
             player["Голод"] = 0
         autosave_game()
@@ -464,7 +464,7 @@ class _explore:
             items["Монеты"] += coin_count
             items["Дерево"] += wood_count
             items["Вода"] += water_count
-            items["яблоко"]["Яблоко"] += food_count
+            items["Еда"]["Яблоко"] += food_count
             clear()
             print(Fore.GREEN + f"Вы добили {wood_count} ед. дерево, {water_count} ед. воды и {food_count} ед. еды")
             autosave_game()
@@ -480,13 +480,13 @@ class _explore:
             coin_count = random.randint(1, 3)
 
             items["Монеты"] += coin_count
-            items["яблоко"]["Яблоко"] += food_count
+            items["Еда"]["Яблоко"] += food_count
             tools["Топор"]["Прочность"] -= random.randint(5, 10)
             items["Вода"] += water_count
             items["Дерево"] += wood_count
             clear()
             autosave_game()
-            print(Fore.GREEN + f"Вы добили {wood_count} ед. дерево, {water_count} ед. воды и {food_count} ед. еды, прочность топора: {tools['Топор']['рочность']}%")
+            print(Fore.GREEN + f"Вы добили {wood_count} ед. дерево, {water_count} ед. воды и {food_count} ед. еды, прочность топора: {tools['Топор']['Прочность']}%")
             _profile.profile()
 
     def mineshaft():
@@ -588,30 +588,30 @@ class _fight:
         progress += progress_count
         clear()
         print(Fore.LIGHTYELLOW_EX + "Вы вступаете в бой с монстром!")
-        if tools["Мечь"]["Количество"] == 0:
+        if tools["Меч"]["Количество"] == 0:
             damage_taken = random.randint(10, 20)
             coin_count  = random.randint(10, 20)
             food_count  = random.randint(10, 20)
 
             player["Здоровие"] -= damage_taken
             items["Монеты"] += coin_count
-            items["яблоко"]["Яблоко"] += food_count
+            items["Еда"]["Яблоко"] += food_count
 
             autosave_game()
             print(Fore.YELLOW + f"Вы теряете {damage_taken} здоровья")
             print(Fore.LIGHTGREEN_EX + f"Вы получили {coin_count} ед. монет и {food_count} ед. еды")
             print()
             _profile.profile()
-        elif tools["Мечь"]["Количество"] >= 0:
+        elif tools["Меч"]["Количество"] >= 0:
             damage_taken = random.randint(5, 10)
             coin_count  = random.randint(20, 30)
             food_count  = random.randint(20, 30)
 
             player["Здоровие"] -= damage_taken
             items["Монеты"] += coin_count
-            items["яблоко"]["Яблоко"] += food_count
+            items["Еда"]["Яблоко"] += food_count
 
-            tools["Мечь"]["Прочность"] -= random.randint(10, 25)
+            tools["Меч"]["Прочность"] -= random.randint(10, 25)
             autosave_game()
             print(Fore.YELLOW + f"Вы теряете {damage_taken} здоровья.")
             print(Fore.LIGHTGREEN_EX + f"Вы получили {coin_count} ед. монет и {food_count} ед. еды")
@@ -637,7 +637,7 @@ class _lootbox:
             elif loot == "вода":
                 items["Вода"] += quantity
             elif loot == "яблоко":
-                items["яблоко"]["Яблоко"] += quantity
+                items["Еда"]["Яблоко"] += quantity
             elif loot == "железо":
                 items["Железо"] += quantity
             elif loot == "уголь":
@@ -647,7 +647,7 @@ class _lootbox:
             elif loot == "кирка":
                 tools["Кирка"]["Количество"] += 1
             elif loot == "меч":
-                tools["Мечь"]["Количество"] += 1
+                tools["Меч"]["Количество"] += 1
             autosave_game()
         print()
         input("Нажми ENTER, чтобы продолжить...")
@@ -725,9 +725,6 @@ class _shop:
         
         food_price, water_price, coal_price, wood_price, iron_price, lootbox_price = 10, 10, 15, 20, 25, 300
         axe_price, pickaxe_price, sword_price, bucket_price = 50, 50, 50, 100
-
-        progress_count = random.uniform(0.1, 5.0)
-        progress += progress_count
         print(Fore.GREEN + f'Твои монеты: {items["Монеты"]}\n\n')
         print("Что хочешь купить?\n\n"
             f"0. назад\n"
@@ -740,109 +737,119 @@ class _shop:
             f"7. кирка - {pickaxe_price} монет\n"
             f"8. меч - {sword_price} монет\n"
             f"9. лутбокс - {lootbox_price} монет")
-        choice = input().lower()
         
-        if choice == "0":
+        print("\n\n[номер тавара] [количесьво]")
+        try:
+            choice = input().split(' ')
+
+            if choice[0] == "0":
+                clear()
+                _shop()
+            elif choice[0] == "1" and choice[1].isdigit():
+                if items["Монеты"] >= food_price * int(choice[1]):
+                    clear()
+                    items["Монеты"] -= food_price * int(choice[1]) 
+                    items["Еда"]["Яблоко"] += int(choice[1]) 
+                    print(Fore.GREEN + f"Ты купил {choice[1]} еды за {food_price * int(choice[1])} монет\n")
+                    _shop.buy()
+                else:
+                    print(Fore.RED + "Недостаточно монет\n")
+                    _shop.buy()
+            elif choice[0] == "2" and choice[1].isdigit():
+                if items["Монеты"] >= water_price * int(choice[1]):
+                    clear()
+                    items["Монеты"] -= water_price * int(choice[1])
+                    items["Вода"] += int(choice[1])
+                    print(Fore.GREEN + f"Ты купил {choice[1]} воды за {water_price * int(choice[1])} монет\n")
+                    autosave_game()
+                    _shop.buy()
+                else:
+                    print(Fore.RED + "Недостаточно монет\n")
+                    _shop.buy()
+            elif choice[0] == "3" and choice[1].isdigit():
+                if items["Монеты"] >= coal_price * int(choice[1]):
+                    clear()
+                    items["Монеты"] -= coal_price * int(choice[1])
+                    items["Уголь"] += int(choice[1])
+                    print(Fore.GREEN + f"Ты купил {choice[1]} уголья за {coal_price * int(choice[1])} монет\n")
+                    autosave_game()
+                    _shop.buy()
+                else:
+                    print(Fore.RED + "Недостаточно монет\n")
+                    _shop.buy()
+            elif choice[0] == "4" and choice[1].isdigit():
+                if items["Монеты"] >= wood_price * int(choice[1]):
+                    clear()
+                    items["Монеты"] -= wood_price * int(choice[1])
+                    items["Дерево"] += int(choice[1])
+                    print(Fore.GREEN + f"Ты купил {choice[1]} дерева за {wood_price * int(choice[1])} монет\n")
+                    autosave_game()
+                    _shop.buy()
+                else:
+                    print(Fore.RED + "Недостаточно монет\n")
+                    _shop.buy()
+            elif choice[0] == "5" and choice[1].isdigit():
+                if items["Монеты"] >= iron_price * int(choice[1]):
+                    clear()
+                    items["Монеты"] -= iron_price * int(choice[1])
+                    items["Железо"] += int(choice[1])
+                    print(Fore.GREEN + f"Ты купил {choice[1]} железа за {iron_price * int(choice[1])} монет\n")
+                    autosave_game()
+                    _shop.buy()
+                else:
+                    print(Fore.RED + "Недостаточно монет\n")
+                    _shop.buy()
+            elif choice[0] == "6" and choice[1].isdigit():
+                if items["Монеты"] >= axe_price * int(choice[1]):
+                    clear()
+                    items["Монеты"] -= axe_price * int(choice[1])
+                    tools["Топор"]["Количество"] += int(choice[1])
+                    print(Fore.GREEN + f"Ты купил {choice[1]} топор(ов) за {axe_price * int(choice[1])} монет\n")
+                    autosave_game()
+                    _shop.buy()
+                else:
+                    print(Fore.RED + "Недостаточно монет\n")
+                    _shop.buy()
+            elif choice[0] == "7" and choice[1].isdigit():
+                if items["Монеты"] >= pickaxe_price * int(choice[1]):
+                    clear()
+                    items["Монеты"] -= pickaxe_price * int(choice[1])
+                    tools["Кирка"]["Количество"] += int(choice[1])
+                    print(Fore.GREEN + f"Ты купил {choice[1]} кирку(и) за {pickaxe_price * int(choice[1])} монет\n")
+                    autosave_game()
+                    _shop.buy()
+                else:
+                    print(Fore.RED + "Недостаточно монет\n")
+                    _shop.buy()
+            elif choice[0] == "8" and choice[1].isdigit():
+                if items["Монеты"] >= sword_price * int(choice[1]):
+                    clear()
+                    items["Монеты"] -= sword_price * int(choice[1])
+                    tools["Меч"]["Количество"] += int(choice[1])
+                    print(Fore.GREEN + f"Ты купил {choice[1]} меч(а) за {sword_price * int(choice[1])} монет\n")
+                    autosave_game()
+                    _shop.buy()
+                else:
+                    print(Fore.RED + "Недостаточно монет\n")
+                    _shop.buy()
+            elif choice[0] == "9" and choice[1].isdigit():
+                if items["Монеты"] >= lootbox_price * int(choice[1]):
+                    clear()
+                    items["Монеты"] -= lootbox_price * int(choice[1])
+                    items["Лутбокс"] += int(choice[1])
+                    print(Fore.GREEN + f"Ты купил {choice[1]} лутбокс(ов) за {lootbox_price * int(choice[1])} монет\n")
+                    autosave_game()
+                    _shop.buy()
+                else:
+                    print(Fore.RED + "Недостаточно монет\n")
+                    _shop.buy()
+            else:
+                clear()
+                print(Fore.RED + "Неправильный ввод. Попробуйте ещё\n")
+                _shop.buy()
+        except IndexError:
             clear()
-            _shop()
-        elif choice == "1":
-            if items["Монеты"] >= food_price:
-                clear()
-                items["Монеты"] -= food_price 
-                items["яблоко"]["Яблоко"] += 5 
-                print(Fore.GREEN + f"Ты купил 5 еды за {food_price} монет\n")
-                _shop.buy()
-            else:
-                print(Fore.RED + "Недостаточно монет\n")
-                _shop.buy()
-        elif choice == "2":
-            if items["Монеты"] >= water_price:
-                clear()
-                items["Монеты"] -= water_price
-                items["Вода"] += 5
-                print(Fore.GREEN + f"Ты купил 5 воды за {food_price} монет\n")
-                autosave_game()
-                _shop.buy()
-            else:
-                print(Fore.RED + "Недостаточно монет\n")
-                _shop.buy()
-        elif choice == "3":
-            if items["Монеты"] >= coal_price:
-                clear()
-                items["Монеты"] -= coal_price
-                items["Уголь"] += 5
-                print(Fore.GREEN + f"Ты купил 5 уголья за {coal_price} монет\n")
-                autosave_game()
-                _shop.buy()
-            else:
-                print(Fore.RED + "Недостаточно монет\n")
-                _shop.buy()
-        elif choice == "4":
-            if items["Монеты"] >= wood_price:
-                clear()
-                items["Монеты"] -= wood_price
-                items["Дерево"] += 5
-                print(Fore.GREEN + f"Ты купил 5 дерева за {wood_price} монет\n")
-                autosave_game()
-                _shop.buy()
-            else:
-                print(Fore.RED + "Недостаточно монет\n")
-                _shop.buy()
-        elif choice == "5":
-            if items["Монеты"] >= iron_price:
-                clear()
-                items["Монеты"] -= iron_price
-                items["Железо"] += 5
-                print(Fore.GREEN + f"Ты купил 5 железа за {iron_price} монет\n")
-                autosave_game()
-                _shop.buy()
-            else:
-                print(Fore.RED + "Недостаточно монет\n")
-                _shop.buy()
-        elif choice == "6":
-            if items["Монеты"] >= axe_price:
-                clear()
-                items["Монеты"] -= axe_price
-                tools["Топор"]["Количество"] += 1
-                print(Fore.GREEN + f"Ты купил 1 топор за {axe_price} монет\n")
-                autosave_game()
-                _shop.buy()
-            else:
-                print(Fore.RED + "Недостаточно монет\n")
-                _shop.buy()
-        elif choice == "7":
-            if items["Монеты"] >= pickaxe_price:
-                clear()
-                items["Монеты"] -= pickaxe_price
-                tools["Кирка"]["Количество"] += 1
-                print(Fore.GREEN + f"Ты купил 1 кирку за {pickaxe_price} монет\n")
-                autosave_game()
-                _shop.buy()
-            else:
-                print(Fore.RED + "Недостаточно монет\n")
-                _shop.buy()
-        elif choice == "8":
-            if items["Монеты"] >= sword_price:
-                clear()
-                items["Монеты"] -= sword_price
-                tools["Мечь"]["Количество"] += 1
-                print(Fore.GREEN + f"Ты купил 1 кирку за {sword_price} монет\n")
-                autosave_game()
-                _shop.buy()
-            else:
-                print(Fore.RED + "Недостаточно монет\n")
-                _shop.buy()
-        elif choice == "9":
-            if items["Монеты"] >= lootbox_price:
-                clear()
-                items["Монеты"] -= lootbox_price
-                items["Лутбокс"] += 1
-                print(Fore.GREEN + f"Ты купил 1 лутбокс за {lootbox_price} монет\n")
-                autosave_game()
-                _shop.buy()
-        else:
-            clear()
-            print(Fore.RED + "Неправильный ввод. Попробуйте ещё\n")
+            print(Fore.RED + "Неправильный ввод.\n Надо:\n [номер тавара] [количесьво]")
             _shop.buy()
 
     def sell():
@@ -850,122 +857,137 @@ class _shop:
         
         food_sell_price, water_sell_price, coal_sell_price, wood_sell_price, iron_sell_price = 5, 5, 10, 10, 15
         axe_sell_price, pickaxe_sell_price, sword_sell_price = 20, 20, 20
-
-        progress_count = random.uniform(0.1, 5.0)
-        progress += progress_count
+        
         print(f"""
-    У тебя есть:
+У тебя есть:
+0. назад
+1. яблоко - {items["Еда"]["Яблоко"]} | {food_sell_price} монет
+2. вода - {items["Вода"]} | {water_sell_price} монет
+3. уголь - {items["Уголь"]} | {coal_sell_price} монет
+4. дерево - {items["Дерево"]} | {wood_sell_price} монет
+5. железо - {items["Железо"]} | {iron_sell_price} монет
+6. топор - {tools["Топор"]["Количество"]} | {axe_sell_price} монет
+7. кирка - {tools["Кирка"]["Количество"]} | {pickaxe_sell_price} монет
+8. меч - {tools["Меч"]["Количество"]} | {sword_sell_price} монет
+        """)
+        print("\n\n[номер тавара] [количесьво]")
+        
+        try:
+            choice, quantity = input("Что хочешь продать? ").split(' ')
 
-    0. назад
-    1. яблоко - {items["яблоко"]["Яблоко"]} | {food_sell_price} монет
-    2. вода - {items["Вода"]} | {water_sell_price} монет
-    3. уголь - {items["Уголь"]} | {coal_sell_price} монет
-    4. дерево - {items["Дерево"]} | {wood_sell_price} монет
-    5. железо - {items["Железо"]} | {iron_sell_price} монет
-    6. топор - {tools["Топор"]["Количество"]} | {axe_sell_price} монет
-    7. кирка - {tools["Кирка"]["Количество"]} | {pickaxe_sell_price} монет
-    8. меч - {tools["Мечь"]["Количество"]} | {sword_sell_price} монет
-            """)
-        choice = input("Что хочешь продать?").lower()
-
-        if choice == "0":
+            if choice == "0" and quantity == "":
+                clear()
+                _shop.shop()
+            elif choice == "1":
+                quantity = int(quantity)
+                if quantity > items["Еда"]["Яблоко"]:
+                    print(Fore.RED + "У тебя нет столько яблок для продажи")
+                    _shop.sell()
+                else:
+                    clear()
+                    items["Монеты"] += food_sell_price * quantity
+                    items["Еда"]["Яблоко"] -= quantity
+                    print(Fore.GREEN + f"Ты продал {quantity} еды за {food_sell_price * quantity} монет")
+                    autosave_game()
+                    _shop.sell()
+            elif choice == "2":
+                quantity = int(quantity)
+                if quantity > items["Вода"]:
+                    print(Fore.RED + "У тебя нет столько воды для продажи")
+                    _shop.sell()
+                else:
+                    clear()
+                    items["Монеты"] += water_sell_price * quantity
+                    items["Вода"] -= quantity
+                    print(Fore.GREEN + f"Ты продал {quantity} воды за {water_sell_price * quantity} монет")
+                    autosave_game()
+                    _shop.sell()
+            elif choice == "3":
+                quantity = int(quantity)
+                if quantity > items["Уголь"]:
+                    print(Fore.RED + "У тебя нет столько угля для продажи")
+                    _shop.sell()
+                else:
+                    clear()
+                    items["Монеты"] += coal_sell_price * quantity
+                    items["Уголь"] -= quantity
+                    print(Fore.GREEN + f"Ты продал {quantity} угля за {coal_sell_price * quantity} монет")
+                    autosave_game()
+                    _shop.sell()
+            elif choice == "4":
+                quantity = int(quantity)
+                if quantity > items["Дерево"]:
+                    print(Fore.RED + "У тебя нет столько дерева для продажи")
+                    _shop.sell()
+                else:
+                    clear()
+                    items["Монеты"] += wood_sell_price * quantity
+                    items["Дерево"] -= quantity
+                    print(Fore.GREEN + f"Ты продал {quantity} дерева за {wood_sell_price * quantity} монет")
+                    autosave_game()
+                    _shop.sell()
+            elif choice == "5":
+                quantity = int(quantity)
+                if quantity > items["Железо"]:
+                    print(Fore.RED + "У тебя нет столько железа для продажи")
+                    _shop.sell()
+                else:
+                    clear()
+                    items["Монеты"] += iron_sell_price * quantity
+                    items["Железо"] -= quantity
+                    print(Fore.GREEN + f"Ты продал {quantity} железа за {iron_sell_price * quantity} монет")
+                    autosave_game()
+                    _shop.sell()
+            elif choice == "6":
+                quantity = int(quantity)
+                if quantity > tools["Топор"]["Количество"]:
+                    print(Fore.RED + "У тебя нет столько топоров для продажи")
+                    _shop.sell()
+                else:
+                    clear()
+                    items["Монеты"] += axe_sell_price * quantity
+                    tools["Топор"]["Количество"] -= quantity
+                    if tools["Топор"]["Количество"] == 0:
+                        tools["Топор"]["Прочность"] = 100
+                    print(Fore.GREEN + f"Ты продал {quantity} топоров за {axe_sell_price * quantity} монет")
+                    autosave_game()
+                    _shop.sell()
+            elif choice == "7":
+                quantity = int(quantity)
+                if quantity > tools["Кирка"]["Количество"]:
+                    print(Fore.RED + "У тебя нет столько кирок для продажи")
+                    _shop.sell()
+                else:
+                    clear()
+                    items["Монеты"] += pickaxe_sell_price * quantity
+                    tools["Кирка"]["Количество"] -= quantity
+                    if tools["Кирка"]["Количество"] == 0:
+                        tools["Кирка"]["Прочность"] = 100
+                    print(Fore.GREEN + f"Ты продал {quantity} кирок за {pickaxe_sell_price * quantity} монет")
+                    autosave_game()
+                    _shop.sell()
+            elif choice == "8":
+                quantity = int(quantity)
+                if quantity > tools["Меч"]["Количество"]:
+                    print(Fore.RED + "У тебя нет столько мечей для продажи")
+                    _shop.sell()
+                else:
+                    clear()
+                    items["Монеты"] += quantity * sword_sell_price
+                    tools["Меч"]["Количество"] -= quantity
+                    if tools["Меч"]["Количество"] == 0:
+                        tools["Меч"]["Прочность"] = 100
+                    print(Fore.GREEN + f"Ты продал {quantity} мечей за {sword_sell_price * quantity} монет")
+                    autosave_game()
+                    _shop.sell()
+            else:
+                clear()
+                print(Fore.RED + "Неправильный ввод. Попробуйте ещё")
+                _shop.sell()
+        except IndexError:
             clear()
-            _shop()
-        elif choice == "1":
-            if items["яблоко"]["Яблоко"] > 0:
-                clear()
-                items["Монеты"] += food_sell_price
-                items["яблоко"]["Яблоко"] -= 1
-                print(Fore.GREEN + f"Ты продал 1 еду за {food_sell_price} монет")
-                autosave_game()
-                _shop.sell()
-            else:
-                print(Fore.RED + "У тебя нет еды для продажи")
-                _shop.sell()
-        elif choice == "2":
-            if items["Вода"] > 0:
-                clear()
-                items["Монеты"] += water_sell_price
-                items["Вода"] -= 1
-                print(Fore.GREEN + f"Ты продал 1 воду за {water_sell_price} монет")
-                autosave_game()
-                _shop.sell()
-            else:
-                print(Fore.RED + "У тебя нет воды для продажи")
-                _shop.sell()
-        elif choice == "3":
-            if items["Уголь"] > 0:
-                clear()
-                items["Монеты"] += coal_sell_price
-                items["Уголь"] -= 1
-                print(Fore.GREEN + f"Ты продал 1 уголь за {coal_sell_price} монет")
-                autosave_game()
-                _shop.sell()
-            else:
-                print(Fore.RED + "У тебя нет угля для продажи")
-                _shop.sell()
-        elif choice == "4":
-            if items["Дерево"] > 0:
-                clear()
-                items["Монеты"] += wood_sell_price
-                items["Дерево"] -= 1
-                print(Fore.GREEN + f"Ты продал 1 дерево за {wood_sell_price} монет")
-                autosave_game()
-                _shop.sell()
-            else:
-                print(Fore.RED + "У тебя нет дерева для продажи")
-                _shop.sell()
-        elif choice == "5":
-            if items["Железо"] > 0:
-                clear()
-                items["Монеты"] += iron_sell_price
-                items["Железо"] -= 1
-                print(Fore.GREEN + f"Ты продал 1 железо за {iron_sell_price} монет")
-                autosave_game()
-                _shop.sell()
-            else:
-                print(Fore.RED + "У тебя нет железа для продажи")
-                _shop.sell()
-        elif choice == "6":
-            if tools["Топор"]["Количество"] > 0:
-                clear()
-                items["Монеты"] += axe_sell_price
-                tools["Топор"]["Количество"] -= 1
-                if tools["Топор"]["Количество"] == 0:
-                    tools["Топор"]["Прочность"] = 100
-                print(Fore.GREEN + f"Ты продал 1 топор за {axe_sell_price} монет")
-                autosave_game()
-                _shop.sell()
-            else:
-                print(Fore.RED + "У тебя нет топора для продажи")
-                _shop.sell()
-        elif choice == "7":
-            if tools["Кирка"]["Количество"] > 0:
-                clear()
-                items["Монеты"] += pickaxe_sell_price
-                tools["Кирка"]["Количество"] -= 1
-                if tools["Кирка"]["Количество"] == 0:
-                    tools["Кирка"]["Прочность"] = 100
-                print(Fore.GREEN + f"Ты продал 1 кирку за {pickaxe_sell_price} монет")
-                autosave_game()
-                _shop.sell()
-            else:
-                print(Fore.RED + "У тебя нет кирки для продажи")
-                _shop.sell()
-        elif choice == "8":
-            if tools["Мечь"]["Количество"] > 0:
-                clear()
-                items["Монеты"] += tools["Мечь"]["Количество"]
-                tools["Мечь"]["Количество"] -= 1
-                if tools["Мечь"]["Количество"] == 0:
-                    tools["Мечь"]["Прочность"] = 100
-                print(Fore.GREEN + f"Ты продал 1 кирку за {sword_sell_price} монет")
-                autosave_game()
-                _shop.sell()
-        else:
-            clear()
-            print(Fore.RED + "Неправылный ввод. Попробуйте ещё")
-            _shop.sell()
+            print(Fore.RED + "Неправильный ввод.\n Надо:\n [номер тавара] [количесьво]")
+            _shop.buy()
 
 
 if __name__ == "__main__":
