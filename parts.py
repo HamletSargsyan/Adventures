@@ -752,8 +752,6 @@ class _shop:
             if quantity == 0:
                 clear()
                 _shop.shop()
-            if quantity == "":
-                quantity = 1
 
             elif choice == 1:
                 if items["Монеты"] >= food_price * int(quantity):
@@ -893,8 +891,6 @@ class _shop:
             if quantity == 0:
                 clear()
                 _shop.shop()
-            if quantity == "":
-                quantity = 1
             
             if choice == 1:
                 quantity = int(quantity)
