@@ -619,7 +619,7 @@ class _fight:
 class _lootbox:
     def lootbox_open():
         global items, progress, player, tools
-        loots = ["монеты", "дерево", "вода", "яблоко", "железо", "уголь", "топор", "кирка", "меч"]
+        loots = ["монеты", "дерево", "вода", "яблоко", "железо", "уголь"]
 
         items["Лутбокс"] -= 1
         print(Fore.LIGHTGREEN_EX + "Ты открыл лутбокс и получил:")
@@ -640,12 +640,6 @@ class _lootbox:
                 items["Железо"] += quantity
             elif loot == "уголь":
                 items["Уголь"] += quantity
-            elif loot == "топор":
-                tools["Топор"]["Количество"] += 1
-            elif loot == "кирка":
-                tools["Кирка"]["Количество"] += 1
-            elif loot == "меч":
-                tools["Меч"]["Количество"] += 1
             autosave_game()
         print()
         input("Нажми ENTER, чтобы продолжить...")
