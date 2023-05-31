@@ -109,10 +109,11 @@ class _checks:
         if progress >= 100:
             level += 1
             progress = 0.0
-            items["Лутбокс"] += 1
+            lootbox_quantity = random.randit(1, 5)
+            items["Лутбокс"] += lootbox_quantity
             clear()
             print(Fore.LIGHTGREEN_EX + f"Поздравляем! Твой уровень повышен до {level}")
-            print("Ты получил 1 лутбокс")
+            print(f"Ты получил {lootbox_quantity} лутбокс")
             print()
             input("Нажми ENTER, чтобы продолжить...")
             clear()
@@ -152,7 +153,6 @@ class _start_menu:
         elif choice == "2":
             clear()
             _start_menu.updates()
-
         elif choice == "3":
             clear()
             help()
