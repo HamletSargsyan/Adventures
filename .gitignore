@@ -3,3 +3,14 @@
 game_data.json
 *.log
 *.exe
+*.dll
+*.pyd
+*.toc
+*.spec
+build/main/xref-main.html
+dist/main/base_library.zip
+build/main/warn-main.txt
+build/main/PYZ-00.pyz
+build/main/main.pkg
+build/main/main.exe.manifest
+build/main/base_library.zip
