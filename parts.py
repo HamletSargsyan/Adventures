@@ -732,7 +732,6 @@ class _shop:
             f"9. лутбокс - {lootbox_price} монет")
         
         try:
-            global choice, quantity
             choice = int(input("\nЧто хочешь купить? (номер тавара) "))
 
             if choice == 0:
