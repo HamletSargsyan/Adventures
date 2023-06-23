@@ -12,6 +12,11 @@ colorama==0.4.6
 ```
 
 ## Установка
+
+``` shell
+git clone https://github.com/HamletSargsyan/Adventures.git
+```
+
 ``` shell
 pip install -r requirements.txt
 ```
@@ -24,7 +29,7 @@ pip install -r requirements.txt
 2. Внесите необходимые изменения в ваш форк.
 3. Создайте pull request, чтобы предложить ваши изменения для рассмотрения.
 
-## Авторы
+## Автор
 
 Автор проекта Adventurs: Hamlet Sargsyan
 
