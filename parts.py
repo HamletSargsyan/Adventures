@@ -155,7 +155,7 @@ class _start_menu:
             _start_menu.updates()
         elif choice == "3":
             clear()
-            help()
+            _start_menu._help()
         elif choice == "4":
             clear()
             load_game()
@@ -184,7 +184,7 @@ class _start_menu:
             print(Fore.RED + "Неправильный выбор. Попробуйте снова.")
             _start_menu.start_menu()
 
-    def help():
+    def _help():
         clear()
         print(Fore.GREEN + "ПОМОЩЬ:")
         print()
