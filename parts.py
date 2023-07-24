@@ -204,7 +204,7 @@ class _start_menu:
             print(Fore.RED + "Неправильный выбор. Попробуйте снова.")
             _start_menu.start_menu()
 
-class _profile:
+class _profile: 
     def profile():
         global items, progress, level, player, tools
         _checks.check()
