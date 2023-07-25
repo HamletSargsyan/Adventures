@@ -5,18 +5,18 @@ import sys
 from colorama import init, Fore, Style, Back
 
 from variables import *
-from utils import *
+from utils import clear, autosave_game, load_game, die
 
 #PARTS
-from parts._checks import *
-from parts._craft import *
-from parts._explore import *
-from parts._lootbox import *
-from parts._monster import *
-from parts._rest import *
-from parts._shop import *
-from parts._eat import *
-from parts._drink import *
+from _checks import *
+from _craft import *
+from _explore import *
+from _lootbox import *
+from _monster import *
+from _rest import *
+from _shop import *
+from _eat import *
+from _drink import *
 
 init(autoreset=True)
 
@@ -93,7 +93,7 @@ class _start_menu:
             print(Fore.RED + "Неправильный выбор. Попробуйте снова.")
             _start_menu.start_menu()
 
-class _profile: #TODO
+class _profile:
     def profile():
         global items, progress, level, player, tools
         check()

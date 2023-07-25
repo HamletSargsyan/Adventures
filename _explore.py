@@ -4,11 +4,12 @@ import json
 import sys
 from colorama import init, Fore, Style, Back
 
-from main import *  #FIXME
-from variables import * #FIXME
-from utils import * #FIXME
+from main import _start_menu, _profile
+from variables import *
+from utils import clear, autosave_game, load_game, die
 
 #PARTS
+from _checks import *
 from _craft import *
 from _explore import *
 from _lootbox import *
@@ -36,20 +37,20 @@ def explore():
         _profile.profile()
     elif choice == "1":
         clear()
-        _explore.forest()
+        forest()
     elif choice == "2":
         clear()
-        _explore.mineshaft()
+        mineshaft()
     elif choice == "3":
         clear()
-        _explore.well()
+        well()
     elif choice == "4":
         clear()
-        _explore.lake()
+        lake()
     else:
         clear()
         print(Fore.RED + "Неверный ввод. Попробуйте еще раз.")
-        _explore.explore()
+        explore()
 def forest():
     global items, progress, player, tools
     progress_count = random.uniform(0.1, 5.0)

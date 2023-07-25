@@ -4,11 +4,12 @@ import json
 import sys
 from colorama import init, Fore, Style, Back
 
-from main import *  #FIXME
-from variables import * #FIXME
-from utils import * #FIXME
+from main import _start_menu, _profile
+from variables import *
+from utils import clear, autosave_game, load_game, die
 
 #PARTS
+from _checks import *
 from _craft import *
 from _explore import *
 from _lootbox import *
@@ -19,7 +20,6 @@ from _eat import *
 from _drink import *
 
 init(autoreset=True)
-
 
 def check():
     global items, progress, level, player, tools
@@ -75,7 +75,7 @@ def check():
     if progress >= 100:
         level += 1
         progress = 0.0
-        lootbox_quantity = random.randit(1, 5)
+        lootbox_quantity = random.randint(1, 5)
         items["Лутбокс"] += lootbox_quantity
         clear()
         print(Fore.LIGHTGREEN_EX + f"Поздравляем! Твой уровень повышен до {level}")
