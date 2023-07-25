@@ -1,6 +1,6 @@
 # Adventurs
 
-[![wakatime](https://wakatime.com/badge/user/ce8061a9-8aab-44c4-a913-9971a16e404a/project/705ee1a4-2f99-47f2-92ea-622fe3c2cbc9.svg)](https://wakatime.com/badge/user/ce8061a9-8aab-44c4-a913-9971a16e404a/project/705ee1a4-2f99-47f2-92ea-622fe3c2cbc9)
+[![wakatime](https://wakatime.com/badge/github/HamletSargsyan/Adventures.svg)](https://wakatime.com/badge/github/HamletSargsyan/Adventures)
 
 **Adventurs** - Это текстовая игра, написанная на языке Python. Игра позволяет игроку исследовать окружающий мир, сражаться с противниками и и т.п.
 
