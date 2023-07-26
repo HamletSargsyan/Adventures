@@ -4,19 +4,11 @@ import json
 import sys
 from colorama import init, Fore, Style, Back
 
-# import main
-from variables import *
+from .variables import *
 
 #PARTS
-from _checks import check
-from _craft import *
-from _explore import *
-from _lootbox import *
-from _monster import *
-from _rest import *
-from _shop import *
-from _eat import *
-from _drink import *
+from parts._checks import *
+
 
 init(autoreset=True)
 

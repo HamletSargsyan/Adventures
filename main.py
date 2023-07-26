@@ -4,19 +4,20 @@ import json
 import sys
 from colorama import init, Fore, Style, Back
 
-from variables import *
-from utils import *
+from settings.variables import *
+from settings.utils import clear, autosave_game, load_game, die
 
 #PARTS
-from _checks import *
-from _craft import *
-from _explore import *
-from _lootbox import *
-from _monster import *
-from _rest import *
-from _shop import *
-from _eat import *
-from _drink import *
+from parts._checks import check
+from parts._craft import craft
+from parts._explore import explore
+from parts._lootbox import lootbox_menu
+from parts._monster import fight
+from parts._rest import rest
+from parts._shop import shop
+from parts._eat import eat
+from parts._drink import drink
+from parts._profile import profile
 
 init(autoreset=True)
 
@@ -38,7 +39,7 @@ class _start_menu:
 
         if choice == "1":
             clear()
-            _profile.profile()
+            profile()
         elif choice == "2":
             clear()
             _start_menu.updates()
@@ -93,85 +94,6 @@ class _start_menu:
             print(Fore.RED + "Неправильный выбор. Попробуйте снова.")
             _start_menu.start_menu()
 
-class _profile:
-    def profile():
-        global items, progress, level, player, tools
-        check()
-        
-        load_game()
-
-        print()
-        print(Fore.GREEN + "ПРОФИЛЬ: ")
-        print(f'Здоровие: {player["Здоровие"]}')
-        print(f'Голод: {player["Голод"]}')
-        print(f'Жажда: {player["Жажда"]}')
-        print(f'Усталость: {player["Усталость"]}')
-        print(f'Уровень: {level}')
-        print(f'Опыт: {progress:.1f}%/100%')
-        print("-------------")
-        print(Fore.GREEN + "РЕСУРСЫ: ")
-        print(f'Монеты: {items["Монеты"]}')
-        print(f'Дерево: {items["Дерево"]}')
-        print(f'Вода: {items["Вода"]}')
-        print(f'Яблоко: {items["Еда"]["Яблоко"]}')
-        print(f'Угол: {items["Уголь"]}')
-        print(f'Железо: {items["Железо"]}')
-        print(f'Лутбокс: {items["Лутбокс"]}')
-        print(f'Рыба: {items["Рыба"]}')
-        print("-------------")
-        print(Fore.GREEN + "ИНСТРУМЕНТЫ: ")
-        print(f'Топор: {tools["Топор"]["Количество"]} прочность: {tools["Топор"]["Прочность"]}%')
-        print(f'Кирка: {tools["Кирка"]["Количество"]} прочность: {tools["Кирка"]["Прочность"]}%')
-        print(f'Меч: {tools["Меч"]["Количество"]} прочность: {tools["Меч"]["Прочность"]}%')
-        print(f'Ведро: {tools["Ведро"]["Количество"]} прочность: {tools["Ведро"]["Прочность"]}%')
-        print(f'Лодка: {tools["Лодка"]["Количество"]} прочность: {tools["Лодка"]["Прочность"]}%')
-        print(f'Удочка: {tools["Удочка"]["Количество"]} прочность: {tools["Удочка"]["Прочность"]}%')
-        print()
-        print(Fore.WHITE + "Выберите действие: ")
-        print("""
-            ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
-            ┃ 0. назад        |   5. выпить    ┃
-            ┃ 1. исследовать  |   6. крафтить  ┃
-            ┃ 2. сражаться    |   7. лутбокс   ┃
-            ┃ 3. отдыхать     |   8. выгрузить ┃
-            ┃ 4. поесть       |   9. магазин   ┃
-            ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
-        """)
-        choice = input()
-
-        if choice == "0":
-            clear()
-            _start_menu.start_menu()
-        elif choice == "1":
-            clear()
-            explore()
-        elif choice == "2":
-            clear()
-            fight()
-        elif choice == "3":
-            clear()
-            rest()
-        elif choice == "4":
-            clear()
-            eat()
-        elif choice == "5":
-            clear()
-            drink()
-        elif choice == "6":
-            clear()
-            craft()
-        elif choice == "7":
-            lootbox_menu()
-        elif choice == "8":
-            clear()
-            load_game()
-        elif choice == "9":
-            clear()
-            shop()    
-        else:
-            clear()
-            print(Fore.RED + "Неправылный ввод. Попробуйте ещё")
-            _profile.profile()
 
 if __name__ == "__main__":
     _start_menu.start_menu()

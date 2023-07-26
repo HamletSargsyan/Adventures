@@ -1,5 +1,1 @@
-random
-os
-json
-sys
 colorama==0.4.6

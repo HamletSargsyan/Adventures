@@ -4,19 +4,11 @@ import json
 import sys
 from colorama import init, Fore, Style, Back
 
-from variables import *
-from utils import clear, autosave_game, load_game, die
+from settings.variables import *
+from settings.utils import clear, autosave_game, load_game, die
 
 #PARTS
 from _checks import *
-from _craft import *
-from _explore import *
-from _lootbox import *
-from _monster import *
-from _rest import *
-from _shop import *
-from _eat import *
-from _drink import *
 from _profile import *
 
 init(autoreset=True)
@@ -51,6 +43,7 @@ def explore():
         clear()
         print(Fore.RED + "Неверный ввод. Попробуйте еще раз.")
         explore()
+
 def forest():
     global items, progress, player, tools
     progress_count = random.uniform(0.1, 5.0)
@@ -89,6 +82,7 @@ def forest():
         autosave_game()
         print(Fore.GREEN + f"Вы добили {wood_count} ед. дерево, {water_count} ед. воды и {food_count} ед. еды, прочность топора: {tools['Топор']['Прочность']}%")
         profile()
+
 def mineshaft():
     global items, progress, player, tools
     if level >= 2:
@@ -127,6 +121,7 @@ def mineshaft():
         clear()
         print(Fore.RED + "Чтобы пойти в шахту нужен 2 уровень")
     profile()
+
 def well():
     global items, progress, player, tools
     if level >= 5 and tools["Ведро"]["Количество"] >= 1:
@@ -146,6 +141,7 @@ def well():
         clear()
         print(Fore.RED + "Чтобы пойти к колодцу нужен ведро")
     profile()
+
 def lake():
     global items, progress, player, tools
     if level >= 10 and tools["Лодка"]["Количество"] >= 1 and tools["Удочка"]["Количество"] >= 1:

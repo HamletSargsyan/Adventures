@@ -4,8 +4,8 @@ import json
 import sys
 from colorama import init, Fore, Style, Back
 
-from variables import *
-from utils import clear, autosave_game, load_game, die
+from settings.variables import *
+from settings.utils import clear, autosave_game, load_game, die
 
 #PARTS
 from _checks import check
