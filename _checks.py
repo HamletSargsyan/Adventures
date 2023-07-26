@@ -4,12 +4,10 @@ import json
 import sys
 from colorama import init, Fore, Style, Back
 
-from main import _start_menu, _profile
 from variables import *
 from utils import clear, autosave_game, load_game, die
 
 #PARTS
-from _checks import *
 from _craft import *
 from _explore import *
 from _lootbox import *
@@ -18,6 +16,7 @@ from _rest import *
 from _shop import *
 from _eat import *
 from _drink import *
+from _profile import *
 
 init(autoreset=True)
 
@@ -83,7 +82,7 @@ def check():
         print()
         input("Нажми ENTER, чтобы продолжить...")
         clear()
-        _profile.profile()
+        profile()
     if tools["Топор"]["Количество"] <= 0:
         tools["Топор"]["Количество"] = 0
     if tools["Кирка"]["Количество"] <= 0:

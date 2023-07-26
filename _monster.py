@@ -4,7 +4,6 @@ import json
 import sys
 from colorama import init, Fore, Style, Back
 
-from main import _start_menu, _profile
 from variables import *
 from utils import clear, autosave_game, load_game, die
 
@@ -18,6 +17,7 @@ from _rest import *
 from _shop import *
 from _eat import *
 from _drink import *
+from _profile import *
 
 init(autoreset=True)
 
@@ -38,7 +38,7 @@ def fight():
         print(Fore.YELLOW + f"Вы теряете {damage_taken} здоровья")
         print(Fore.LIGHTGREEN_EX + f"Вы получили {coin_count} ед. монет и {food_count} ед. еды")
         print()
-        _profile.profile()
+        profile()
     elif tools["Меч"]["Количество"] >= 0:
         damage_taken = random.randint(5, 10)
         coin_count  = random.randint(20, 30)
@@ -51,4 +51,4 @@ def fight():
         print(Fore.YELLOW + f"Вы теряете {damage_taken} здоровья.")
         print(Fore.LIGHTGREEN_EX + f"Вы получили {coin_count} ед. монет и {food_count} ед. еды")
         print()
-        _profile.profile()
+        profile()

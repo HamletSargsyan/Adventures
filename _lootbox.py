@@ -4,7 +4,6 @@ import json
 import sys
 from colorama import init, Fore, Style, Back
 
-from main import _start_menu, _profile
 from variables import *
 from utils import clear, autosave_game, load_game, die
 
@@ -18,6 +17,7 @@ from _rest import *
 from _shop import *
 from _eat import *
 from _drink import *
+from _profile import *
 
 init(autoreset=True)
 
@@ -48,7 +48,7 @@ def lootbox_open():
     print()
     input("Нажми ENTER, чтобы продолжить...")
     clear()
-    _profile.profile()
+    profile()
 def lootbox_menu():
     clear()
     print("Хочешь открить лутбокс?")
@@ -64,10 +64,10 @@ def lootbox_menu():
         else:
             clear()
             print(Fore.RED + "У тебя нет лутбокса")
-            _profile.profile()
+            profile()
     elif choice == "2":
         clear()
-        _profile.profile()
+        profile()
     else:
         clear()
         print(Fore.RED + "Неправылный ввод. Попробуйте ещё")

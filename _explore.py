@@ -4,7 +4,6 @@ import json
 import sys
 from colorama import init, Fore, Style, Back
 
-from main import _start_menu, _profile
 from variables import *
 from utils import clear, autosave_game, load_game, die
 
@@ -18,6 +17,7 @@ from _rest import *
 from _shop import *
 from _eat import *
 from _drink import *
+from _profile import *
 
 init(autoreset=True)
 
@@ -34,7 +34,7 @@ def explore():
     choice = input(Fore.LIGHTBLACK_EX + "Введите номер: ")
     if choice == "0":
         clear()
-        _profile.profile()
+        profile()
     elif choice == "1":
         clear()
         forest()
@@ -71,7 +71,7 @@ def forest():
         clear()
         print(Fore.GREEN + f"Вы добили {wood_count} ед. дерево, {water_count} ед. воды и {food_count} ед. еды")
         autosave_game()
-        _profile.profile()
+        profile()
     elif tools["Топор"]['Количество'] > 0:
         wood_count = random.randint(20, 30)
         water_count = random.randint(1, 10)
@@ -88,7 +88,7 @@ def forest():
         clear()
         autosave_game()
         print(Fore.GREEN + f"Вы добили {wood_count} ед. дерево, {water_count} ед. воды и {food_count} ед. еды, прочность топора: {tools['Топор']['Прочность']}%")
-        _profile.profile()
+        profile()
 def mineshaft():
     global items, progress, player, tools
     if level >= 2:
@@ -107,7 +107,7 @@ def mineshaft():
             autosave_game()
             clear()
             print(Fore.GREEN + f"Вы добили {iron_count} ед. железа и {coal_count} ед. угля")
-            _profile.profile()
+            profile()
         elif tools["Кирка"]["Количество"] > 0:
             iron_count = random.randint(20, 30)
             coal_count = random.randint(20, 30)
@@ -122,11 +122,11 @@ def mineshaft():
             autosave_game()
             clear()
             print(Fore.GREEN + f'Вы добили {coal_count} ед. железа и {iron_count} ед. железа, прочность кирки: {tools["Кирка"]["Прочность"]}%')
-            _profile.profile()
+            profile()
     elif level < 2:
         clear()
         print(Fore.RED + "Чтобы пойти в шахту нужен 2 уровень")
-    _profile.profile()
+    profile()
 def well():
     global items, progress, player, tools
     if level >= 5 and tools["Ведро"]["Количество"] >= 1:
@@ -145,7 +145,7 @@ def well():
     elif tools["Ведро"]["Количество"] == 0:
         clear()
         print(Fore.RED + "Чтобы пойти к колодцу нужен ведро")
-    _profile.profile()
+    profile()
 def lake():
     global items, progress, player, tools
     if level >= 10 and tools["Лодка"]["Количество"] >= 1 and tools["Удочка"]["Количество"] >= 1:
@@ -168,4 +168,4 @@ def lake():
         print(Fore.RED + "Чтобы пойти в озеро нужна лодка")
     elif tools["Удочка"]["Количество"] == 0:
         print(Fore.RED + "Чтобы пойти в озеро нужна удочка")
-    _profile.profile()
+    profile()

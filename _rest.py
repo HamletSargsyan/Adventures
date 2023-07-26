@@ -4,9 +4,8 @@ import json
 import sys
 from colorama import init, Fore, Style, Back
 
-from main import _start_menu, _profile
 from variables import *
-from utils import clear, autosave_game, load_game, die
+from utils import *
 
 #PARTS
 from _checks import *
@@ -18,6 +17,7 @@ from _rest import *
 from _shop import *
 from _eat import *
 from _drink import *
+from _profile import *
 
 init(autoreset=True)
 
@@ -35,4 +35,4 @@ def rest():
     if player["Здоровие"] > health_max:
         player["Здоровие"] = health_max
     autosave_game()
-    _profile.profile()
+    profile()

@@ -4,11 +4,11 @@ import json
 import sys
 from colorama import init, Fore, Style, Back
 
-from main import _start_menu, _profile
+# import main
 from variables import *
 
 #PARTS
-from _checks import *
+from _checks import check
 from _craft import *
 from _explore import *
 from _lootbox import *
@@ -58,7 +58,8 @@ def load_game():
         check()
     except FileNotFoundError:
         print(Fore.RED + "Файл сохранения не найден.")
-    _profile.profile()
+        
+    # main._profile.profile()
 
 def die():
     check()

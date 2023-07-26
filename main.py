@@ -5,7 +5,7 @@ import sys
 from colorama import init, Fore, Style, Back
 
 from variables import *
-from utils import clear, autosave_game, load_game, die
+from utils import *
 
 #PARTS
 from _checks import *
@@ -98,7 +98,7 @@ class _profile:
         global items, progress, level, player, tools
         check()
         
-        autosave_game()
+        load_game()
 
         print()
         print(Fore.GREEN + "ПРОФИЛЬ: ")
