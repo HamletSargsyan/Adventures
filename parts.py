@@ -137,6 +137,7 @@ class _start_menu:
         print(Back.WHITE + Fore.BLACK + "\n Добро пожаловать в Adventures! " + Back.RESET)
         print("""
 
+        0. Выход
         1. Играть
         2. Обновления
         3. Помощь
