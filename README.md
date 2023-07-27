@@ -18,12 +18,12 @@
 colorama==0.4.6
 ```
 
-## Установка
+## Установка и запуск
 
 Игра работает на пк и на телефоне
 
 ### Установка на пк
-Установка через **git**
+1. Установка через **git**
 > Если на вашем ПК нет git'а, то скачайте его на офицеальном сайте
 > https://git-scm.com/downloads
 
@@ -31,20 +31,37 @@ colorama==0.4.6
 git clone https://github.com/HamletSargsyan/Adventures.git
 ```
 
-Установкв зависимостей
+2. Установкв зависимостей
 ``` shell
 pip install -r requirements.txt
 ```
 
+3. Смена папки
+```shell
+cd Adventures
+```
+
+4. Запуск
+``` shell
+python main.py
+```
+
 ### Установка на телефон
 
-Чтобы играть на телефоне вам надо скачать **Termux**, после установки приложеиня выполните эту команду:
+Чтобы играть на телефоне вам надо скачать **Termux**
+
+> Гайд по установке Termux на android и на ios
+> https://teletype.in/@artur.kerimov777/LULi6jK5-
+
+После установки приложеиня выполните эту команду:
 
 ``` shell
 pkg update && pkg install git && git clone https://github.com/HamletSargsyan/Adventures && pkg install python && cd Adventures && pip install -r requirements.txt && python main.py
 ```
 
-## Вклад и разработка
+После установки игра сама запустится
+
+## Вклад
 
 Если вы хотите внести свой вклад в проект Adventurs, вы можете выполнить следующие действия:
 
@@ -60,5 +77,5 @@ pkg update && pkg install git && git clone https://github.com/HamletSargsyan/Adv
 
 ## Лицензия
 
-Проект Adventurs распространяется под лицензией MIT. Подробную информацию можно найти в файле LICENSE.
+Проект Adventurs распространяется под лицензией **MIT**. Подробную информацию можно найти в файле **LICENSE**.
 
