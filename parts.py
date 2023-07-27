@@ -145,9 +145,11 @@ class _start_menu:
         """)
         print(Fore.LIGHTBLACK_EX + 'Версия: ' + version)
         print()
-        choice = input(Fore.WHITE + "Введите номер опции: ")
+        choice = str(input(Fore.WHITE + "Введите номер опции: "))
 
-        if choice == "1":
+        if choice == "0":
+            sys.exit()
+        elif choice == "1":
             clear()
             _profile.profile()
         elif choice == "2":
