@@ -1,7 +1,7 @@
 # Adventurs
 
 [![wakatime](https://wakatime.com/badge/github/HamletSargsyan/Adventures.svg)](https://wakatime.com/badge/github/HamletSargsyan/Adventures) 
-![Static Badge](https://img.shields.io/badge/version-1.0.0--beta-blue)
+![Static Badge](https://img.shields.io/badge/version-1.0.0-blue)
 ![GitHub (Pre-)Release Date](https://img.shields.io/github/release-date-pre/HamletSargsyan/Adventures?color=blue)
 ![GitHub all releases](https://img.shields.io/github/downloads/HamletSargsyan/Adventures/total?color=blue)
 
@@ -10,7 +10,7 @@
 **Adventurs** - Это текстовая игра, написанная на языке Python. Игра позволяет игроку исследовать окружающий мир, сражаться с противниками и и т.п.
 
 
-**Версия**: 1.0.0-BETA
+**Версия**: 1.0.0
 
 [TOC]
 
