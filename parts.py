@@ -53,6 +53,11 @@ def die():
     input("Нажмите Enter, чтобы выйти из игры.")
     sys.exit()
 
+def check_input():
+    print(Fore.RED + "Неправылный ввод. Попробуйте ещё")
+    input("Нажмите Enter, чтобы продолжить.")
+    clear()
+
 class _checks:
     def check():
         global items, progress, level, player, tools
@@ -164,7 +169,7 @@ class _start_menu:
             load_game()
         else:
             clear()
-            print(Fore.RED + "Неправильный выбор. Попробуйте снова.")
+            check_input()
             _start_menu.start_menu()
 
     def updates():
@@ -184,7 +189,7 @@ class _start_menu:
             # Здесь вызываем функцию для начала игры
             _start_menu.start_menu()
         else:
-            print(Fore.RED + "Неправильный выбор. Попробуйте снова.")
+            check_input()
             _start_menu.start_menu()
 
     def help():
@@ -204,7 +209,7 @@ class _start_menu:
             # Здесь вызываем функцию для начала игры
             _start_menu.start_menu()
         else:
-            print(Fore.RED + "Неправильный выбор. Попробуйте снова.")
+            check_input()
             _start_menu.start_menu()
 
 class _profile:
@@ -284,7 +289,7 @@ class _profile:
             _shop.shop()    
         else:
             clear()
-            print(Fore.RED + "Неправылный ввод. Попробуйте ещё")
+            check_input()
             _profile.profile()
 
 class _craft:
@@ -371,7 +376,7 @@ class _craft:
             else:
                 print(Fore.RED + "Недостаточно материалов для создания удочки")
         else:
-            print(Fore.RED + "Неверный ввод. Попробуйте еще раз.")
+            check_input()
             _craft.craft()
         autosave_game()
         _profile.profile()
@@ -444,7 +449,7 @@ class _explore:
 
         else:
             clear()
-            print(Fore.RED + "Неверный ввод. Попробуйте еще раз.")
+            check_input()
             _explore.explore()
 
     def forest():
@@ -671,7 +676,7 @@ class _lootbox:
             _profile.profile()
         else:
             clear()
-            print(Fore.RED + "Неправылный ввод. Попробуйте ещё")
+            check_input()
             _lootbox.lootbox_menu()
 
 class _rest:
@@ -712,7 +717,7 @@ class _shop:
             clear()
             _profile.profile()
         else:
-            print("Неправильный ввод. Попробуйте ещё\n")
+            check_input()
             _shop.shop()
 
 
@@ -847,11 +852,11 @@ class _shop:
                     _shop.buy()
             else:
                 clear()
-                print(Fore.RED + "Неправильный ввод. Попробуйте ещё\n")
+                check_input()
                 _shop.buy()
         except ValueError:
             clear()
-            print(Fore.RED + "Неправильный ввод. Попробуйте ещё\n")
+            check_input()
             _shop.buy()
 
     def sell():
@@ -990,11 +995,11 @@ class _shop:
                     _shop.sell()
             else:
                 clear()
-                print(Fore.RED + "Неправильный ввод. Попробуйте ещё")
+                check_input()
                 _shop.sell()
         except ValueError:
             clear()
-            print(Fore.RED + "Неправильный ввод. Попробуйте ещё\n")
+            check_input()
             _shop.sell()
 
 if __name__ == "__main__":
