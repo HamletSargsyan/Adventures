@@ -2,7 +2,7 @@ from colorama import init, Fore, Style, Back
 
 init(autoreset=True)
 
-version = "1.0.0 [BETA]" 
+version = "1.0.0" 
 
 health_max = 100
 level = 0
