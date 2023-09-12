@@ -114,7 +114,7 @@ class _checks:
         if progress >= 100:
             level += 1
             progress = 0.0
-            lootbox_quantity = random.randit(1, 5)
+            lootbox_quantity = random.randint(1, 5)
             items["Лутбокс"] += lootbox_quantity
             clear()
             print(Fore.LIGHTGREEN_EX + f"Поздравляем! Твой уровень повышен до {level}")
