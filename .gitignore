@@ -1,0 +1,8 @@
+*.pyc
+game_data.json
+*.log
+*.exe
+__pycache__
+output
+test.py
+saves
