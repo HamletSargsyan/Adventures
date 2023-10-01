@@ -1,6 +1,12 @@
-
 *.pyc
 game_data.json
 *.log
 *.exe
+<<<<<<< HEAD
 output
+=======
+__pycache__
+output
+test.py
+saves
+>>>>>>> module
