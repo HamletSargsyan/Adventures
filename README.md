@@ -9,8 +9,6 @@
 
 **Версия**: 2.0.0
 
-[ДЕМО](https://replit.com/@HamletSargsyan/Adventures?v=1)
-
 ## Оглавление
 
 - [Adventures](#adventures)
