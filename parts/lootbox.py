@@ -9,6 +9,8 @@ from rich.console import Console
 @check_all
 def lootbox_open():
     global items, player
+    items["Лутбокс"]["Количество"] -= 1
+
     loot_table = list(items.keys())  # Получить список всех доступных предметов
     rarity_weights = {
         "Обычный": 6,   # Увеличенный вес для обычных предметов
