@@ -64,8 +64,8 @@ def food():
         else:
             alert('Ты не голоден', 'warning')
     elif choice == '2':
-        if items['Рыба']['Количество'] >= 1:
-            if player['Голод'] >= 1:
+        if player['Голод'] >= 1:
+            if items['Рыба']['Количество'] >= 1:
                 player['Голод'] -= items['Рыба']['Бонусы']['Питание']
                 alert(f"-{items['Рыба']['Бонусы']['Питание']} голода", 'success')
             else:
@@ -73,8 +73,8 @@ def food():
         else:
             alert('Ты не голоден', 'warning')
     elif choice == '3':
-        if items['Вода']['Количество'] >= 1:
-            if player['Жажда'] >= 1:
+        if player['Жажда'] >= 1:
+            if items['Вода']['Количество'] >= 1:
                 player['Жажда'] -= items['Вода']['Бонусы']['Насыщенность водой']
                 alert(f"-{items['Вода']['Бонусы']['Насыщенность водой']} жажды", 'success')
             else:

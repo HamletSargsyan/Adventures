@@ -1,5 +1,5 @@
 *.pyc
-game_data.json
+game_data.pickle
 *.log
 *.exe
 __pycache__

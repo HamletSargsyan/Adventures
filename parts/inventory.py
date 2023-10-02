@@ -17,7 +17,7 @@ def inventory():
     # Цикл для вывода предметов игрока, если их количество больше 0
     for index, (item_name, item_data) in enumerate(sorted_items):
         if item_data["Количество"] > 0:
-            player_items += f"{item_name}: {item_data['Количество']}{f' | Прочность: ' + str(item_data['Прочность']) if item_data['Прочность'] > 0 else ''}"
+            player_items += f"{item_name}: {int(item_data['Количество'])}{f' | Прочность: ' + str(item_data['Прочность']) if item_data['Прочность'] > 0 else ''}"
             if index < len(sorted_items) - 1:
                 player_items += '\n'
 
