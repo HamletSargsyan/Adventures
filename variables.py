@@ -1,4 +1,4 @@
-version = "2.0.1"
+version = "2.0.2"
 
 health_max = 100
 hunger_max = 100
