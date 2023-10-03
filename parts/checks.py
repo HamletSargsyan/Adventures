@@ -1,19 +1,19 @@
 import random
 
 from utils import clear, alert, die, level_up, save_game
-from variables import hunger_max, thirst_max, player, items
+from variables import health_max, hunger_max, thirst_max, fatigue_max, player, items
 
 def check():
-    global items, player
+    global items, player, health_max, hunger_max, thirst_max, fatigue_max
     
-    if player["Здоровье"] >= 100:
-        player["Здоровье"] = 100
-    if player["Голод"] >= 100:
-        player["Голод"] = 100
-    if player["Жажда"] >= 100:
-        player["Жажда"] = 100
-    if player["Усталость"] >= 100:
-        player["Усталость"] = 100
+    if player["Здоровье"] >= health_max:
+        player["Здоровье"] = health_max
+    if player["Голод"] >= hunger_max:
+        player["Голод"] = hunger_max
+    if player["Жажда"] >= thirst_max:
+        player["Жажда"] = thirst_max
+    if player["Усталость"] >= fatigue_max:
+        player["Усталость"] = fatigue_max
     if player["Уровень"] < 0:
         player["Уровень"] = 0
 
@@ -28,7 +28,7 @@ def check():
     if player["Уровень"] < 0:
         player["Уровень"] = 0
 
-    if player["Усталость"] >= 100:
+    if player["Усталость"] >= fatigue_max:
         player["Здоровье"] -= random.randint(1, 5)
     if player["Голод"] >= hunger_max:
         player["Здоровье"] -= random.randint(1, 5)
@@ -45,7 +45,9 @@ def check():
         clear()
         alert(f"[bright_green]Поздравляем! Ваш уровень повышен до {player['Уровень']}[/bright_green]", 'success')
         alert(f"Вы получили {lootbox_quantity} лутбокс", 'success')
-        level_up()
+        
+        #  https://github.com/HamletSargsyan/Adventures/issues/9
+        # level_up()
 
     if items["Топор"]["Прочность"] <= 0:
         items["Топор"]["Количество"] -= 1

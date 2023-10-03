@@ -1,11 +1,11 @@
-version = "2.0.2"
+version = "2.0.3"
 
 health_max = 100
 hunger_max = 100
 thirst_max = 100
 fatigue_max = 100
 damage_max = 5
-protection_max = 0  # Защита
+protection_max = 2  # Защита
 
 player = {
     "Здоровье": 100,

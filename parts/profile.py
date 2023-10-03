@@ -4,17 +4,19 @@ from rich.panel import Panel
 import inquirer
 
 from utils import clear, check_all, save_game
-from variables import player
+from variables import player, items, health_max, hunger_max, thirst_max, fatigue_max, damage_max, protection_max
 from .inventory import inventory
 
 @check_all
 def profile():
+    global items, player, health_max, hunger_max, thirst_max, fatigue_max
+
     clear()
 
-    player_status = (f'{"[bright_red]Здоровье:[/bright_red]" if player["Здоровье"] <= 10 else "Здоровье:"} {player["Здоровье"]}\n'
-                     f'Голод: {player["Голод"]}\n'
-                     f'Жажда: {player["Жажда"]}\n'
-                     f'Усталость: {player["Усталость"]}\n'
+    player_status = (f'{"[bright_red]Здоровье:[/bright_red]" if player["Здоровье"] <= 10 else "Здоровье:"} {player["Здоровье"]}/{health_max}\n'
+                     f'Голод: {player["Голод"]}/{hunger_max}\n'
+                     f'Жажда: {player["Жажда"]}/{thirst_max}\n'
+                     f'Усталость: {player["Усталость"]}/{fatigue_max}\n'
                      f'Уровень: {player["Уровень"]}\n'
                      f'Опыт: {player["Опыт"]:.1f}%/100%\n'  # Исправлено: Опит -> Опыт
                      )

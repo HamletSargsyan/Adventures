@@ -82,7 +82,7 @@ def die(message: str = None):
     player["Уровень"] = 0 if player["Уровень"] == 0 else player["Уровень"] - 1
     player["Опит"] = 0
 
-    items['Монеты']['Количество'] -= 20
+    items['Монеты']['Количество'] -= 100
 
     save_game()
     clear()
@@ -97,7 +97,30 @@ def die(message: str = None):
     from main import start_menu
     start_menu()
 
+logger.add("logs.log", rotation="500 MB", level="INFO")
 
+
+def check_all(func):
+    def wrapper():
+        try:
+            from parts.checks import check
+            check()
+            func()
+            save_game()
+        except RecursionError:
+            pass
+        except KeyboardInterrupt as e:
+            logger.error(e)
+            clear()
+            save_game()
+            alert('Выход из игры', 'warning')
+            exit()
+        except Exception as e:
+            logger.error(e)
+
+    return wrapper
+
+@check_all
 def level_up():
     global health_max, damage_max, protection_max, hunger_max, thirst_max, fatigue_max
     from parts.profile import profile
@@ -145,25 +168,3 @@ def level_up():
     save_game()
     profile()
 
-logger.add("logs.log", rotation="500 MB", level="INFO")
-
-
-def check_all(func):
-    def wrapper():
-        try:
-            from parts.checks import check
-            check()
-            func()
-            save_game()
-        except RecursionError:
-            pass
-        except (KeyboardInterrupt, TypeError) as e:
-            logger.error(e)
-            clear()
-            alert('Выход из игры', 'warning')
-            save_game()
-            exit()
-        except Exception as e:
-            logger.error(e)
-
-    return wrapper

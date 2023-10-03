@@ -46,11 +46,11 @@ class Mob:
     def attack(self):
         global health_max, damage_max, protection_max, hunger_max, thirst_max, fatigue_max
         while self.health and player['Здоровье'] > 0:
-            mob_damage = random.randint(1, self.damage)
+            mob_damage = random.randint(1, self.damage - protection_max)
             if items["Меч"]["Количество"] == 0:
-                damage = random.randint(5, damage_max)
+                damage = random.randint(1, damage_max)
             else:
-                damage = random.randint(5, damage_max + 10)
+                damage = random.randint(1, damage_max + 10)
 
             self.health -= damage
             player['Здоровье'] -= mob_damage
@@ -58,19 +58,22 @@ class Mob:
             clear()
             alert(f'Ты нанес удар и нанес {damage} урона\n'
                   f'{self.name} наносит удар и наносит {mob_damage} урона', 'warning')
+            
+            if player['Здоровье'] <= 0:
+                alert(f'{self.name} победил тебя...', 'error')
+                die()
 
             if self.health <= 0:
                 alert(f'Ты одолел {self.name}!', 'success')
                 for loot_item in self.loot:
-                    items[loot_item]['Количество'] += 1
+                    quantity = random.randint(1, 5)
+                    items[loot_item]['Количество'] += quantity
 
-                    alert(f"+ 1 {loot_item}", 'success')
+                    alert(f"+ {quantity} {loot_item}", 'success', enter=False)
+                alert('', enter=True)
                 player['Опыт'] += random.randint(10, 15)
                 profile()
 
-            if player['Здоровье'] <= 0:
-                alert(f'{self.name} победил тебя...', 'error')
-                die()
             check()
             clear()
             save_game()
