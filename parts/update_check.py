@@ -114,7 +114,6 @@ def check_update():
                     from main import start_menu
                     start_menu()
                 elif choice == '2':
-                    check_update()
                     download_latest_release()
             else:
                 alert('', enter=True)
