@@ -71,31 +71,26 @@ def craft():
     elif choice == "1":
         crafting.craft_tool(item_name="Топор",
                             progress_range=(3.0, 5.0),
-                            required_materials={"Дерево": 5,
-                                                "Железо": 3})
+                            required_materials=items['Топор']['Изготовление'])
     elif choice == "2":
         crafting.craft_tool(item_name="Кирка",
                             progress_range=(5.0, 8.0),
-                            required_materials={"Железо": 5,
-                                                "Дерево": 3})
+                            required_materials=items['Кирка']['Изготовление'])
     elif choice == "3":
         crafting.craft_tool(item_name="Меч",
                             progress_range=(5.0, 9.0),
-                            required_materials={"Железо": 2,
-                                                "Дерево": 1})
+                            required_materials=items['Меч']['Изготовление'])
     elif choice == "4":
         crafting.craft_tool(item_name="Ведро",
                             progress_range=(5.0, 9.0),
-                            required_materials={"Железо": 3})
+                            required_materials=items['Ведро']['Изготовление'])
     elif choice == "5":
         crafting.craft_tool(item_name="Лодка",
                             progress_range=(5.0, 9.0),
-                            required_materials={"Железо": 2,
-                                                "Дерево": 5})
+                            required_materials=items['Лодка']['Изготовление'])
     elif choice == "6":
         crafting.craft_tool(item_name="Удочка",
                             progress_range=(5.0, 9.0),
-                            required_materials={"Железо": 5,
-                                                "Нить": 2})
+                            required_materials=items['Удочка']['Изготовление'])
 
     craft()

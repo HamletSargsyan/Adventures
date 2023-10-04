@@ -27,7 +27,7 @@ class Shop:
             item = self.items[item_name]
             if item["Количество"] >= quantity:
                 # Рассчитываем цену продажи немного ниже цены покупки
-                sell_price = item["Цена"] * quantity * 0.9  # Продаем по 90% от цены покупки
+                sell_price = item["Цена"] * quantity / 2
                 items["Монеты"]["Количество"] += sell_price  # Увеличиваем Монеты игрока
                 item["Количество"] -= quantity  # Уменьшаем количество проданных предметов
                 alert(f"Вы продали {quantity} {item_name} за {sell_price} монет.", 'success')
