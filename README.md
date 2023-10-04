@@ -66,7 +66,7 @@ pkg update && pkg install git && git clone https://github.com/HamletSargsyan/Adv
 После установки приложения выполните следующую команду:
 
 ``` shell
-termux-change-repo && pkg update && pkg install git && git clone https://github.com/HamletSargsyan/Adventures && pkg install python && cd Adventures && pkg install python-pip && pip install -r requirements.txt && python main.py
+pkg update && pkg install git && git clone https://github.com/HamletSargsyan/Adventures && pkg install python && cd Adventures && pkg install python-pip && pip install -r requirements.txt && python main.py
 ```
 
 После установки игра сама запустится
