@@ -63,13 +63,14 @@ def download_latest_release():
     # Удаляем пустую распакованную директорию
     os.rmdir(f'{GITHUB_REPO}-{release_tag}')
 
-    print(f'Архив из релиза {release_tag} успешно скачан и файлы заменены в текущей директории.')
+    print(f'Архив из релиза {release_tag} успешно скачан.')
 
     # После успешного скачивания и распаковки, запускаем main.py
     main_script = 'main.py'
     if os.path.exists(main_script):
-        
+        print(f'Установка зависимостей.')
         subprocess.run(['pip', 'install', '-r', 'requirements.txt'])
+        print(f'Запуск игры.')
         subprocess.run(['python', main_script])
     else:
         print(f'Файл {main_script} не найден.')
