@@ -20,55 +20,6 @@ GITHUB_REPO = 'Adventures'
 REPO_URL = 'https://api.github.com/repos/HamletSargsyan/Adventures'
 RELEASES_URL = f'{REPO_URL}/releases/latest'
 
-def check_update():
-    try:
-        response = requests.get(RELEASES_URL)
-
-        clear()
-
-        if response.status_code == 200:
-            latest_release = response.json()
-            tag_name = latest_release['tag_name']
-
-            # Парсим версии и сравниваем их
-            latest_version = tag_name.strip('v')
-            current_version = version.strip('v')
-
-            print(Panel(Markdown(latest_release['body']), title=f"[bright_white]Описание версии {tag_name}[/bright_white]"))
-            
-            if latest_version > current_version:
-                alert(f'Новый релиз доступен: {tag_name}', 'success', enter=False)
-
-                questions = [
-                    inquirer.List('choice',
-                                message="Выберите опцию:",
-                                choices=[
-                                    ("Назад", "1"),
-                                    ("Обновить", "2"),
-                                ],
-                                ),
-                ]
-
-                try:
-                    answers = inquirer.prompt(questions)
-                    choice = answers['choice']
-                except TypeError:
-                    exit()
-
-                if choice == '1':
-                    from main import start_menu
-                    start_menu()
-                elif choice == '2':
-                    check_update()
-                    download_latest_release()
-            else:
-                alert('', enter=True)
-        else:
-            alert('Не удалось получить информацию о релизе.', 'error')
-    except:
-        alert('Не удалось получить информацию о релизе.', 'error')
-
-
 def download_latest_release():
     # Запрашиваем информацию о последнем релизе
     response = requests.get(RELEASES_URL)
@@ -122,4 +73,54 @@ def download_latest_release():
         subprocess.run(['python', main_script])
     else:
         print(f'Файл {main_script} не найден.')
+
+
+def check_update():
+    try:
+        response = requests.get(RELEASES_URL)
+
+        clear()
+
+        if response.status_code == 200:
+            latest_release = response.json()
+            tag_name = latest_release['tag_name']
+
+            # Парсим версии и сравниваем их
+            latest_version = tag_name.strip('v')
+            current_version = version.strip('v')
+
+            print(Panel(Markdown(latest_release['body']), title=f"[bright_white]Описание версии {tag_name}[/bright_white]"))
+            
+            if latest_version > current_version:
+                alert(f'Новый релиз доступен: {tag_name}', 'success', enter=False)
+
+                questions = [
+                    inquirer.List('choice',
+                                message="Выберите опцию:",
+                                choices=[
+                                    ("Назад", "1"),
+                                    ("Обновить", "2"),
+                                ],
+                                ),
+                ]
+
+                try:
+                    answers = inquirer.prompt(questions)
+                    choice = answers['choice']
+                except TypeError:
+                    exit()
+
+                if choice == '1':
+                    from main import start_menu
+                    start_menu()
+                elif choice == '2':
+                    check_update()
+                    download_latest_release()
+            else:
+                alert('', enter=True)
+        else:
+            alert('Не удалось получить информацию о релизе.', 'error')
+    except:
+        alert('Не удалось получить информацию о релизе.', 'error')
+
 
