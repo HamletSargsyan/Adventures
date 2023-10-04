@@ -53,7 +53,7 @@ python main.py
 
 #### Linux
 ``` shell
-pkg update && pkg install git && git clone https://github.com/HamletSargsyan/Adventures && pkg install python && cd Adventures && pip install -r requirements.txt && python main.py
+pkg update && pkg install git && git clone https://github.com/HamletSargsyan/Adventures && pkg install python && cd Adventures && pkg install python-pip && pip install -r requirements.txt && python main.py
 ```
 
 ### Установка на телефон
