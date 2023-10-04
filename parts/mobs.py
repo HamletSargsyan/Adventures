@@ -110,7 +110,7 @@ def generate_forest_mob():
     now = datetime.datetime.now()
     current_hour = now.hour
 
-    if 22 <= current_hour < 6:  # Ночь (с 21:00 до 6:00)
+    if 21 <= current_hour or current_hour <= 6:  # Ночь (с 21:00 до 6:00)
         mob_types = [Wolf, Goblin, Spider, Zombie]
     else:  # День (с 6:00 до 21:59)
         mob_types = [Spider, Zombie]
@@ -125,7 +125,7 @@ def generate_mineshaft_mob():
     now = datetime.datetime.now()
     current_hour = now.hour
 
-    if 22 <= current_hour < 6:  # Ночь (с 22:00 до 6:00)
+    if 21 <= current_hour or current_hour <= 6:  # Ночь (с 21:00 до 6:00)
         mob_types = [Goblin, Skeleton, Spider]
     else:  # День (с 6:00 до 21:59)
         mob_types = [Spider, Zombie, Skeleton]

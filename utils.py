@@ -147,22 +147,28 @@ def level_up():
         pass
 
     if choice == '1':
-        health_max += 10
+        health_max = health_max + 10
+        save_game()
         alert('+10 к Здоровью')
     elif choice == '2':
-        hunger_max += 10
+        hunger_max = hunger_max + 10
+        save_game()
         alert('+10 к Голоду')
     elif choice == '3':
-        thirst_max += 10
+        thirst_max = thirst_max + 10
+        save_game()
         alert('+10 к Жажде')
     elif choice == '4':
-        fatigue_max += 10
+        fatigue_max = fatigue_max + 10
+        save_game()
         alert('+10 к Усталости')
     elif choice == '5':
-        damage_max += 5
-        alert('+5 к Урону')
+        damage_max = damage_max + 1
+        save_game()
+        alert('+1 к Урону')
     elif choice == '6':
-        protection_max += 1
+        protection_max = protection_max + 1
+        save_game()
         alert('+1 к Защите')
 
     save_game()

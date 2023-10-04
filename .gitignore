@@ -4,4 +4,7 @@ game_data.pickle
 *.exe
 __pycache__
 output
-test.py
+tests
+*.spec
+dist
+build
