@@ -35,7 +35,6 @@ def check_update():
             current_version = version.strip('v')
 
             print(Panel(Markdown(latest_release['body']), title=f"[bright_white]Описание версии {tag_name}[/bright_white]"))
-            alert('', enter=True)
             
             if latest_version > current_version:
                 alert(f'Новый релиз доступен: {tag_name}', 'success', enter=False)
