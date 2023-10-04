@@ -61,7 +61,8 @@ def check_update():
                 elif choice == '2':
                     check_update()
                     download_latest_release()
-
+            else:
+                alert('', enter=True)
         else:
             alert('Не удалось получить информацию о релизе.', 'error')
     except:
