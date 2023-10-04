@@ -1,7 +1,7 @@
 # Adventures
 
 [![wakatime](https://wakatime.com/badge/github/HamletSargsyan/Adventures.svg)](https://wakatime.com/badge/github/HamletSargsyan/Adventures) 
-![Static Badge](https://img.shields.io/badge/version-2.0.0-blue)
+![Static Badge](https://img.shields.io/badge/version-2.0.3-blue)
 ![GitHub (Pre-)Release Date](https://img.shields.io/github/release-date-pre/HamletSargsyan/Adventures?color=blue)
 ![GitHub all releases](https://img.shields.io/github/downloads/HamletSargsyan/Adventures/total?color=blue)
 
@@ -60,14 +60,13 @@ pkg update && pkg install git && git clone https://github.com/HamletSargsyan/Adv
 
 Чтобы играть на телефоне, вам нужно скачать **Termux**
 
-
 > Гайд по установке Termux на android и на ios
 > https://teletype.in/@artur.kerimov777/LULi6jK5-
 
 После установки приложения выполните следующую команду:
 
 ``` shell
-pkg update && pkg install git && git clone https://github.com/HamletSargsyan/Adventures && pkg install python && cd Adventures && pip install -r requirements.txt && python main.py
+termux-change-repo && pkg update && pkg install git && git clone https://github.com/HamletSargsyan/Adventures && pkg install python && cd Adventures && pkg install python-pip && pip install -r requirements.txt && python main.py
 ```
 
 После установки игра сама запустится
