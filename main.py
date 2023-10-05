@@ -19,7 +19,7 @@ def start_menu():
                           ("Играть", "1"),
                           ("Обновления", "2"),
                           ("Выгрузить", "3"),
-                          ("Справка", "4")
+                        #   ("Справка", "4")
                       ],
                       ),
     ]
@@ -39,9 +39,9 @@ def start_menu():
     elif choice == '3':
         load_game()
         profile()
-    # elif choice == '4':
-        # from parts.help import help
-        # help()
+    elif choice == '4':
+        from parts.help import help
+        help()
 
 if __name__ == '__main__':
     start_menu()
