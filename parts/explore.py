@@ -85,10 +85,10 @@ def forest():
 
         loot_table = {
             "Монеты": (1, 3),
-            "Дерево": (1, 15),
-            "Вода": (1, 10),
-            "Яблоко": (1, 10),
-            "Листья": (1, 5),
+            "Дерево": (1, 5),
+            "Вода": (1, 5),
+            "Яблоко": (1, 2),
+            "Листья": (1, 2),
         }
 
         generate_random_loot(loot_table, multiplier=1.2)
@@ -101,11 +101,11 @@ def forest():
         items["Топор"]["Прочность"] -= random.randint(5, 10)
 
         loot_table = {
-            "Монеты": (1, 3),
-            "Дерево": (10, 20),
-            "Вода": (1, 10),
-            "Яблоко": (1, 10),
-            "Листья": (1, 10),
+            "Монеты": (1, 5),
+            "Дерево": (1, 10),
+            "Вода": (1, 5),
+            "Яблоко": (1, 5),
+            "Листья": (1, 5),
         }
 
         generate_random_loot(loot_table)
@@ -119,17 +119,18 @@ def mineshaft():
 
     clear()
 
-    encounter_chance = random.random()
-
-    if encounter_chance <= 0.3:
-        mob = generate_mineshaft_mob()
-        print(f"Вы встретили моба: {mob.name}")
-        print(f"Здоровье моба: {mob.health}")
-        print(f"Урон моба: {mob.damage}")
-
-        mob.mob()
-
     if player['Уровень'] >= 2:
+
+        encounter_chance = random.random()
+
+        if encounter_chance <= 0.3:
+            mob = generate_mineshaft_mob()
+            print(f"Вы встретили моба: {mob.name}")
+            print(f"Здоровье моба: {mob.health}")
+            print(f"Урон моба: {mob.damage}")
+
+            mob.mob()
+
         progress_count = random.uniform(2.0, 5.0)
         player['Опыт'] += progress_count
 
@@ -140,7 +141,7 @@ def mineshaft():
 
             loot_table = {
                 "Камень": (1, 5),
-                "Монеты": (5, 10),
+                "Монеты": (1, 4),
             }
 
             generate_random_loot(loot_table, multiplier=1.2)
@@ -153,12 +154,12 @@ def mineshaft():
             items["Кирка"]["Прочность"] -= random.randint(5, 10)
 
             loot_table = {
-                "Монеты": (5, 15),
-                "Железо": (5, 10),
-                "Уголь": (5, 10),
-                "Камень": (5, 10),
-                "Золото": (1, 5),
-                "Кристалл": (1, 5),
+                "Монеты": (1, 8),
+                "Железо": (1, 5),
+                "Уголь": (1, 10),
+                "Камень": (1, 3),
+                "Золото": (1, 2),
+                "Кристалл": (1, 3),
                 "Алмаз": (1, 2)
             }
 
@@ -185,7 +186,7 @@ def well():
         player["Усталость"] += random.randint(5, 15)
 
         loot_table = {
-            "Вода": (10, 20),
+            "Вода": (1, 15),
         }
 
         generate_random_loot(loot_table)
@@ -214,7 +215,7 @@ def lake():
         player["Усталость"] += random.randint(5, 15)
 
         loot_table = {
-            "Рыба": (10, 20),
+            "Рыба": (1, 15),
         }
 
         generate_random_loot(loot_table)
