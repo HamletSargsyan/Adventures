@@ -21,6 +21,7 @@ REPO_URL = 'https://api.github.com/repos/HamletSargsyan/Adventures'
 RELEASES_URL = f'{REPO_URL}/releases/latest'
 
 def download_latest_release():
+    clear()
     # Запрашиваем информацию о последнем релизе
     response = requests.get(RELEASES_URL)
     
@@ -36,9 +37,10 @@ def download_latest_release():
     response = requests.get(download_url)
 
     if response.status_code != 200:
-        alert(f'Не удалось скачать архив. Код состояния: {response.status_code}', 'error')
+        alert(f'Не удалось скачать архив. Код состояния: {response.status_code}', 'error', enter=False)
         return
 
+    alert(f'Начало скачивания архива из релиза {release_tag}', 'success', enter=False)
     # Создаем объект ZipFile из полученных данных
     with zipfile.ZipFile(io.BytesIO(response.content)) as zip_file:
         # Распаковываем архив в текущей директории, используя extractall
@@ -63,17 +65,18 @@ def download_latest_release():
     # Удаляем пустую распакованную директорию
     os.rmdir(f'{GITHUB_REPO}-{release_tag}')
 
-    alert(f'Архив из релиза {release_tag} успешно скачан.', 'success')
+    alert(f'Архив из релиза {release_tag} успешно скачан.', 'success', enter=False)
 
     # После успешного скачивания и распаковки, запускаем main.py
     main_script = 'main.py'
     if os.path.exists(main_script):
-        alert(f'Установка зависимостей.', 'success')
+        alert(f'Установка зависимостей.', 'success', enter=False)
         subprocess.run(['pip', 'install', '-r', 'requirements.txt'])
-        alert(f'Запуск игры.', 'success')
+        alert(f'Зависимости успешно скачены.', 'success', enter=False)
+        alert(f'Запуск игры.', 'success', enter=False)
         subprocess.run(['python', main_script])
     else:
-        alert(f'Файл {main_script} не найден.', 'error')
+        alert(f'Файл {main_script} не найден.', 'error', enter=False)
 
 
 def check_update():
