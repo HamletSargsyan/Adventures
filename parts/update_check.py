@@ -25,7 +25,7 @@ def download_latest_release():
     response = requests.get(RELEASES_URL)
     
     if response.status_code != 200:
-        print(f'Не удалось получить информацию о релизе. Код состояния: {response.status_code}')
+        alert(f'Не удалось получить информацию о релизе. Код состояния: {response.status_code}', 'error')
         return
 
     latest_release = response.json()
@@ -36,7 +36,7 @@ def download_latest_release():
     response = requests.get(download_url)
 
     if response.status_code != 200:
-        print(f'Не удалось скачать архив. Код состояния: {response.status_code}')
+        alert(f'Не удалось скачать архив. Код состояния: {response.status_code}', 'error')
         return
 
     # Создаем объект ZipFile из полученных данных
@@ -63,17 +63,17 @@ def download_latest_release():
     # Удаляем пустую распакованную директорию
     os.rmdir(f'{GITHUB_REPO}-{release_tag}')
 
-    print(f'Архив из релиза {release_tag} успешно скачан.')
+    alert(f'Архив из релиза {release_tag} успешно скачан.', 'success')
 
     # После успешного скачивания и распаковки, запускаем main.py
     main_script = 'main.py'
     if os.path.exists(main_script):
-        print(f'Установка зависимостей.')
+        alert(f'Установка зависимостей.', 'success')
         subprocess.run(['pip', 'install', '-r', 'requirements.txt'])
-        print(f'Запуск игры.')
+        alert(f'Запуск игры.', 'success')
         subprocess.run(['python', main_script])
     else:
-        print(f'Файл {main_script} не найден.')
+        alert(f'Файл {main_script} не найден.', 'error')
 
 
 def check_update():

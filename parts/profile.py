@@ -18,7 +18,7 @@ def profile():
                      f'Жажда: {player["Жажда"]}/{thirst_max}\n'
                      f'Усталость: {player["Усталость"]}/{fatigue_max}\n'
                      f'Уровень: {player["Уровень"]}\n'
-                     f'Опыт: {player["Опыт"]:.1f}%/100%\n'  # Исправлено: Опит -> Опыт
+                     f'Опыт: {player["Опыт"]:.1f}%/100%\n'
                      )
 
     print(Panel.fit(player_status, title="[bold bright_green]Статус игрока[/bold bright_green]"))
@@ -30,12 +30,12 @@ def profile():
                       message="Выберите опцию:",
                       choices=[
                           ("Инвентарь", "1"),
-                          ("Исследование", "2"),  # Исправлено: Иследование -> Исследование
+                          ("Исследование", "2"),
                           ("Верстак", "3"),
                           ("Магазин", "4"),
                           ("Отдых", "5"),
                           ("Еда", "6"),
-                          ("Открыть лутбокс", "7")
+                          "Назад",
                       ]),
     ]
     
@@ -63,6 +63,6 @@ def profile():
     elif choice == '6':
         from .recovery import food
         food()
-    elif choice == '7':
-        from .lootbox import lootbox_menu
-        lootbox_menu()
+    elif choice == 'Назад':
+        from main import start_menu
+        start_menu()

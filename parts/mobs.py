@@ -86,7 +86,7 @@ class Goblin(Mob):
 
 class Wolf(Mob):
     def __init__(self):
-        loot = ['Монеты', 'Лутбокс']
+        loot = ['Монеты', 'Кожа']
         super().__init__(name="Волк", health=random.randint(30, 40), damage=random.randint(5, 8), loot=loot)
 
 class Spider(Mob):

@@ -12,37 +12,36 @@ def lootbox_open():
 
     items["Лутбокс"]["Количество"] -= 1
 
-    loot_table = list(items.keys())  # Получить список всех доступных предметов
+    loot_table = list(items.keys())
     rarity_weights = {
-        "Обычный": 6,   # Увеличенный вес для обычных предметов
-        "Редкий": 3,    # Вес для редких предметов
-        "Необычный": 2, # Вес для необычных предметов
-        "Эпический": 1  # Вес для эпических предметов
+        "Обычный": 6,
+        "Редкий": 3,
+        "Необычный": 2,
+        "Эпический": 1
     }
     
-    num_items_to_get = random.randint(1, 10)  # Генерируем случайное количество предметов
+    num_items_to_get = random.randint(1, 10)
     
     items_to_get = random.choices(loot_table, k=num_items_to_get, weights=[rarity_weights[items[item]["Редкость"]] for item in loot_table])
     
-    console = Console()  # Создаем объект консоли rich
+    console = Console()
     
     for item in items_to_get:
-        quantity = 0  # Изначально количество устанавливаем в 0
+        quantity = 0
         
-        # Устанавливаем максимальное количество для каждой редкости предмета
         if items[item]["Редкость"] == "Обычный":
-            quantity = random.randint(1, 5)  # Максимальное количество для обычных предметов
+            quantity = random.randint(1, 5)
         elif items[item]["Редкость"] == "Редкий":
-            quantity = random.randint(1, 3)  # Максимальное количество для редких предметов
+            quantity = random.randint(1, 3)
         elif items[item]["Редкость"] == "Необычный":
-            quantity = random.randint(1, 2)  # Максимальное количество для необычных предметов
+            quantity = random.randint(1, 2)
         elif items[item]["Редкость"] == "Эпический":
-            quantity = 1  # Максимальное количество для эпических предметов
+            quantity = 1
         
         if quantity > 0:
             items[item]["Количество"] += quantity
             
-            #TODO Добавить в версии v2.0.2
+            #TODO Добавить в версии v2.1.0 или раньше если возможно
             # rarity_color = {
             #     "Обычный": "green",
             #     "Редкий": "blue",

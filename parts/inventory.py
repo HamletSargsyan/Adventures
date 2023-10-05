@@ -28,6 +28,7 @@ def inventory():
                       message="Выберите опцию:",
                       choices=[
                           ("Назад в профиль", "1"),
+                          ("Открыть лутбокс", "2")
                       ],
                       ),
     ]
@@ -42,3 +43,6 @@ def inventory():
     if choice == '1':
         from .profile import profile
         profile()
+    elif choice == '2':
+        from .lootbox import lootbox_menu
+        lootbox_menu()
