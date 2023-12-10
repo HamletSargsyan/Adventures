@@ -5,7 +5,7 @@ import io
 import shutil
 import subprocess
 
-from variables import version
+from variables import version, theme
 from utils import alert, clear
 
 from rich import print
@@ -109,7 +109,7 @@ def check_update():
                 ]
 
                 try:
-                    answers = inquirer.prompt(questions)
+                    answers = inquirer.prompt(questions, theme=theme)
                     choice = answers['choice']
                 except TypeError:
                     exit()

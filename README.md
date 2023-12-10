@@ -7,7 +7,7 @@
 
 **Adventures** - это текстовая игра, написанная на языке Python. Игра позволяет игроку исследовать окружающий мир, сражаться с противниками и многое другое.
 
-**Версия**: 2.0.8
+**Версия**: 2.0.9
 
 ## Оглавление
 
@@ -52,7 +52,7 @@ python main.py
 
 #### Linux
 ``` shell
-pkg update && pkg install git && git clone https://github.com/HamletSargsyan/Adventures && pkg install python && cd Adventures && pkg install python-pip && pip install -r requirements.txt && python main.py
+sudo apt update && sudo apt install git && git clone https://github.com/HamletSargsyan/Adventures && sudo apt install python && cd Adventures && sudo apt install python-pip && pip install -r requirements.txt && python main.py
 ```
 
 ### Установка на телефон

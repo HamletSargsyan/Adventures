@@ -4,7 +4,7 @@ from rich.panel import Panel
 import inquirer
 
 from utils import clear, load_game, save_game
-from variables import version
+from variables import version, theme
 from parts.profile import profile
 from parts.update_check import check_update
 
@@ -25,7 +25,7 @@ def start_menu():
     ]
 
     try:
-        answers = inquirer.prompt(questions)
+        answers = inquirer.prompt(questions, theme=theme)
         choice = answers['choice']
     except TypeError:
         save_game()

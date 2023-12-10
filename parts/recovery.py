@@ -1,7 +1,7 @@
 import random
 import inquirer
 from utils import clear, alert, save_game, check_all
-from variables import health_max, player, items
+from variables import health_max, player, items, theme
 
 @check_all
 def recovery():
@@ -45,7 +45,7 @@ def food():
     ]
 
     try:
-        answers = inquirer.prompt(options)
+        answers = inquirer.prompt(options, theme=theme)
         choice = answers['choice']
     except TypeError:
         save_game()

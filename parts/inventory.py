@@ -4,7 +4,7 @@ from rich.panel import Panel
 import inquirer
 
 from utils import clear, check_all, save_game
-from variables import player, items
+from variables import player, items, theme
 
 @check_all
 def inventory():
@@ -34,7 +34,7 @@ def inventory():
     ]
 
     try:
-        answers = inquirer.prompt(options)
+        answers = inquirer.prompt(options, theme=theme)
         choice = answers['choice']
     except TypeError:
         save_game()

@@ -47,7 +47,7 @@ def check():
         alert(f"[bright_green]Поздравляем! Ваш уровень повышен до {player['Уровень']}[/bright_green]", 'success')
         alert(f"Вы получили {lootbox_quantity} лутбокс", 'success')
         
-        #  https://github.com/HamletSargsyan/Adventures/issues/9
+        # https://github.com/HamletSargsyan/Adventures/issues/9
         # level_up()
 
     if items["Топор"]["Прочность"] <= 0:

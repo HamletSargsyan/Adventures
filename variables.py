@@ -1,4 +1,6 @@
-version = "2.0.8"
+import inquirer.themes
+
+version = "2.0.9"
 
 health_max = 100
 hunger_max = 100
@@ -6,6 +8,23 @@ thirst_max = 100
 fatigue_max = 100
 damage_max = 5
 protection_max = 2  # Защита
+
+custom_theme = {
+    "Checkbox": {
+        "selection_color": "gray46",
+        "selection_icon": "❯",
+        "selected_icon": "◉",
+        "selected_color": "green",
+        "unselected_icon": "◯"
+    },
+    "List": {
+        "selection_color": "gray46",
+        "selection_cursor": "❯"
+
+    }
+}
+
+theme = inquirer.themes.load_theme_from_dict(custom_theme)
 
 player = {
     "Здоровье": 100,

@@ -2,7 +2,7 @@ import random
 from rich import print
 import inquirer
 from utils import clear, alert, check_all, save_game
-from variables import player, items
+from variables import player, items, theme
 from rich.console import Console
 
 
@@ -83,7 +83,7 @@ def lootbox_menu():
     ]
     
     try:
-        answers = inquirer.prompt(options)
+        answers = inquirer.prompt(options, theme=theme)
         choice = answers['choice']
     except TypeError:
         save_game()

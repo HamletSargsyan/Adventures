@@ -1,5 +1,4 @@
-from variables import version, health_max, damage_max, protection_max,\
-                    hunger_max, thirst_max, fatigue_max, player, items
+from variables import theme
 from utils import alert, clear
 
 from rich import print
@@ -39,7 +38,7 @@ def help():
     ]
 
     try:
-        answers = inquirer.prompt(questions)
+        answers = inquirer.prompt(questions, theme=theme)
         choice = answers['choice']
     except TypeError:
         exit()

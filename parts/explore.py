@@ -2,7 +2,7 @@ import random
 from rich import print
 import inquirer
 from utils import clear, alert, save_game, check_all
-from variables import player, items
+from variables import player, items, theme
 
 from .profile import profile
 from .mobs import generate_forest_mob, generate_mineshaft_mob
@@ -25,7 +25,7 @@ def explore():
     ]
 
     try:
-        answers = inquirer.prompt(options)
+        answers = inquirer.prompt(options, theme=theme)
         choice = answers['choice']
     except TypeError:
         save_game()

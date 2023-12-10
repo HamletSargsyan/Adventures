@@ -3,7 +3,7 @@ import datetime
 import inquirer
 
 from utils import clear, alert, die, save_game
-from variables import health_max, damage_max, protection_max, hunger_max, thirst_max, fatigue_max, player, items
+from variables import health_max, damage_max, protection_max, hunger_max, thirst_max, fatigue_max, player, items, theme
 from .profile import profile
 from .checks import check
 
@@ -22,7 +22,7 @@ class Mob:
             ]),
         ]
         try:
-            answers = inquirer.prompt(questions)
+            answers = inquirer.prompt(questions, theme=theme)
             choice = answers['choice']
         except TypeError:
             save_game()

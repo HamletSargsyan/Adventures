@@ -1,7 +1,7 @@
 import random
 import inquirer
 from utils import clear, alert, save_game, check_all
-from variables import player, items
+from variables import player, items, theme
 from .profile import profile
 
 class Craft:
@@ -57,7 +57,7 @@ def craft():
                     ),
     ]
     try:
-        answers = inquirer.prompt(questions)
+        answers = inquirer.prompt(questions, theme=theme)
         choice = answers['choice']
     except TypeError:
         save_game()

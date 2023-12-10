@@ -7,7 +7,7 @@ from loguru import logger
 
 from rich import print
 from variables import version, health_max, damage_max, protection_max,\
-                    hunger_max, thirst_max, fatigue_max, player, items
+                    hunger_max, thirst_max, fatigue_max, player, items, theme
 
 
 def clear():
@@ -141,7 +141,7 @@ def level_up():
     ]
 
     try:
-        answers = inquirer.prompt(questions)
+        answers = inquirer.prompt(questions, theme=theme)
         choice = answers['choice']
     except TypeError:
         pass

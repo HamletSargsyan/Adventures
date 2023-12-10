@@ -4,7 +4,7 @@ from rich.panel import Panel
 import inquirer
 
 from utils import clear, check_all, save_game
-from variables import player, items, health_max, hunger_max, thirst_max, fatigue_max, damage_max, protection_max
+from variables import player, items, health_max, hunger_max, thirst_max, fatigue_max, theme
 from .inventory import inventory
 
 @check_all
@@ -40,7 +40,7 @@ def profile():
     ]
     
     try:
-        answers = inquirer.prompt(options)
+        answers = inquirer.prompt(options, theme=theme)
         choice = answers['choice']
     except TypeError:
         save_game()

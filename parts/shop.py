@@ -3,7 +3,7 @@ from rich.panel import Panel
 import inquirer
 
 from utils import clear, alert, save_game, check_all
-from variables import items
+from variables import items, theme
 
 class Shop:
     def __init__(self):
@@ -63,7 +63,7 @@ def shop():
     ]
 
     try:
-        answers = inquirer.prompt(options)
+        answers = inquirer.prompt(options, theme=theme)
         choice = answers['choice']
     except TypeError:
         save_game()
@@ -79,7 +79,7 @@ def shop():
             inquirer.List('item',
                           message="Выберите предмет для покупки:",
                           choices=available_items)
-        ])
+        ], theme=theme)
         item_name = item_choice['item']
         clear()
         quantity = int(input("Введите количество: "))  # Можно также использовать inquirer для ввода количества
@@ -91,7 +91,7 @@ def shop():
             inquirer.List('item',
                           message="Выберите предмет для продажи:",
                           choices=available_items)
-        ])
+        ], theme=theme)
         item_name = item_choice['item']
         clear()
         quantity = int(input("Введите количество: "))  # Можно также использовать inquirer для ввода количества
