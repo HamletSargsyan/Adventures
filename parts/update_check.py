@@ -70,11 +70,25 @@ def download_latest_release():
     # После успешного скачивания и распаковки, запускаем main.py
     main_script = 'main.py'
     if os.path.exists(main_script):
-        alert(f'Установка зависимостей.', 'success', enter=False)
-        subprocess.run(['pip', 'install', '-r', 'requirements.txt'])
-        alert(f'Зависимости успешно скачены.', 'success', enter=False)
-        alert(f'Запуск игры.', 'success', enter=False)
-        subprocess.run(['python', main_script])
+        try:
+            alert(f'Установка зависимостей.', 'success', enter=False)
+            
+            if os.name == 'nt':
+                subprocess.run(['pip', 'install', '-r', 'requirements.txt'])
+            else:
+                subprocess.run(['pip3', 'install', '-r', 'requirements.txt'])
+
+            alert(f'Зависимости успешно скачены.', 'success', enter=False)
+            alert(f'Запуск игры.', 'success', enter=False)
+
+            if os.name == 'nt':
+                subprocess.run(['python', main_script])
+            else:
+                subprocess.run(['python3', main_script])
+        except Exception:
+            alert("Не удалось запустить игру автоматичесый, пожалуйста введите команду для его запуска для ващей системы", level="error")
+            alert("Выход из игры", enter=False)
+            exit()
     else:
         alert(f'Файл {main_script} не найден.', 'error', enter=False)
 

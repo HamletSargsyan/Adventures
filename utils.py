@@ -113,7 +113,7 @@ def check_all(func):
             logger.error(e)
             clear()
             save_game()
-            alert('Выход из игры', 'warning')
+            alert('Выход из игры', 'warning', enter=False)
             exit()
         except Exception as e:
             logger.error(e)

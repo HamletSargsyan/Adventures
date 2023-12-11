@@ -38,8 +38,7 @@ class Shop:
 
     def get_available_items(self):
         # Возвращаем список доступных предметов, исключая "Монеты", если они есть в списке
-        available_items = list(self.items.keys())
-        available_items.remove("Монеты")
+        available_items = [f"{item} ({self.items[item]['Количество']})" for item in self.items if item != "Монеты"]
         return available_items
 
 @check_all
@@ -49,8 +48,8 @@ def shop():
                     "1. Купить\n"
                     "2. Продать", title="Добро пожаловать в магазин"))
 
-    _shop = Shop()
-    available_items = _shop.get_available_items()
+    shop_ = Shop()
+    available_items = shop_.get_available_items()
 
     options = [
         inquirer.List('choice',
@@ -80,10 +79,13 @@ def shop():
                           message="Выберите предмет для покупки:",
                           choices=available_items)
         ], theme=theme)
-        item_name = item_choice['item']
+        item_name = item_choice['item'].split(" ")[0]
         clear()
-        quantity = int(input("Введите количество: "))  # Можно также использовать inquirer для ввода количества
-        _shop.buy(item_name, quantity)
+        try:
+            quantity = int(input(f"Введите количество (у вас {items[item_name]['Количество']}): "))  # Можно также использовать inquirer для ввода количества
+        except ValueError:
+            quantity = 1
+        shop_.buy(item_name, quantity)
 
     elif choice == 'Продать':
         clear()
@@ -92,8 +94,11 @@ def shop():
                           message="Выберите предмет для продажи:",
                           choices=available_items)
         ], theme=theme)
-        item_name = item_choice['item']
+        item_name = item_choice['item'].split(" ")[0]
         clear()
-        quantity = int(input("Введите количество: "))  # Можно также использовать inquirer для ввода количества
-        _shop.sell(item_name, quantity)
+        try:
+            quantity = int(input(f"Введите количество (у вас {items[item_name]['Количество']}): "))  # Можно также использовать inquirer для ввода количества
+        except ValueError:
+            quantity = 1
+        shop_.sell(item_name, quantity)
     shop()
