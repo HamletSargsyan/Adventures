@@ -109,7 +109,8 @@ def check_update():
 
             print(Panel(Markdown(latest_release['body']), title=f"[bright_white]Описание версии {tag_name}[/bright_white]"))
             
-            if latest_version > current_version:
+            # https://github.com/HamletSargsyan/Adventures/issues/13
+            if latest_version != current_version:
                 alert(f'Новый релиз доступен: {tag_name}', 'success', enter=False)
 
                 questions = [
