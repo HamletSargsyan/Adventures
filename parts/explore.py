@@ -7,54 +7,62 @@ from variables import player, items, theme
 from .profile import profile
 from .mobs import generate_forest_mob, generate_mineshaft_mob
 
+
 @check_all
 def explore():
     clear()
 
     # Список опций для исследования
     options = [
-        inquirer.List("choice",
-                      message="Куда пойдём?",
-                      choices=[
-                          ("Назад", "0"),
-                          ("Лес", "1"),
-                          ("Шахта", "2"),
-                          ("Колодец", "3"),
-                          ("Озеро", "4"),
-                      ]),
+        inquirer.List(
+            "choice",
+            message="Куда пойдём?",
+            choices=[
+                ("Назад", "0"),
+                ("Лес", "1"),
+                ("Шахта", "2"),
+                ("Колодец", "3"),
+                ("Озеро", "4"),
+            ],
+        ),
     ]
 
     try:
         answers = inquirer.prompt(options, theme=theme)
-        choice = answers['choice']
+        choice = answers["choice"]
     except TypeError:
         save_game()
         exit()
 
-    if choice == '0':
+    if choice == "0":
         from .profile import profile
+
         profile()
-    elif choice == '1':
+    elif choice == "1":
         forest()
-    elif choice == '2':
+    elif choice == "2":
         mineshaft()
-    elif choice == '3':
+    elif choice == "3":
         well()
-    elif choice == '4':
+    elif choice == "4":
         lake()
 
 
 def generate_random_loot(loot_table: dict, multiplier=1.0):
     global items, player
-    num_items_to_get = random.randint(1, len(loot_table))  # Генерируем случайное количество предметов
+    num_items_to_get = random.randint(
+        1, len(loot_table)
+    )  # Генерируем случайное количество предметов
     items_to_get = random.sample(list(loot_table.keys()), num_items_to_get)
 
     for item in items_to_get:
         quantity_range = loot_table[item]
-        quantity = int(random.uniform(quantity_range[0], quantity_range[1]) * multiplier)
+        quantity = int(
+            random.uniform(quantity_range[0], quantity_range[1]) * multiplier
+        )
         if quantity > 0:
-            items[item]['Количество'] += quantity
-            alert(f"+ {quantity} {item}", 'success', enter=False)
+            items[item]["Количество"] += quantity
+            alert(f"+ {quantity} {item}", "success", enter=False)
     alert("", enter=True)
 
 
@@ -76,9 +84,9 @@ def forest():
         mob.mob()
         clear()
 
-    player['Опыт'] += random.uniform(0.1, 5.0)
+    player["Опыт"] += random.uniform(0.1, 5.0)
 
-    if items["Топор"]['Количество'] == 0:
+    if items["Топор"]["Количество"] == 0:
         player["Усталость"] += random.randint(5, 15)
         player["Голод"] += random.randint(5, 10)
         player["Жажда"] += random.randint(10, 15)
@@ -94,7 +102,7 @@ def forest():
         generate_random_loot(loot_table, multiplier=1.2)
         save_game()
 
-    elif items["Топор"]['Количество'] > 0:
+    elif items["Топор"]["Количество"] > 0:
         player["Усталость"] += random.randint(5, 15)
         player["Голод"] += random.randint(5, 10)
         player["Жажда"] += random.randint(5, 15)
@@ -113,14 +121,14 @@ def forest():
 
     profile()
 
+
 @check_all
 def mineshaft():
     global items, player
 
     clear()
 
-    if player['Уровень'] >= 2:
-
+    if player["Уровень"] >= 2:
         encounter_chance = random.random()
 
         if encounter_chance <= 0.3:
@@ -132,7 +140,7 @@ def mineshaft():
             mob.mob()
 
         progress_count = random.uniform(2.0, 5.0)
-        player['Опыт'] += progress_count
+        player["Опыт"] += progress_count
 
         if items["Кирка"]["Количество"] == 0:
             player["Усталость"] += random.randint(10, 20)
@@ -160,16 +168,17 @@ def mineshaft():
                 "Камень": (1, 3),
                 "Золото": (1, 2),
                 "Кристалл": (1, 3),
-                "Алмаз": (1, 2)
+                "Алмаз": (1, 2),
             }
 
             generate_random_loot(loot_table)
             save_game()
 
     else:
-        alert("Чтобы пойти в шахту, нужен 2 уровень", 'error')
+        alert("Чтобы пойти в шахту, нужен 2 уровень", "error")
 
     profile()
+
 
 @check_all
 def well():
@@ -177,9 +186,9 @@ def well():
 
     clear()
 
-    if player['Уровень'] >= 5 and items["Ведро"]["Количество"] >= 1:
+    if player["Уровень"] >= 5 and items["Ведро"]["Количество"] >= 1:
         progress_count = random.uniform(10.0, 15.0)
-        player['Опыт'] += progress_count
+        player["Опыт"] += progress_count
         items["Ведро"]["Прочность"] -= random.randint(10, 15)
         player["Голод"] += random.randint(10, 20)
         player["Жажда"] += random.randint(10, 20)
@@ -192,12 +201,13 @@ def well():
         generate_random_loot(loot_table)
         save_game()
 
-    elif player['Уровень'] < 5:
-        alert("Чтобы пойти к колодцу, нужен 5 уровень", 'error')
+    elif player["Уровень"] < 5:
+        alert("Чтобы пойти к колодцу, нужен 5 уровень", "error")
     elif items["Ведро"]["Количество"] == 0:
-        alert("Чтобы пойти к колодцу, нужно ведро", 'error')
+        alert("Чтобы пойти к колодцу, нужно ведро", "error")
 
     profile()
+
 
 @check_all
 def lake():
@@ -205,9 +215,13 @@ def lake():
 
     clear()
 
-    if player['Уровень'] >= 10 and items["Лодка"]["Количество"] >= 1 and items["Удочка"]["Количество"] >= 1:
+    if (
+        player["Уровень"] >= 10
+        and items["Лодка"]["Количество"] >= 1
+        and items["Удочка"]["Количество"] >= 1
+    ):
         progress_count = random.uniform(10.0, 20.0)
-        player['Опыт'] += progress_count
+        player["Опыт"] += progress_count
         items["Лодка"]["Прочность"] -= 5
         items["Удочка"]["Прочность"] -= 10
         player["Голод"] += random.randint(10, 20)
@@ -221,11 +235,11 @@ def lake():
         generate_random_loot(loot_table)
         save_game()
 
-    elif player['Уровень'] < 10:
-        alert("Чтобы пойти в озеро, нужен 10 уровень", 'error')
+    elif player["Уровень"] < 10:
+        alert("Чтобы пойти в озеро, нужен 10 уровень", "error")
     elif items["Лодка"]["Количество"] == 0:
-        alert("Чтобы пойти в озеро, нужна лодка", 'error')
+        alert("Чтобы пойти в озеро, нужна лодка", "error")
     elif items["Удочка"]["Количество"] == 0:
-        alert("Чтобы пойти в озеро, нужна удочка", 'error')
+        alert("Чтобы пойти в озеро, нужна удочка", "error")
 
     profile()

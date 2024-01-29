@@ -8,49 +8,56 @@ from rich.table import Table
 from rich.console import Console
 import inquirer
 
+
 def items_help():
     ...
+
 
 def mobs_help():
     ...
 
+
 def locations_help():
     ...
+
 
 def craft_help():
     ...
 
+
 def help():
     clear()
-    print(Panel(Text("Приветствую! Это справка для игры"), title='Справка'))
-    
+    print(Panel(Text("Приветствую! Это справка для игры"), title="Справка"))
+
     questions = [
-        inquirer.List('choice',
-                      message="Выберите опцию:",
-                      choices=[
-                          ("Назад", "1"),
-                          ("Придметы", "2"),
-                          ("Мобы", "3"),
-                          ("Локации", "4"),
-                          ("Крафты", "5")
-                      ],
-                      ),
+        inquirer.List(
+            "choice",
+            message="Выберите опцию:",
+            choices=[
+                ("Назад", "1"),
+                ("Придметы", "2"),
+                ("Мобы", "3"),
+                ("Локации", "4"),
+                ("Крафты", "5"),
+            ],
+        ),
     ]
 
     try:
         answers = inquirer.prompt(questions, theme=theme)
-        choice = answers['choice']
+        choice = answers["choice"]
     except TypeError:
         exit()
 
-    if choice == '1':
+    if choice == "1":
         from main import start_menu
+
         start_menu()
-    elif choice == '2':
+    elif choice == "2":
         items_help()
-    elif choice == '3':
+    elif choice == "3":
         mobs_help()
-    elif choice == '4':
+    elif choice == "4":
         locations_help()
-    elif choice == '5':
+    elif choice == "5":
         craft_help()

@@ -3,4 +3,4 @@ import utils
 import variables
 import parts
 
-__all__ = ['main', 'utils', 'variables', 'parts']
+__all__ = ["main", "utils", "variables", "parts"]
