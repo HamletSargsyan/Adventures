@@ -1,7 +1,6 @@
 
 [![wakatime](https://wakatime.com/badge/github/HamletSargsyan/Adventures.svg)](https://wakatime.com/badge/github/HamletSargsyan/Adventures) 
 ![GitHub (Pre-)Release Date](https://img.shields.io/github/release-date-pre/HamletSargsyan/Adventures?color=blue)
-![GitHub all releases](https://img.shields.io/github/downloads/HamletSargsyan/Adventures/total?color=blue)
 ![Github actions](https://github.com/HamletSargsyan/Adventures/actions/workflows/check.yml/badge.svg)
 ![GitHub License](https://img.shields.io/github/license/HamletSargsyan/Adventures)
 
