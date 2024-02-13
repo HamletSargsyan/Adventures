@@ -67,6 +67,39 @@ def generate_random_loot(loot_table: dict, multiplier=1.0):
 
 
 @check_all
+def chest():
+    alert("Ты нашел сундук", level="success", enter=False)
+    questions = [
+        inquirer.List(
+            "choice",
+            message="Открыть?",
+            choices=[("Открыть", "1"), ("Не открыть", "2")],
+        )
+    ]
+
+    try:
+        answers = inquirer.prompt(questions, theme=theme)
+        choice = answers["choice"]  # pyright: ignore
+    except TypeError:
+        save_game()
+        exit()
+
+    if choice == "1":
+        loot_table = {
+            "Монеты": (5, 15),
+            "Дерево": (1, 6),
+            "Вода": (3, 6),
+            "Железо": (5, 10),
+            "Рыба": (5, 10),
+        }
+
+        alert("Открыл сундук и получил:", level="success", enter=False)
+        generate_random_loot(loot_table)  # TODO
+    elif choice == "2":
+        alert("Как хочешь")
+
+
+@check_all
 def forest():
     global items, player
     clear()
@@ -82,6 +115,11 @@ def forest():
         print(f"Урон моба: {mob.damage}")
 
         mob.mob()
+        clear()
+
+    chest_chance = random.random()
+    if chest_chance <= 0.1:
+        chest()
         clear()
 
     player["Опыт"] += random.uniform(0.1, 5.0)
@@ -129,7 +167,6 @@ def mineshaft():
     clear()
 
     if player["Уровень"] >= 2:
-
         encounter_chance = random.random()
 
         if encounter_chance <= 0.3:
@@ -139,6 +176,11 @@ def mineshaft():
             print(f"Урон моба: {mob.damage}")
 
             mob.mob()
+
+        chest_chance = random.random()
+        if chest_chance <= 0.1:
+            chest()
+            clear()
 
         progress_count = random.uniform(2.0, 5.0)
         player["Опыт"] += progress_count

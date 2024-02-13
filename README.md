@@ -3,6 +3,7 @@
 ![GitHub (Pre-)Release Date](https://img.shields.io/github/release-date-pre/HamletSargsyan/Adventures?color=blue)
 ![Github actions](https://github.com/HamletSargsyan/Adventures/actions/workflows/check.yml/badge.svg)
 ![GitHub License](https://img.shields.io/github/license/HamletSargsyan/Adventures)
+[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 
 
 **Adventures** - это текстовая игра, написанная на языке Python. Игра позволяет игроку исследовать окружающий мир, сражаться с противниками и многое другое.
