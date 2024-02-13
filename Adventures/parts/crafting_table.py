@@ -71,7 +71,7 @@ def craft():
     ]
     try:
         answers = inquirer.prompt(questions, theme=theme)
-        choice = answers["choice"]
+        choice = answers["choice"]  # pyright: ignore
     except TypeError:
         save_game()
         exit()

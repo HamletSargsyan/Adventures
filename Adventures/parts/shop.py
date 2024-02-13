@@ -76,7 +76,7 @@ def shop():
 
     try:
         answers = inquirer.prompt(options, theme=theme)
-        choice = answers["choice"]
+        choice = answers["choice"]  # pyright: ignore
     except TypeError:
         save_game()
         exit()
@@ -98,7 +98,7 @@ def shop():
             ],
             theme=theme,
         )
-        item_name = item_choice["item"].split(" ")[0]
+        item_name = item_choice["item"].split(" ")[0]  # pyright: ignore
         clear()
         try:
             quantity = int(
@@ -120,7 +120,7 @@ def shop():
             ],
             theme=theme,
         )
-        item_name = item_choice["item"].split(" ")[0]
+        item_name = item_choice["item"].split(" ")[0]  # pyright: ignore
         clear()
         try:
             quantity = int(
