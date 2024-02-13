@@ -1,6 +1,6 @@
 import inquirer.themes
 
-version = "2.0.11"
+version = "2.0.11.1"
 
 health_max = 100
 hunger_max = 100
