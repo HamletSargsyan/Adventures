@@ -1,21 +1,24 @@
 name: Checks
 on:
-    push:
-        branches:
-            - main
-  
-jobs:
-    check:
-      runs-on: ubuntu-latest
-  
-      steps:
-        - name: Checkout Repository
-          uses: actions/checkout@v2
+  push:
+    branches:
+      - main
 
-        - name: Install requirements
-          run: pip install -r requirements.txt && pip install pyright
-        
-        - name: Pyright chack
-          run: pyright ./Adventures
-        
-        
+jobs:
+  check:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Install requirements
+        run: |
+          pip install -r requirements.txt
+          pip install pyright
+
+      - name: Pyright check
+        run: pyright ./Adventures
