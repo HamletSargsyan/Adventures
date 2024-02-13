@@ -9,20 +9,16 @@ from rich.console import Console
 import inquirer
 
 
-def items_help():
-    ...
+def items_help(): ...
 
 
-def mobs_help():
-    ...
+def mobs_help(): ...
 
 
-def locations_help():
-    ...
+def locations_help(): ...
 
 
-def craft_help():
-    ...
+def craft_help(): ...
 
 
 def help():
@@ -45,7 +41,7 @@ def help():
 
     try:
         answers = inquirer.prompt(questions, theme=theme)
-        choice = answers["choice"]
+        choice = answers["choice"]  # pyright: ignore
     except TypeError:
         exit()
 

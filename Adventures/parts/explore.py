@@ -29,7 +29,7 @@ def explore():
 
     try:
         answers = inquirer.prompt(options, theme=theme)
-        choice = answers["choice"]
+        choice = answers["choice"]  # pyright: ignore
     except TypeError:
         save_game()
         exit()
@@ -129,6 +129,7 @@ def mineshaft():
     clear()
 
     if player["Уровень"] >= 2:
+
         encounter_chance = random.random()
 
         if encounter_chance <= 0.3:

@@ -1,9 +1,9 @@
 import os
 import pickle
 import random
+from typing import Union
 
 import inquirer
-from loguru import logger
 
 from rich import print
 from variables import (
@@ -82,7 +82,7 @@ def load_game():
         alert("Файл сохранения не найден.", "error")
 
 
-def die(message: str = None):
+def die(message: Union[str, None] = None):
     global items, player, items
 
     player["Здоровье"] = health_max - random.randint(30, 50)
@@ -109,9 +109,6 @@ def die(message: str = None):
     start_menu()
 
 
-logger.add("logs.log", rotation="500 MB", level="INFO")
-
-
 def check_all(func):
     def wrapper():
         try:
@@ -123,13 +120,14 @@ def check_all(func):
         except RecursionError:
             pass
         except KeyboardInterrupt as e:
-            logger.error(e)
+            # logger.error(e)
             clear()
             save_game()
             alert("Выход из игры", "warning", enter=False)
             exit()
         except Exception as e:
-            logger.error(e)
+            # logger.error(e)
+            ...
 
     return wrapper
 
@@ -157,9 +155,10 @@ def level_up():
 
     try:
         answers = inquirer.prompt(questions, theme=theme)
-        choice = answers["choice"]
+        choice = answers["choice"]  # pyright: ignore
     except TypeError:
-        pass
+        save_game()
+        exit()
 
     if choice == "1":
         health_max = health_max + 10
