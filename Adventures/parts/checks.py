@@ -3,9 +3,9 @@ import random
 from utils import clear, alert, die, level_up, save_game
 from variables import health_max, hunger_max, thirst_max, fatigue_max, player, items
 
+
 def check():
     global items, player, health_max, hunger_max, thirst_max, fatigue_max
-    
 
     if player["Здоровье"] >= health_max:
         player["Здоровье"] = health_max
@@ -38,15 +38,18 @@ def check():
     if player["Здоровье"] <= 0:
         die()
 
-    if player['Опыт'] >= 100:
-        player['Уровень'] += 1
-        player['Опыт'] = 0.0
+    if player["Опыт"] >= 100:
+        player["Уровень"] += 1
+        player["Опыт"] = 0.0
         lootbox_quantity = random.randint(1, 3)
-        items["Лутбокс"]['Количество'] += lootbox_quantity
+        items["Лутбокс"]["Количество"] += lootbox_quantity
         clear()
-        alert(f"[bright_green]Поздравляем! Ваш уровень повышен до {player['Уровень']}[/bright_green]", 'success')
-        alert(f"Вы получили {lootbox_quantity} лутбокс", 'success')
-        
+        alert(
+            f"[bright_green]Поздравляем! Ваш уровень повышен до {player['Уровень']}[/bright_green]",
+            "success",
+        )
+        alert(f"Вы получили {lootbox_quantity} лутбокс", "success")
+
         # https://github.com/HamletSargsyan/Adventures/issues/9
         # level_up()
 
@@ -69,10 +72,8 @@ def check():
         items["Удочка"]["Количество"] -= 1
         items["Удочка"]["Прочность"] = 10
 
-        
-   
     for item_name in items:
-             if items[item_name]["Количество"] < 0:
-                items[item_name]["Количество"] = 0
-    
+        if items[item_name]["Количество"] < 0:
+            items[item_name]["Количество"] = 0
+
     save_game()
