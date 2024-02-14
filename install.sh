@@ -59,21 +59,21 @@ echo -e "\e[32mAdventures версии $tag_name успешно установл
 echo
 echo 
 
-echo -n "Хотите запустить игру? [Y/n]: "
-read -r answer
-answer=${answer:-Y}
-if [[ $answer =~ ^[Yy]$ ]]; then
-    python_command=""
-    if command -v python3 &>/dev/null; then
-        python_command="python3"
-    elif command -v python &>/dev/null; then
-        python_command="python"
-    else
-        echo "\e[31mpython не найден, пожалуйста установите и попробуйте снова\e[0m"
-        exit 1
-    fi
+# echo -n "Хотите запустить игру? [Y/n]: "
+# read -r answer
+# answer=${answer:-Y}
+# if [[ $answer =~ ^[Yy]$ ]]; then
+#     python_command=""
+#     if command -v python3 &>/dev/null; then
+#         python_command="python3"
+#     elif command -v python &>/dev/null; then
+#         python_command="python"
+#     else
+#         echo "\e[31mpython не найден, пожалуйста установите и попробуйте снова\e[0m"
+#         exit 1
+#     fi
 
-    eval "$python_command $install_dir/main.py"
-else
-    exit 0
-fi
+#     eval "$python_command $install_dir/main.py"
+# else
+#     exit 0
+# fi

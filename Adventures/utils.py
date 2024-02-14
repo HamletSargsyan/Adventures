@@ -120,7 +120,6 @@ def check_all(func):
         except RecursionError:
             pass
         except KeyboardInterrupt as e:
-            # logger.error(e)
             clear()
             save_game()
             alert("Выход из игры", "warning", enter=False)
