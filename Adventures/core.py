@@ -2,10 +2,14 @@ import os
 from typing import Dict, List, Callable, Type, Any
 import importlib.util
 
+from rich.console import Console
+
 class Game:
     def __init__(self) -> None:
         self.events: Dict[str, List[Callable[[], None]]] = {}
-        self.modules: List[Type["Any"]] = []
+        self.modules: List[Type[Any]] = []
+        self.console = Console()
+    
 
     def trigger(self, event_name: str) -> None:
         if event_name in self.events:
@@ -21,11 +25,6 @@ class Game:
         return decorator
     
     def run(self):
-        self.import_modules("modules")
-        print("Импортированные модули:")
-        for mod in self.modules:
-            m = mod()
-            print(m.name, m.version)
         self.trigger("start")
 
     def register_trigger(self, event_name: str, func: Callable[[], None]) -> None:
@@ -33,18 +32,3 @@ class Game:
             self.events[event_name] = []
         self.events[event_name].append(func)
     
-    def import_modules(self, folder_path: str):
-        self.modules = []
-        for filename in os.listdir(folder_path):
-            if filename.endswith(".py"):
-                module_name = filename[:-3]
-                module = importlib.import_module(f"{folder_path}.{module_name}")
-                for name in dir(module):
-                    obj = getattr(module, name)
-                    if isinstance(obj, type) and issubclass(obj, Module) and name.endswith("Mod"):
-                        self.modules.append(obj)
-
-class Module:
-    def __init__(self, name: str, version: str) -> None:
-        self.name = name
-        self.version = version
