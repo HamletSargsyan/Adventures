@@ -17,7 +17,7 @@ from parts import profile
 from parts import recovery
 from parts import shop
 from parts import update_check
-
+import modules
 from config import game
 
 
