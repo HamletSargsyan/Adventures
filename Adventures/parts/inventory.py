@@ -5,8 +5,10 @@ import inquirer
 
 from utils import clear, check_all, save_game
 from variables import player, items, theme
+from config import game
 
 
+@game.on("inventory")
 @check_all
 def inventory():
     clear()
@@ -42,10 +44,6 @@ def inventory():
         exit()
 
     if choice == "1":
-        from .profile import profile
-
-        profile()
+        game.trigger("profile")
     elif choice == "2":
-        from .lootbox import lootbox_menu
-
-        lootbox_menu()
+        game.trigger("lootbox_menu")

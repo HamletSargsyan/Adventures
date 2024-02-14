@@ -14,6 +14,8 @@ from rich.console import Console
 from rich.markdown import Markdown
 import inquirer
 
+from config import game
+
 console = Console()
 
 GITHUB_REPO = "Adventures"
@@ -106,6 +108,7 @@ def download_latest_release():
         alert(f"Файл {main_script} не найден.", "error", enter=False)
 
 
+@game.on("check_update")
 def check_update():
     try:
         response = requests.get(RELEASES_URL)
@@ -149,14 +152,12 @@ def check_update():
                     exit()
 
                 if choice == "1":
-                    from main import start_menu
-
-                    start_menu()
+                    game.trigger("start")
                 elif choice == "2":
                     download_latest_release()
             else:
                 alert("", enter=True)
         else:
             alert("Не удалось получить информацию о релизе.", "error")
-    except:
-        alert("Не удалось получить информацию о релизе.", "error")
+    except Exception as e:
+        alert(f"Не удалось получить информацию о релизе. Причина: {e}", "error")

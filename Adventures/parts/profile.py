@@ -14,8 +14,10 @@ from variables import (
     theme,
 )
 from .inventory import inventory
+from config import game
 
 
+@game.on("profile")
 @check_all
 def profile():
     global items, player, health_max, hunger_max, thirst_max, fatigue_max
@@ -37,7 +39,6 @@ def profile():
         )
     )
 
-    # Создайте список опций для inquirer
     options = [
         inquirer.List(
             "choice",
@@ -62,28 +63,16 @@ def profile():
         exit()
 
     if choice == "1":
-        inventory()
+        game.trigger("inventory")
     elif choice == "2":
-        from .explore import explore
-
-        explore()
+        game.trigger("explore")
     elif choice == "3":
-        from .crafting_table import craft
-
-        craft()
+        game.trigger("craft")
     elif choice == "4":
-        from .shop import shop
-
-        shop()
+        game.trigger("shop")
     elif choice == "5":
-        from .recovery import recovery
-
-        recovery()
+        game.trigger("recovery")
     elif choice == "6":
-        from .recovery import food
-
-        food()
+        game.trigger("foot")
     elif choice == "Назад":
-        from main import start_menu
-
-        start_menu()
+        game.trigger("start")

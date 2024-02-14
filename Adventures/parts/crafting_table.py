@@ -1,8 +1,10 @@
 import random
 import inquirer
+
 from utils import clear, alert, save_game, check_all
 from variables import player, items, theme
-from .profile import profile
+
+from config import game
 
 
 class Craft:
@@ -51,6 +53,7 @@ class Craft:
             alert(f"Недостаточно материалов для создания {item_name.lower()}", "error")
 
 
+@game.on("craft")
 @check_all
 def craft():
     clear()
@@ -79,7 +82,7 @@ def craft():
     crafting = Craft()
     if choice == "0":
         clear()
-        profile()
+        game.trigger("profile")
     elif choice == "1":
         crafting.craft_tool(
             item_name="Топор",
@@ -117,4 +120,4 @@ def craft():
             required_materials=items["Удочка"]["Изготовление"],
         )
 
-    craft()
+    game.trigger("craft")

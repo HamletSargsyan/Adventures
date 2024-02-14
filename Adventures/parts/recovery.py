@@ -3,7 +3,10 @@ import inquirer
 from utils import clear, alert, save_game, check_all
 from variables import health_max, player, items, theme
 
+from config import game
 
+
+@game.on("recovery")
 @check_all
 def recovery():
     global items, player
@@ -27,11 +30,10 @@ def recovery():
 
     save_game()
 
-    from .profile import profile
-
-    profile()
+    game.trigger("profile")
 
 
+@game.on("food")
 @check_all
 def food():
     global player
@@ -58,10 +60,8 @@ def food():
         save_game()
         exit()
 
-    from .profile import profile
-
     if choice == "0":
-        profile()
+        game.trigger("profile")
     elif choice == "1":
         if player["Голод"] >= 1:
             if items["Яблоко"]["Количество"] >= 1:
@@ -91,4 +91,4 @@ def food():
                 alert("Недостаточно", "error")
         else:
             alert("Тебе не нужно пить", "warning")
-    food()
+    game.trigger("food")
