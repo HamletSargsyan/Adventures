@@ -42,7 +42,7 @@ def open_lootbox():
         if quantity > 0:
             items[item]["Количество"] += quantity
 
-            # TODO Добавить в версии v2.1.0 или раньше если возможно
+            # TODO Добавить в пользовтельскый модуль
             # rarity_color = {
             #     "Обычный": "green",
             #     "Редкий": "blue",
