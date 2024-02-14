@@ -1,15 +1,12 @@
-import os
 from typing import Dict, List, Callable, Type, Any
-import importlib.util
-
 from rich.console import Console
+
 
 class Game:
     def __init__(self) -> None:
         self.events: Dict[str, List[Callable[[], None]]] = {}
         self.modules: List[Type[Any]] = []
         self.console = Console()
-    
 
     def trigger(self, event_name: str) -> None:
         if event_name in self.events:
@@ -22,8 +19,9 @@ class Game:
                 self.events[event_name] = []
             self.events[event_name].append(func)
             return func
+
         return decorator
-    
+
     def run(self):
         self.trigger("start")
 
@@ -31,4 +29,3 @@ class Game:
         if event_name not in self.events:
             self.events[event_name] = []
         self.events[event_name].append(func)
-    

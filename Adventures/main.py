@@ -19,6 +19,7 @@ from parts import shop
 from parts import update_check
 from config import game
 
+
 @game.on("start")
 @check_all
 def start_menu():
