@@ -9,3 +9,4 @@ tests
 dist
 build
 test*.*
+saves/
