@@ -51,7 +51,7 @@ python main.py # или python3 main.py
 
 Автор проекта Adventurs: [Hamlet Sargsyan](https://github.com/HamletSargsyan/)
 
-Вы можете связаться со мной по электронной почте: hamlets849@gmail.com
+Вы можете связаться со мной в телеграмм: https://t.me/HamletSargsyan
 
 ## Лицензия
 
