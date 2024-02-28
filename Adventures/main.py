@@ -1,4 +1,5 @@
 import sys
+
 if sys.version_info < (3, 8):
     print(f"Игра работает с версии python 3.8 и выше. У вас {sys.version}")
     exit(1)
