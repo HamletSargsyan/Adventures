@@ -5,7 +5,6 @@ from rich.console import Console
 class Game:
     def __init__(self) -> None:
         self.events: Dict[str, List[Callable[[], None]]] = {}
-        self.modules: List[Type[Any]] = []
         self.console = Console()
 
     def trigger(self, event_name: str) -> None:
