@@ -6,6 +6,7 @@ from typing import Union
 import inquirer
 
 from rich import print
+from Adventures.core import Item
 from variables import (
     version,
     health_max,
@@ -15,9 +16,10 @@ from variables import (
     thirst_max,
     fatigue_max,
     player,
-    items,
+    # items,
     theme,
 )
+from items import items
 
 from config import game
 
@@ -186,3 +188,9 @@ def level_up():
 
     save_game()
     game.trigger("profile")
+
+
+def get_item(name: str) -> Item:
+    for item in items:
+        if name == item.name:
+            return item
