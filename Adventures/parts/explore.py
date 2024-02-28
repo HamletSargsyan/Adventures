@@ -4,10 +4,11 @@ import inquirer
 from utils import clear, alert, save_game, check_all
 from variables import player, items, theme
 
-from .profile import profile
 from .mobs import generate_forest_mob, generate_mineshaft_mob
+from config import game
 
 
+@game.on("explore")
 @check_all
 def explore():
     clear()
@@ -35,24 +36,20 @@ def explore():
         exit()
 
     if choice == "0":
-        from .profile import profile
-
-        profile()
+        game.trigger("profile")
     elif choice == "1":
-        forest()
+        game.trigger("forest")
     elif choice == "2":
-        mineshaft()
+        game.trigger("mineshaft")
     elif choice == "3":
-        well()
+        game.trigger("well")
     elif choice == "4":
-        lake()
+        game.trigger("lake")
 
 
 def generate_random_loot(loot_table: dict, multiplier=1.0):
     global items, player
-    num_items_to_get = random.randint(
-        1, len(loot_table)
-    )  # Генерируем случайное количество предметов
+    num_items_to_get = random.randint(1, len(loot_table))
     items_to_get = random.sample(list(loot_table.keys()), num_items_to_get)
 
     for item in items_to_get:
@@ -66,6 +63,7 @@ def generate_random_loot(loot_table: dict, multiplier=1.0):
     alert("", enter=True)
 
 
+@game.on("chest")
 @check_all
 def chest():
     alert("Ты нашел сундук", level="success", enter=False)
@@ -99,6 +97,7 @@ def chest():
         alert("Как хочешь")
 
 
+@game.on("forest")
 @check_all
 def forest():
     global items, player
@@ -119,7 +118,7 @@ def forest():
 
     chest_chance = random.random()
     if chest_chance <= 0.1:
-        chest()
+        game.trigger("chest")
         clear()
 
     player["Опыт"] += random.uniform(0.1, 5.0)
@@ -157,9 +156,10 @@ def forest():
         generate_random_loot(loot_table)
         save_game()
 
-    profile()
+    game.trigger("profile")
 
 
+@game.on("mineshaft")
 @check_all
 def mineshaft():
     global items, player
@@ -179,7 +179,7 @@ def mineshaft():
 
         chest_chance = random.random()
         if chest_chance <= 0.1:
-            chest()
+            game.on("chest")
             clear()
 
         progress_count = random.uniform(2.0, 5.0)
@@ -220,9 +220,10 @@ def mineshaft():
     else:
         alert("Чтобы пойти в шахту, нужен 2 уровень", "error")
 
-    profile()
+    game.trigger("profile")
 
 
+@game.on("well")
 @check_all
 def well():
     global items, player
@@ -249,9 +250,10 @@ def well():
     elif items["Ведро"]["Количество"] == 0:
         alert("Чтобы пойти к колодцу, нужно ведро", "error")
 
-    profile()
+    game.trigger("well")
 
 
+@game.on("lake")
 @check_all
 def lake():
     global items, player
@@ -285,4 +287,4 @@ def lake():
     elif items["Удочка"]["Количество"] == 0:
         alert("Чтобы пойти в озеро, нужна удочка", "error")
 
-    profile()
+    game.trigger("profile")

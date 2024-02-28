@@ -8,6 +8,8 @@ from rich.table import Table
 from rich.console import Console
 import inquirer
 
+from config import game
+
 
 def items_help(): ...
 
@@ -21,6 +23,7 @@ def locations_help(): ...
 def craft_help(): ...
 
 
+@game.on("help")
 def help():
     clear()
     print(Panel(Text("Приветствую! Это справка для игры"), title="Справка"))
@@ -46,9 +49,7 @@ def help():
         exit()
 
     if choice == "1":
-        from main import start_menu
-
-        start_menu()
+        game.trigger("start")
     elif choice == "2":
         items_help()
     elif choice == "3":

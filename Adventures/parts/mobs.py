@@ -16,6 +16,7 @@ from variables import (
 )
 from .profile import profile
 from .checks import check
+from config import game
 
 
 class Mob:
@@ -78,7 +79,7 @@ class Mob:
 
             if player["Здоровье"] <= 0:
                 alert(f"{self.name} победил тебя...", "error")
-                die()
+                game.trigger("die")
 
             if self.health <= 0:
                 alert(f"Ты одолел {self.name}!", "success")
@@ -89,7 +90,7 @@ class Mob:
                     alert(f"+ {quantity} {loot_item}", "success", enter=False)
                 alert("", enter=True)
                 player["Опыт"] += random.randint(10, 15)
-                profile()
+                game.trigger("profile")
 
             check()
             clear()

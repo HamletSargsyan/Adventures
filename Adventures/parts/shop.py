@@ -5,6 +5,8 @@ import inquirer
 from utils import clear, alert, save_game, check_all
 from variables import items, theme
 
+from config import game
+
 
 class Shop:
     def __init__(self):
@@ -56,6 +58,7 @@ class Shop:
         return available_items
 
 
+@game.on("shop")
 @check_all
 def shop():
     clear()
@@ -82,9 +85,7 @@ def shop():
         exit()
 
     if choice == "Назад":
-        from .profile import profile
-
-        profile()
+        game.trigger("profile")
 
     elif choice == "Купить":
         clear()
@@ -129,4 +130,4 @@ def shop():
         except ValueError:
             quantity = 1
         shop_.sell(item_name, quantity)
-    shop()
+    game.trigger("profile")

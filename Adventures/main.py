@@ -8,12 +8,25 @@ from rich.text import Text
 from rich.panel import Panel
 import inquirer
 
-from utils import clear, load_game, save_game
+
+from utils import clear, load_game, save_game, check_all
 from variables import version, theme
-from parts.profile import profile
-from parts.update_check import check_update
+
+from parts import achievements
+from parts import crafting_table
+from parts import explore
+from parts import help
+from parts import inventory
+from parts import lootbox
+from parts import profile
+from parts import recovery
+from parts import shop
+from parts import update_check
+from config import game
 
 
+@game.on("start")
+@check_all
 def start_menu():
     clear()
     print(
@@ -31,7 +44,7 @@ def start_menu():
                 ("Играть", "1"),
                 ("Обновления", "2"),
                 ("Выгрузить", "3"),
-                #   ("Справка", "4")
+                # ("Справка", "4")
             ],
         ),
     ]
@@ -44,18 +57,15 @@ def start_menu():
         exit()
 
     if choice == "1":
-        profile()
+        game.trigger("profile")
     elif choice == "2":
-        check_update()
-        start_menu()
+        game.trigger("check_update")
     elif choice == "3":
         load_game()
-        profile()
+        game.trigger("profile")
     elif choice == "4":
-        from parts.help import help
-
-        help()
+        game.trigger("help")
 
 
 if __name__ == "__main__":
-    start_menu()
+    game.run()

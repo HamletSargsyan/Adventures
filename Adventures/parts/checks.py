@@ -1,7 +1,8 @@
 import random
 
-from utils import clear, alert, die, level_up, save_game
+from utils import clear, alert, level_up, save_game
 from variables import health_max, hunger_max, thirst_max, fatigue_max, player, items
+from config import game
 
 
 def check():
@@ -36,7 +37,7 @@ def check():
     if player["Жажда"] >= thirst_max:
         player["Здоровье"] -= random.randint(1, 5)
     if player["Здоровье"] <= 0:
-        die()
+        game.trigger("die")
 
     if player["Опыт"] >= 100:
         player["Уровень"] += 1

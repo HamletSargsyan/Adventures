@@ -19,6 +19,8 @@ from variables import (
     theme,
 )
 
+from config import game
+
 
 def clear():
     os.system("cls" if os.name == "nt" else "clear")
@@ -82,6 +84,7 @@ def load_game():
         alert("Файл сохранения не найден.", "error")
 
 
+@game.on("die")
 def die(message: Union[str, None] = None):
     global items, player, items
 
@@ -104,9 +107,7 @@ def die(message: Union[str, None] = None):
     clear()
     alert("Ты вернулся к жизни\n\nПостарайся не умереть в следующий раз!", "warning")
 
-    from main import start_menu
-
-    start_menu()
+    game.trigger("profile")
 
 
 def check_all(func):
@@ -125,8 +126,7 @@ def check_all(func):
             alert("Выход из игры", "warning", enter=False)
             exit()
         except Exception as e:
-            # logger.error(e)
-            ...
+            ...  # TODO
 
     return wrapper
 
@@ -185,4 +185,4 @@ def level_up():
         alert("+1 к Защите")
 
     save_game()
-    profile()
+    game.trigger("profile")

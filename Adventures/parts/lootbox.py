@@ -4,10 +4,12 @@ import inquirer
 from utils import clear, alert, check_all, save_game
 from variables import player, items, theme
 from rich.console import Console
+from config import game
 
 
+@game.on("open_lootbox")
 @check_all
-def lootbox_open():
+def open_lootbox():
     global items, player
 
     items["Лутбокс"]["Количество"] -= 1
@@ -40,7 +42,7 @@ def lootbox_open():
         if quantity > 0:
             items[item]["Количество"] += quantity
 
-            # TODO Добавить в версии v2.1.0 или раньше если возможно
+            # TODO Добавить в пользовтельскый модуль
             # rarity_color = {
             #     "Обычный": "green",
             #     "Редкий": "blue",
@@ -64,11 +66,10 @@ def lootbox_open():
     alert("", enter=True)
 
     save_game()
-    from .profile import profile
-
-    profile()
+    game.trigger("profile")
 
 
+@game.on("lootbox_menu")
 @check_all
 def lootbox_menu():
     clear()
@@ -89,13 +90,11 @@ def lootbox_menu():
     if choice == "1":
         if items["Лутбокс"]["Количество"] >= 1:
             clear()
-            lootbox_open()
+            game.trigger("open_lootbox")
         else:
             clear()
             alert("У тебя нет лутбокса", "error")
     elif choice == "2":
         clear()
 
-    from .profile import profile
-
-    profile()
+    game.trigger("profile")
