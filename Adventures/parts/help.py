@@ -3,8 +3,6 @@ from utils import clear, prompt
 from rich import print
 from rich.panel import Panel
 from rich.text import Text
-from rich.table import Table
-from rich.console import Console
 import inquirer
 
 from config import game

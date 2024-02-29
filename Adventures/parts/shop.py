@@ -1,7 +1,7 @@
 from rich import print
 from rich.panel import Panel
 import inquirer
-from Adventures.core import Item
+from core import Item
 from items import items
 
 from utils import clear, alert, check_all, get_item, prompt

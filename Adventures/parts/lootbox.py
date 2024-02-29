@@ -2,7 +2,7 @@ import random
 from rich import print
 import inquirer
 from utils import prompt
-from Adventures.core import ItemRarity
+from core import ItemRarity
 from items import items
 from utils import clear, alert, check_all
 from rich.console import Console

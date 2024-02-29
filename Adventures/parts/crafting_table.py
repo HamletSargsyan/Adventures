@@ -1,6 +1,5 @@
 import random
 import inquirer
-from core import CraftDict
 
 from utils import clear, alert, check_all, get_item, prompt
 

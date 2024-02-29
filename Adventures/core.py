@@ -63,8 +63,8 @@ class Game:
         self.player = Player()
         self.save_dir: str = "./saves"
 
-        self.config = config
-        self.theme = inquirer.themes.load_theme_from_dict(self.theme)
+        self.config = config  # type: Config
+        self.theme = self.config.theme
 
     def trigger(self, event_name: str) -> None:
         if event_name in self.events:

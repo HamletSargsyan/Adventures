@@ -61,7 +61,7 @@ def die(message: Union[str, None] = None):
 
 
 def check_all(func):
-    def wrapper():
+    def wrapper(*args, **kwargs):
         try:
             from parts.checks import check
 
@@ -132,7 +132,7 @@ def get_item(name: str) -> Union[Item, NoReturn]:
     raise ValueError
 
 
-@check_all
+# @check_all
 def prompt(questions, choice: str = "choice") -> Union[Any, NoReturn]:
     try:
         answers = inquirer.prompt(questions)

@@ -26,7 +26,7 @@ from config import game
 
 
 @game.on("start")
-@check_all
+# @check_all
 def start_menu():
     clear()
     print(
