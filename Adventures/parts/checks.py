@@ -61,3 +61,4 @@ def check():
             item.quantity = 0
 
     game.save()
+

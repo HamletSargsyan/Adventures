@@ -66,7 +66,7 @@ def check_all(func):
             from parts.checks import check
 
             check()
-            func()
+            func(*args, **kwargs)
             game.save()
         except RecursionError:
             pass
@@ -132,7 +132,7 @@ def get_item(name: str) -> Union[Item, NoReturn]:
     raise ValueError
 
 
-# @check_all
+@check_all
 def prompt(questions, choice: str = "choice") -> Union[Any, NoReturn]:
     try:
         answers = inquirer.prompt(questions, theme=game.config.load_theme())
