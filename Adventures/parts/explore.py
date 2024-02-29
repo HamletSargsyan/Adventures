@@ -1,12 +1,14 @@
 import random
+from typing import TYPE_CHECKING
 from rich import print
 import inquirer
-from utils import clear, alert, save_game, check_all
-from variables import player, items, theme
+from utils import clear, alert, check_all, get_item, prompt
 
 from .mobs import generate_forest_mob, generate_mineshaft_mob
 from config import game
 
+if TYPE_CHECKING:
+    from core import Item
 
 @game.on("explore")
 @check_all
@@ -14,7 +16,7 @@ def explore():
     clear()
 
     # Список опций для исследования
-    options = [
+    questions = [
         inquirer.List(
             "choice",
             message="Куда пойдём?",
@@ -28,12 +30,7 @@ def explore():
         ),
     ]
 
-    try:
-        answers = inquirer.prompt(options, theme=theme)
-        choice = answers["choice"]  # pyright: ignore
-    except TypeError:
-        save_game()
-        exit()
+    choice = prompt(questions)
 
     if choice == "0":
         game.trigger("profile")
@@ -48,18 +45,18 @@ def explore():
 
 
 def generate_random_loot(loot_table: dict, multiplier=1.0):
-    global items, player
     num_items_to_get = random.randint(1, len(loot_table))
     items_to_get = random.sample(list(loot_table.keys()), num_items_to_get)
 
-    for item in items_to_get:
-        quantity_range = loot_table[item]
+    for item_name in items_to_get:
+        quantity_range = loot_table[item_name]
         quantity = int(
             random.uniform(quantity_range[0], quantity_range[1]) * multiplier
         )
         if quantity > 0:
-            items[item]["Количество"] += quantity
-            alert(f"+ {quantity} {item}", "success", enter=False)
+            item = game.player.get_or_add_item(item_name)
+            item.quantity += quantity
+            alert(f"+ {quantity} {item_name}", "success", enter=False)
     alert("", enter=True)
 
 
@@ -75,12 +72,7 @@ def chest():
         )
     ]
 
-    try:
-        answers = inquirer.prompt(questions, theme=theme)
-        choice = answers["choice"]  # pyright: ignore
-    except TypeError:
-        save_game()
-        exit()
+    choice = prompt(questions)
 
     if choice == "1":
         loot_table = {
@@ -100,7 +92,6 @@ def chest():
 @game.on("forest")
 @check_all
 def forest():
-    global items, player
     clear()
 
     # Генерируем случайное число от 0 до 1
@@ -121,12 +112,14 @@ def forest():
         game.trigger("chest")
         clear()
 
-    player["Опыт"] += random.uniform(0.1, 5.0)
+    game.player.xp += random.uniform(0.1, 5.0)
 
-    if items["Топор"]["Количество"] == 0:
-        player["Усталость"] += random.randint(5, 15)
-        player["Голод"] += random.randint(5, 10)
-        player["Жажда"] += random.randint(10, 15)
+    player_item = game.player.get_equiped_item("топор")
+
+    if player_item.quantity <= 0:
+        game.player.fatigue += random.randint(5, 15)
+        game.player.hunger += random.randint(5, 10)
+        game.player.thirst += random.randint(10, 15)
 
         loot_table = {
             "Монеты": (1, 3),
@@ -137,13 +130,12 @@ def forest():
         }
 
         generate_random_loot(loot_table, multiplier=1.2)
-        save_game()
 
-    elif items["Топор"]["Количество"] > 0:
-        player["Усталость"] += random.randint(5, 15)
-        player["Голод"] += random.randint(5, 10)
-        player["Жажда"] += random.randint(5, 15)
-        items["Топор"]["Прочность"] -= random.randint(5, 10)
+    else:
+        game.player.fatigue += random.randint(5, 15)
+        game.player.hunger += random.randint(5, 10)
+        game.player.thirst += random.randint(5, 15)
+        player_item.strength -= random.uniform(5, 10) #pyright: ignore
 
         loot_table = {
             "Монеты": (1, 5),
@@ -154,19 +146,17 @@ def forest():
         }
 
         generate_random_loot(loot_table)
-        save_game()
 
+    game.save()
     game.trigger("profile")
 
 
 @game.on("mineshaft")
 @check_all
 def mineshaft():
-    global items, player
-
     clear()
 
-    if player["Уровень"] >= 2:
+    if game.player.level >= 2:
         encounter_chance = random.random()
 
         if encounter_chance <= 0.3:
@@ -183,12 +173,14 @@ def mineshaft():
             clear()
 
         progress_count = random.uniform(2.0, 5.0)
-        player["Опыт"] += progress_count
+        game.player.xp += progress_count
 
-        if items["Кирка"]["Количество"] == 0:
-            player["Усталость"] += random.randint(10, 20)
-            player["Голод"] += random.randint(10, 15)
-            player["Жажда"] += random.randint(10, 15)
+        player_item = game.player.get_equiped_item("кирка")
+
+        if player_item.quantity <= 0:
+            game.player.fatigue += random.randint(10, 20)
+            game.player.hunger += random.randint(10, 15)
+            game.player.thirst += random.randint(10, 15)
 
             loot_table = {
                 "Камень": (1, 5),
@@ -196,13 +188,11 @@ def mineshaft():
             }
 
             generate_random_loot(loot_table, multiplier=1.2)
-            save_game()
-
-        elif items["Кирка"]["Количество"] > 0:
-            player["Усталость"] += random.randint(10, 20)
-            player["Голод"] += random.randint(10, 15)
-            player["Жажда"] += random.randint(10, 15)
-            items["Кирка"]["Прочность"] -= random.randint(5, 10)
+        else:
+            game.player.fatigue += random.randint(10, 20)
+            game.player.hunger += random.randint(10, 15)
+            game.player.thirst += random.randint(10, 15)
+            player_item.strength -= random.randint(5, 10) #pyright: ignore
 
             loot_table = {
                 "Монеты": (1, 8),
@@ -215,76 +205,69 @@ def mineshaft():
             }
 
             generate_random_loot(loot_table)
-            save_game()
-
     else:
         alert("Чтобы пойти в шахту, нужен 2 уровень", "error")
-
+    game.save()
     game.trigger("profile")
 
 
 @game.on("well")
 @check_all
 def well():
-    global items, player
-
     clear()
 
-    if player["Уровень"] >= 5 and items["Ведро"]["Количество"] >= 1:
+    player_item = game.player.get_equiped_item("ведро")
+
+    if game.player.level >= 5 and player_item.quantity >= 1:
         progress_count = random.uniform(10.0, 15.0)
-        player["Опыт"] += progress_count
-        items["Ведро"]["Прочность"] -= random.randint(10, 15)
-        player["Голод"] += random.randint(10, 20)
-        player["Жажда"] += random.randint(10, 20)
-        player["Усталость"] += random.randint(5, 15)
+        game.player.xp += progress_count
+        player_item.strength -= random.randint(10, 15) # pyright: ignore
+        game.player.hunger += random.randint(10, 20)
+        game.player.thirst += random.randint(10, 20)
+        game.player.fatigue += random.randint(5, 15)
 
         loot_table = {
             "Вода": (1, 15),
         }
-
         generate_random_loot(loot_table)
-        save_game()
-
-    elif player["Уровень"] < 5:
+    elif game.player.level < 5:
         alert("Чтобы пойти к колодцу, нужен 5 уровень", "error")
-    elif items["Ведро"]["Количество"] == 0:
+    else:
         alert("Чтобы пойти к колодцу, нужно ведро", "error")
-
+    game.save()
     game.trigger("well")
 
 
 @game.on("lake")
 @check_all
 def lake():
-    global items, player
-
     clear()
 
-    if (
-        player["Уровень"] >= 10
-        and items["Лодка"]["Количество"] >= 1
-        and items["Удочка"]["Количество"] >= 1
+    boat = game.player.get_equiped_item("лодка")
+    fishing_rod = game.player.get_equiped_item("удочка")
+    if (game.player.level >= 10
+        and boat.quantity >= 1
+        and fishing_rod.quantity >= 1
     ):
         progress_count = random.uniform(10.0, 20.0)
-        player["Опыт"] += progress_count
-        items["Лодка"]["Прочность"] -= 5
-        items["Удочка"]["Прочность"] -= 10
-        player["Голод"] += random.randint(10, 20)
-        player["Жажда"] += random.randint(10, 20)
-        player["Усталость"] += random.randint(5, 15)
+        game.player.xp += progress_count
+        boat.strength -= 5 #pyright: ignore
+        fishing_rod.strength -= 10 #pyright: ignore
+        game.player.hunger += random.randint(10, 20)
+        game.player.thirst += random.randint(10, 20)
+        game.player.fatigue += random.randint(5, 15)
 
         loot_table = {
             "Рыба": (1, 15),
         }
 
         generate_random_loot(loot_table)
-        save_game()
 
-    elif player["Уровень"] < 10:
+    elif game.player.level < 10:
         alert("Чтобы пойти в озеро, нужен 10 уровень", "error")
-    elif items["Лодка"]["Количество"] == 0:
+    elif boat.quantity == 0:
         alert("Чтобы пойти в озеро, нужна лодка", "error")
-    elif items["Удочка"]["Количество"] == 0:
+    elif fishing_rod.quantity == 0:
         alert("Чтобы пойти в озеро, нужна удочка", "error")
 
     game.trigger("profile")

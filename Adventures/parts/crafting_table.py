@@ -1,56 +1,38 @@
 import random
 import inquirer
+from core import CraftDict
 
-from utils import clear, alert, save_game, check_all
-from variables import player, items, theme
+from utils import clear, alert, check_all, get_item, prompt
 
 from config import game
 
 
 class Craft:
     def __init__(self):
-        self.items = items
-        self.player = player
+        pass
 
-    def craft_tool(
-        self, item_name: str, progress_range: tuple, required_materials: dict
-    ):
+    def craft(
+        self, item_name: str, progress_range: tuple):
         clear()
-        if all(
-            items[material]["Количество"] >= amount
-            for material, amount in required_materials.items()
-        ):
+        
+        item = get_item(item_name)
+        if not item.craft:
+            raise ValueError
+        
+        if all(get_item(i["name"]).quantity >= i["quantity"] for i in item.craft):
             alert(f"Вы создали {item_name.lower()}", "success")
-            items[item_name]["Количество"] += 1
+            item.quantity += 1
 
-            for material, amount in required_materials.items():
-                items[material]["Количество"] -= amount
+            for i in item.craft:
+                item_ = get_item(i["name"])
+                item_.quantity -= i["quantity"]
 
             progress_count = random.uniform(*progress_range)
-            player["Опыт"] += progress_count  # Заменил "Опит" на "Опыт"
-            save_game()
+            game.player.xp += progress_count
+            game.save()
         else:
             alert(f"Недостаточно материалов для создания {item_name.lower()}", "error")
 
-    def craft_item(
-        self, item_name: str, progress_range: tuple, required_materials: dict
-    ):
-        clear()
-        if all(
-            items[material]["Количество"] >= amount
-            for material, amount in required_materials.items()
-        ):
-            alert(f"Вы создали {item_name.lower()}", "success")
-            items[item_name]["Количество"] += 1
-
-            for material, amount in required_materials.items():
-                items[material]["Количество"] -= amount
-
-            progress_count = random.uniform(*progress_range)
-            player["Опыт"] += progress_count  # Заменил "Опит" на "Опыт"
-            save_game()
-        else:
-            alert(f"Недостаточно материалов для создания {item_name.lower()}", "error")
 
 
 @game.on("craft")
@@ -72,52 +54,42 @@ def craft():
             ],
         ),
     ]
-    try:
-        answers = inquirer.prompt(questions, theme=theme)
-        choice = answers["choice"]  # pyright: ignore
-    except TypeError:
-        save_game()
-        exit()
+    
+    choice = prompt(questions)
 
     crafting = Craft()
     if choice == "0":
         clear()
         game.trigger("profile")
     elif choice == "1":
-        crafting.craft_tool(
+        crafting.craft(
             item_name="Топор",
             progress_range=(3.0, 5.0),
-            required_materials=items["Топор"]["Изготовление"],
         )
     elif choice == "2":
-        crafting.craft_tool(
+        crafting.craft(
             item_name="Кирка",
             progress_range=(5.0, 8.0),
-            required_materials=items["Кирка"]["Изготовление"],
         )
     elif choice == "3":
-        crafting.craft_tool(
+        crafting.craft(
             item_name="Меч",
             progress_range=(5.0, 9.0),
-            required_materials=items["Меч"]["Изготовление"],
         )
     elif choice == "4":
-        crafting.craft_tool(
+        crafting.craft(
             item_name="Ведро",
             progress_range=(5.0, 9.0),
-            required_materials=items["Ведро"]["Изготовление"],
         )
     elif choice == "5":
-        crafting.craft_tool(
+        crafting.craft(
             item_name="Лодка",
             progress_range=(5.0, 9.0),
-            required_materials=items["Лодка"]["Изготовление"],
         )
     elif choice == "6":
-        crafting.craft_tool(
+        crafting.craft(
             item_name="Удочка",
             progress_range=(5.0, 9.0),
-            required_materials=items["Удочка"]["Изготовление"],
         )
 
     game.trigger("craft")

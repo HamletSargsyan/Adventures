@@ -1,11 +1,10 @@
 from enum import Enum
 import os
 import pickle
-from typing import TYPE_CHECKING, Any, Dict, Generic, Iterable, List, Callable, Literal, TypeVar, TypedDict, Union
+from typing import TYPE_CHECKING, Any, Dict, Generic, Iterable, List, Callable, Literal, NoReturn, TypeVar, TypedDict, Union
 import inquirer.themes
 from rich.console import Console
 
-from utils import get_item
 
 if TYPE_CHECKING:
     from config import Config
@@ -42,20 +41,6 @@ class Const(Generic[T], DictSerializable):
     def __repr__(self) -> str:
         return repr(self._value)
     
-    def __iter__(self):
-        self._index = 0
-        return self
-    
-    
-    def __next__(self):
-        if self._index < len(self.value): #pyright: ignore
-            value: T = self.value[self._index]
-            self._index += 1
-            return value
-        else:
-            # Raise StopIteration to signal the end of iteration
-            raise StopIteration
-
 
 class Game:
     def __init__(self, config) -> None:
@@ -147,9 +132,9 @@ class Item(DictSerializable):
     def __init__(
             self,
             name: str,
-            strength: float,
             rarity: ItemRarity,
             desc: str,
+            strength: Union[float, None] = None,
             can_equip: bool = False,
             price: Union[int, None] = None,
             effects: Union[List[Effect], None] = None,
@@ -197,16 +182,26 @@ class Player(DictSerializable):
         self.inventory: List[Item] = []
         self.equiped_items: List[Item] = []
 
-    def _get_item(self, name: str, where: Union[Literal["inventory"], Literal["equiped_items"]]):
+    def _get_item(self, name: str, where: Union[Literal["inventory"], Literal["equiped_items"]]) -> Union[NoReturn, Item]:
         _items = self.inventory if where == "inventory" else self.equiped_items
         
         for item in _items:
             if item.name == name:
                 return item
+        raise ValueError
 
-    def get_or_add_item(self, name: str):
+    def get_or_add_item(self, name: str) -> Union[NoReturn, Item]:
+        from utils import get_item
+
         if not get_item(name):
-            raise
+            raise ValueError
         if not self._get_item(name, "inventory"):
             self.inventory.append(get_item(name)) # pyright: ignore
         return self._get_item(name, "inventory")
+
+    def get_equiped_item(self, name: str) -> Union[NoReturn, Item]:
+        from utils import get_item
+
+        if not get_item(name):
+            raise ValueError
+        return self._get_item(name, "equiped_items")

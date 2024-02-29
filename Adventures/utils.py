@@ -5,7 +5,7 @@ from typing import Union, NoReturn, Any
 import inquirer
 
 from rich import print
-from Adventures.core import Item
+from core import Item
 
 from items import items
 
@@ -125,10 +125,11 @@ def level_up():
 
 
 @check_all
-def get_item(name: str) -> Union[Item, None]:
+def get_item(name: str) -> Union[Item, NoReturn]:
     for item in items.value:
         if name == item.name:
             return item
+    raise ValueError
 
 
 @check_all
