@@ -1,3 +1,5 @@
+import inquirer.themes
+
 from core import Game, DictSerializable, Const
 
 __all__ = ["game", "config"]
@@ -20,6 +22,9 @@ class Config(DictSerializable):
         self.version = Const("3.0")
         self.theme = default_theme
 
+    def load_theme(self):
+        self.theme = inquirer.themes.load_theme_from_dict(self.theme)
+        return self.theme
 
 config = Config()
 

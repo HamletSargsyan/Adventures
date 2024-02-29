@@ -10,8 +10,7 @@ from rich.panel import Panel
 import inquirer
 
 
-from utils import clear, load_game, save_game, check_all
-from variables import version, theme
+from utils import clear, load_game, check_all, prompt
 
 from parts import achievements
 from parts import crafting_table
@@ -33,7 +32,7 @@ def start_menu():
     print(
         Panel(
             Text("\nДобро пожаловать в ADVENTURES\n", justify="center"),
-            subtitle=f"{version}",
+            subtitle=f"{game.config.version}",
         )
     )
 
@@ -50,12 +49,7 @@ def start_menu():
         ),
     ]
 
-    try:
-        answers = inquirer.prompt(questions, theme=theme)
-        choice = answers["choice"]  # pyright: ignore
-    except TypeError:
-        save_game()
-        exit()
+    choice = prompt(questions)
 
     if choice == "1":
         game.trigger("profile")

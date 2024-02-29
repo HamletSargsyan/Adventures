@@ -1,24 +1,13 @@
 import os
 import pickle
 import random
-from typing import Union
+from typing import Union, NoReturn, Any
 
 import inquirer
 
 from rich import print
 from Adventures.core import Item
-from variables import (
-    version,
-    health_max,
-    damage_max,
-    protection_max,
-    hunger_max,
-    thirst_max,
-    fatigue_max,
-    player,
-    # items,
-    theme,
-)
+
 from items import items
 
 from config import game
@@ -49,54 +38,15 @@ def alert(text: str, level: str = "log", enter=True):
         input("Нажми ENTER, чтобы продолжить...")
 
 
-def save_game():
-    global version, health_max, hunger_max, thirst_max, fatigue_max, damage_max, protection_max, player, items
-    game_data = {
-        "health_max": health_max,
-        "hunger_max": hunger_max,
-        "thirst_max": thirst_max,
-        "fatigue_max": fatigue_max,
-        "damage_max": damage_max,
-        "protection_max": protection_max,
-        "player": player,
-        "items": items,
-    }
-
-    with open("saves/game_data.pickle", "wb") as f:
-        pickle.dump(game_data, f)
-
-
-def load_game():
-    global version, health_max, protection_max, thirst_max, fatigue_max, damage_max, protection_max, player, items, items
-    clear()
-    try:
-        with open("saves/game_data.pickle", "rb") as f:
-            game_data = pickle.load(f)
-            health_max = game_data["health_max"]
-            protection_max = game_data["protection_max"]
-            thirst_max = game_data["thirst_max"]
-            fatigue_max = game_data["fatigue_max"]
-            protection_max = game_data["protection_max"]
-            player.update(game_data["player"])
-            items.update(game_data["items"])
-
-            alert("Игра загружена.", "success")
-
-    except FileNotFoundError:
-        alert("Файл сохранения не найден.", "error")
-
-
 @game.on("die")
 def die(message: Union[str, None] = None):
     global items, player, items
 
-    player["Здоровье"] = health_max - random.randint(30, 50)
-    player["Голод"] = 0
-    player["Жажда"] = 0
-    player["Усталость"] = 0
-    player["Уровень"] = 0 if player["Уровень"] == 0 else player["Уровень"] - 1
-    player["Опит"] = 0
-
+    game.player.health = health_max - random.randint(30, 50)
+    game.player.hunger = 0
+    game.player.fatigue = 0
+    game.player.thirst = 0
+    
     items["Монеты"]["Количество"] -= 100
 
     save_game()
@@ -190,7 +140,17 @@ def level_up():
     game.trigger("profile")
 
 
-def get_item(name: str) -> Item:
-    for item in items:
+@check_all
+def get_item(name: str) -> Union[Item, None]:
+    for item in items.value:
         if name == item.name:
             return item
+
+
+@check_all
+def prompt(questions, choice: str = "choice") -> Union[Any, NoReturn]:
+    try:
+        answers = inquirer.prompt(questions)
+        return answers[choice] # pyright: ignore
+    except TypeError:
+        game.trigger("exit_game")

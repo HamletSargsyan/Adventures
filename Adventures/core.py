@@ -4,7 +4,8 @@ import pickle
 from typing import TYPE_CHECKING, Any, Dict, Generic, Iterable, List, Callable, Literal, TypeVar, TypedDict, Union
 import inquirer.themes
 from rich.console import Console
-from sqlalchemy import values
+
+from utils import get_item
 
 if TYPE_CHECKING:
     from config import Config
@@ -83,6 +84,7 @@ class Game:
         return decorator
 
     def run(self):
+        self.config.load_theme()
         self.trigger("start")
 
     def register_trigger(self, event_name: str, func: Callable[[], None]) -> None:
@@ -193,3 +195,15 @@ class Player(DictSerializable):
         self.inventory: List[Item] = []
         self.equiped_items: List[Item] = []
 
+    def _get_item(self, name: str, where: Union[Literal["inventory"], Literal["equiped_items"]]):
+        _items = self.inventory if where == "inventory" else self.equiped_items
+        
+        for item in _items:
+            if item.name == name:
+                return item
+
+    def get_or_add_item(self, name: str):
+       if not get_item(name):
+           raise
+       
+        return self._get_item(name, "inventory")
