@@ -3,34 +3,22 @@ from rich.panel import Panel
 
 import inquirer
 
-from utils import clear, check_all, save_game
-from variables import (
-    player,
-    items,
-    health_max,
-    hunger_max,
-    thirst_max,
-    fatigue_max,
-    theme,
-)
-from .inventory import inventory
+from utils import clear, check_all, prompt
 from config import game
 
 
 @game.on("profile")
 @check_all
 def profile():
-    global items, player, health_max, hunger_max, thirst_max, fatigue_max
-
     clear()
 
     player_status = (
-        f'{"[bright_red]Здоровье:[/bright_red]" if player["Здоровье"] <= 10 else "Здоровье:"} {player["Здоровье"]}/{health_max}\n'
-        f'Голод: {player["Голод"]}/{hunger_max}\n'
-        f'Жажда: {player["Жажда"]}/{thirst_max}\n'
-        f'Усталость: {player["Усталость"]}/{fatigue_max}\n'
-        f'Уровень: {player["Уровень"]}\n'
-        f'Опыт: {player["Опыт"]:.1f}%/100%\n'
+        f'{"[bright_red]Здоровье:[/bright_red]" if game.player.health <= 10 else "Здоровье:"} {game.player.health}/{game.player.health_max}\n'
+        f'Голод: {game.player.hunger}/{game.player.hunger_max}\n'
+        f'Жажда: {game.player.thirst}/{game.player.thirst_max}\n'
+        f'Усталость: {game.player.fatigue}/{game.player.fatigue_max}\n'
+        f'Уровень: {game.player.level}\n'
+        f'Опыт: {game.player.xp:.1f}%/100%\n'
     )
 
     print(
@@ -39,7 +27,7 @@ def profile():
         )
     )
 
-    options = [
+    questions = [
         inquirer.List(
             "choice",
             message="Выберите опцию:",
@@ -55,12 +43,7 @@ def profile():
         ),
     ]
 
-    try:
-        answers = inquirer.prompt(options, theme=theme)
-        choice = answers["choice"]  # pyright: ignore
-    except TypeError:
-        save_game()
-        exit()
+    choice = prompt(questions)
 
     if choice == "1":
         game.trigger("inventory")

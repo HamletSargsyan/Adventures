@@ -1,7 +1,7 @@
 import random
 import inquirer
-from utils import clear, alert, save_game, check_all
-from variables import health_max, player, items, theme
+from utils import clear, alert, check_all, prompt
+
 
 from config import game
 
@@ -9,26 +9,24 @@ from config import game
 @game.on("recovery")
 @check_all
 def recovery():
-    global items, player
-
     clear()
 
     health_gain = random.randint(5, 10)
     fatigue_reduction = random.randint(5, 15)
-    player["Здоровье"] += health_gain
-    player["Усталость"] -= fatigue_reduction
+    game.player.health += health_gain
+    game.player.fatigue -= fatigue_reduction
 
     alert(
         f"Вы отдыхаете и восстанавливаете {health_gain} здоровья и уменьшаете усталость на {fatigue_reduction}",
         "success",
     )
 
-    if player["Усталость"] < 0:
-        player["Усталость"] = 0
-    if player["Здоровье"] > health_max:
-        player["Здоровье"] = health_max
+    if game.player.fatigue < 0:
+        game.player.fatigue = 0
+    if game.player.health > game.player.health_max:
+        game.player.health = game.player.health_max
 
-    save_game()
+    game.save()
 
     game.trigger("profile")
 
@@ -40,7 +38,7 @@ def food():
 
     clear()
 
-    options = [
+    questions = [
         inquirer.List(
             "choice",
             message="Выберите опцию:",
@@ -53,39 +51,37 @@ def food():
         ),
     ]
 
-    try:
-        answers = inquirer.prompt(options, theme=theme)
-        choice = answers["choice"]  # pyright: ignore
-    except TypeError:
-        save_game()
-        exit()
+    choice = prompt(questions)
 
     if choice == "0":
         game.trigger("profile")
     elif choice == "1":
-        if player["Голод"] >= 1:
-            if items["Яблоко"]["Количество"] >= 1:
-                player["Голод"] -= items["Яблоко"]["Бонусы"]["Питание"]
-                alert(f"-{items['Яблоко']['Бонусы']['Питание']} голода", "success")
+        if game.player.hunger >= 1:
+            apple = game.player.get_or_add_item("яблоко")
+            if apple.quantity >= 1:
+                game.player.hunger -= int(apple.effects[0].value) # TODO edit
+                alert(f"-{int(apple.effects[0].value)} голода", "success")
             else:
                 alert("Недостаточно", "error")
         else:
             alert("Ты не голоден", "warning")
     elif choice == "2":
-        if player["Голод"] >= 1:
-            if items["Рыба"]["Количество"] >= 1:
-                player["Голод"] -= items["Рыба"]["Бонусы"]["Питание"]
-                alert(f"-{items['Рыба']['Бонусы']['Питание']} голода", "success")
+        if game.player.hunger >= 1:
+            fish = game.player.get_or_add_item("рыба")
+            if fish.quantity >= 1:
+                game.player.hunger -= int(fish.effects[0].value) # TODO edit
+                alert(f"-{int(fish.effects[0].value)} голода", "success")
             else:
                 alert("Недостаточно", "error")
         else:
             alert("Ты не голоден", "warning")
     elif choice == "3":
-        if player["Жажда"] >= 1:
-            if items["Вода"]["Количество"] >= 1:
-                player["Жажда"] -= items["Вода"]["Бонусы"]["Насыщенность водой"]
+        if game.player.thirst >= 1:
+            wather = game.player.get_or_add_item("вода")
+            if wather.quantity >= 1:
+                game.player.thirst -= int(wather.effects[0].value) # TODO edit
                 alert(
-                    f"-{items['Вода']['Бонусы']['Насыщенность водой']} жажды", "success"
+                    f"-{int(wather.effects[0].value)} жажды", "success"
                 )
             else:
                 alert("Недостаточно", "error")

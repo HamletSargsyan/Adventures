@@ -5,8 +5,7 @@ import io
 import shutil
 import subprocess
 
-from variables import version, theme
-from utils import alert, clear
+from utils import alert, clear, prompt
 
 from rich import print
 from rich.panel import Panel
@@ -121,7 +120,7 @@ def check_update():
 
             # Парсим версии и сравниваем их
             latest_version = tag_name.strip("v")
-            current_version = version.strip("v")
+            current_version = game.config.version.value.strip("v")
 
             print(
                 Panel(
@@ -145,11 +144,7 @@ def check_update():
                     ),
                 ]
 
-                try:
-                    answers = inquirer.prompt(questions, theme=theme)
-                    choice = answers["choice"]  # pyright: ignore
-                except TypeError:
-                    exit()
+                choice = prompt(questions)
 
                 if choice == "1":
                     game.trigger("start")

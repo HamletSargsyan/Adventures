@@ -2,19 +2,7 @@ import random
 import datetime
 import inquirer
 
-from utils import clear, alert, die, save_game
-from variables import (
-    health_max,
-    damage_max,
-    protection_max,
-    hunger_max,
-    thirst_max,
-    fatigue_max,
-    player,
-    items,
-    theme,
-)
-from .profile import profile
+from utils import clear, alert, prompt
 from .checks import check
 from config import game
 
@@ -32,12 +20,7 @@ class Mob:
                 "choice", message="Выбери опцию", choices=["Сражаться", "Уйти"]
             ),
         ]
-        try:
-            answers = inquirer.prompt(questions, theme=theme)
-            choice = answers["choice"]  # pyright: ignore
-        except TypeError:
-            save_game()
-            exit()
+        choice = prompt(questions)
 
         if choice == "Сражаться":
             self.attack()
@@ -45,30 +28,28 @@ class Mob:
             self.leave()
 
     def leave(self):
-        global health_max, damage_max, protection_max, hunger_max, thirst_max, fatigue_max
 
         damage = (
-            random.randint(1, 10) - protection_max
-            if protection_max != 0
+            random.randint(1, 10) - game.player.protection
+            if game.player.protection != 0
             else random.randint(1, 10)
         )
-        player["Здоровье"] -= damage
-        save_game()
+        game.player.health -= damage
+        game.save()
         alert(f"{self.name} догнал и ударил\n\n-{damage} здоровья", "error")
         check()
         clear()
 
     def attack(self):
-        global health_max, damage_max, protection_max, hunger_max, thirst_max, fatigue_max
-        while self.health and player["Здоровье"] > 0:
-            mob_damage = random.randint(1, self.damage - protection_max)
-            if items["Меч"]["Количество"] == 0:
-                damage = random.randint(1, damage_max)
-            else:
-                damage = random.randint(1, damage_max + 10)
+        while self.health and game.player.health > 0:
+            mob_damage = random.randint(1, self.damage - game.player.protection)
+            damage = random.randint(1, game.player.damage)
+
+            if game.player.get_or_add_item("меч").quantity > 0:
+                damage += 10
 
             self.health -= damage
-            player["Здоровье"] -= mob_damage
+            game.player.health -= mob_damage
 
             clear()
             alert(
@@ -77,7 +58,7 @@ class Mob:
                 "warning",
             )
 
-            if player["Здоровье"] <= 0:
+            if game.player.health <= 0:
                 alert(f"{self.name} победил тебя...", "error")
                 game.trigger("die")
 
@@ -85,16 +66,16 @@ class Mob:
                 alert(f"Ты одолел {self.name}!", "success")
                 for loot_item in self.loot:
                     quantity = random.randint(1, 5)
-                    items[loot_item]["Количество"] += quantity
+                    game.player.get_or_add_item(loot_item).quantity += quantity
 
                     alert(f"+ {quantity} {loot_item}", "success", enter=False)
                 alert("", enter=True)
-                player["Опыт"] += random.randint(10, 15)
-                game.trigger("profile")
+                game.player.xp += random.randint(10, 15)
+                return game.trigger("profile")
 
             check()
             clear()
-            save_game()
+            game.save()
 
 
 class Goblin(Mob):

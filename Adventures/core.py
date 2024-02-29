@@ -137,8 +137,8 @@ class Item(DictSerializable):
             strength: Union[float, None] = None,
             can_equip: bool = False,
             price: Union[int, None] = None,
-            effects: Union[List[Effect], None] = None,
             craft: Union[List[CraftDict], None] = None,
+            effects: List[Effect] = [],
             quantity: int = 0
             ) -> None:
         self.name = name
@@ -172,7 +172,7 @@ class Player(DictSerializable):
         self.level = 1
         self.xp = 0.0
         self.damage = 5
-        self.protection = 1
+        self.protection = 0
 
         self.health_max = 100
         self.hunger_max = 100
