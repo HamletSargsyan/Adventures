@@ -1,14 +1,11 @@
 import random
 
-from utils import clear, alert, level_up, save_game
-from variables import health_max, hunger_max, thirst_max, fatigue_max, player, items
+from utils import clear, alert, level_up
 from config import game
 
 
 def check():
-    global items, player, health_max, hunger_max, thirst_max, fatigue_max
-
-    if player["Здоровье"] >= health_max:
+    if game.player.health >= game.player.health_max:
         player["Здоровье"] = health_max
     if player["Голод"] >= hunger_max:
         player["Голод"] = hunger_max

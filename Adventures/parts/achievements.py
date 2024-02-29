@@ -1,14 +1,3 @@
-from variables import (
-    version,
-    health_max,
-    damage_max,
-    protection_max,
-    hunger_max,
-    thirst_max,
-    fatigue_max,
-    player,
-    items,
-)
 from utils import alert, clear
 
 from rich import print

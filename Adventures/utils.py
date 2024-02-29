@@ -1,5 +1,4 @@
 import os
-import pickle
 import random
 from typing import Union, NoReturn, Any
 
@@ -42,14 +41,13 @@ def alert(text: str, level: str = "log", enter=True):
 def die(message: Union[str, None] = None):
     global items, player, items
 
-    game.player.health = health_max - random.randint(30, 50)
+    game.player.health = game.player.health_max - random.randint(30, 50)
     game.player.hunger = 0
     game.player.fatigue = 0
     game.player.thirst = 0
     
-    items["Монеты"]["Количество"] -= 100
+    game.player.get_or_add_item("монета").quantity -= 100 # pyright: ignore
 
-    save_game()
     clear()
 
     if message:
@@ -69,15 +67,15 @@ def check_all(func):
 
             check()
             func()
-            save_game()
+            game.save()
         except RecursionError:
             pass
-        except KeyboardInterrupt as e:
+        except KeyboardInterrupt:
             clear()
-            save_game()
+            game.save()
             alert("Выход из игры", "warning", enter=False)
             exit()
-        except Exception as e:
+        except Exception:
             ...  # TODO
 
     return wrapper
@@ -85,9 +83,6 @@ def check_all(func):
 
 @check_all
 def level_up():
-    global health_max, damage_max, protection_max, hunger_max, thirst_max, fatigue_max
-    from parts.profile import profile
-
     clear()
     questions = [
         inquirer.List(
@@ -104,39 +99,28 @@ def level_up():
         ),
     ]
 
-    try:
-        answers = inquirer.prompt(questions, theme=theme)
-        choice = answers["choice"]  # pyright: ignore
-    except TypeError:
-        save_game()
-        exit()
+    choice = prompt(questions)
 
     if choice == "1":
-        health_max = health_max + 10
-        save_game()
+        game.player.health_max += 10
         alert("+10 к Здоровью")
     elif choice == "2":
-        hunger_max = hunger_max + 10
-        save_game()
+        game.player.hunger_max += 10
         alert("+10 к Голоду")
     elif choice == "3":
-        thirst_max = thirst_max + 10
-        save_game()
+        game.player.thirst_max += 10
         alert("+10 к Жажде")
     elif choice == "4":
-        fatigue_max = fatigue_max + 10
-        save_game()
+        game.player.fatigue_max += 10
         alert("+10 к Усталости")
     elif choice == "5":
-        damage_max = damage_max + 1
-        save_game()
+        game.player.damage += 1
         alert("+1 к Урону")
     elif choice == "6":
-        protection_max = protection_max + 1
-        save_game()
+        game.player.protection += 1
         alert("+1 к Защите")
 
-    save_game()
+    game.save()
     game.trigger("profile")
 
 

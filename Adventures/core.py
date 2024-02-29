@@ -153,7 +153,8 @@ class Item(DictSerializable):
             can_equip: bool = False,
             price: Union[int, None] = None,
             effects: Union[List[Effect], None] = None,
-            craft: Union[List[CraftDict], None] = None
+            craft: Union[List[CraftDict], None] = None,
+            quantity: int = 0
             ) -> None:
         self.name = name
         self.strength = strength
@@ -163,6 +164,7 @@ class Item(DictSerializable):
         self.price = price
         self.effects = effects
         self.craft = craft
+        self.quantity = quantity
 
     def __repr__(self) -> str:
         return f"<Item {self.name}>"
@@ -203,7 +205,8 @@ class Player(DictSerializable):
                 return item
 
     def get_or_add_item(self, name: str):
-       if not get_item(name):
-           raise
-       
+        if not get_item(name):
+            raise
+        if not self._get_item(name, "inventory"):
+            self.inventory.append(get_item(name)) # pyright: ignore
         return self._get_item(name, "inventory")

@@ -10,7 +10,7 @@ from rich.panel import Panel
 import inquirer
 
 
-from utils import clear, load_game, check_all, prompt
+from utils import clear, check_all, prompt
 
 from parts import achievements
 from parts import crafting_table
@@ -56,7 +56,7 @@ def start_menu():
     elif choice == "2":
         game.trigger("check_update")
     elif choice == "3":
-        load_game()
+        game.load()
         game.trigger("profile")
     elif choice == "4":
         game.trigger("help")
