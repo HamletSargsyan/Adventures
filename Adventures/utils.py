@@ -135,7 +135,7 @@ def get_item(name: str) -> Union[Item, NoReturn]:
 # @check_all
 def prompt(questions, choice: str = "choice") -> Union[Any, NoReturn]:
     try:
-        answers = inquirer.prompt(questions)
+        answers = inquirer.prompt(questions, theme=game.config.load_theme())
         return answers[choice]  # pyright: ignore
     except TypeError:
         game.trigger("exit_game")

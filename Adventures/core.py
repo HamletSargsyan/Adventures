@@ -64,7 +64,6 @@ class Game:
         self.save_dir: str = "./saves"
 
         self.config = config  # type: Config
-        self.theme = self.config.theme
 
     def trigger(self, event_name: str) -> None:
         if event_name in self.events:
