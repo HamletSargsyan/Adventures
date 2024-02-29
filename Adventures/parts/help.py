@@ -1,5 +1,4 @@
-from variables import theme
-from utils import alert, clear
+from utils import clear, prompt
 
 from rich import print
 from rich.panel import Panel
@@ -42,11 +41,7 @@ def help():
         ),
     ]
 
-    try:
-        answers = inquirer.prompt(questions, theme=theme)
-        choice = answers["choice"]  # pyright: ignore
-    except TypeError:
-        exit()
+    choice = prompt(questions)
 
     if choice == "1":
         game.trigger("start")

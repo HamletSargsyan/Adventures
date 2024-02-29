@@ -3,8 +3,7 @@ from rich.panel import Panel
 
 import inquirer
 
-from utils import clear, check_all, save_game
-from variables import player, items, theme
+from utils import clear, check_all, prompt
 from config import game
 
 
@@ -12,15 +11,14 @@ from config import game
 @check_all
 def inventory():
     clear()
-    global items, player  # Убрал дублирующееся объявление переменной 'items'
     # Сортируем предметы по количеству в убывающем порядке
-    sorted_items = sorted(items.items(), key=lambda x: x[1]["Количество"], reverse=True)
+    sorted_items = sorted(game.player.inventory, key=lambda x: x.quantity, reverse=True)
 
     player_items = ""
     # Цикл для вывода предметов игрока, если их количество больше 0
-    for index, (item_name, item_data) in enumerate(sorted_items):
-        if item_data["Количество"] > 0:
-            player_items += f"{item_name}: {item_data['Количество']:.0f}{f' | Прочность: ' + str(item_data['Прочность']) if item_data['Прочность'] > 0 else ''}"
+    for index, item in enumerate(sorted_items):
+        if item.quantity > 0:
+            player_items += f"{item.name}: {item.quantity:.0f}{f' | Прочность: ' + str(item.strength) if item.strength and item.strength > 0 else ''}"
             if index < len(sorted_items) - 1:
                 player_items += "\n"
 
@@ -28,7 +26,7 @@ def inventory():
         Panel.fit(player_items, title="[bold bright_green]Предметы[/bold bright_green]")
     )
 
-    options = [
+    questions = [
         inquirer.List(
             "choice",
             message="Выберите опцию:",
@@ -36,12 +34,7 @@ def inventory():
         ),
     ]
 
-    try:
-        answers = inquirer.prompt(options, theme=theme)
-        choice = answers["choice"]  # pyright: ignore
-    except TypeError:
-        save_game()
-        exit()
+    choice = prompt(questions)
 
     if choice == "1":
         game.trigger("profile")
