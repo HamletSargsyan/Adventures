@@ -4,7 +4,7 @@ import inquirer
 from Adventures.core import Item
 from items import items
 
-from utils import clear, alert,  check_all, get_item, prompt
+from utils import clear, alert, check_all, get_item, prompt
 
 from config import game
 
@@ -19,9 +19,7 @@ class Shop:
             coin = game.player.get_or_add_item("монета")
             if item.price * quantity <= coin.quantity:
                 # Проверяем, хватает ли денег у игрока
-                coin.quantity -= (
-                    item.price * quantity
-                )  # Уменьшаем Монеты игрока
+                coin.quantity -= item.price * quantity  # Уменьшаем Монеты игрока
                 item.quantity += quantity  # Увеличиваем количество купленных предметов
                 alert(f"Вы купили {quantity} {item_name}.", "success")
             else:
@@ -52,7 +50,8 @@ class Shop:
         available_items = [
             f"{item} ({item.quantity} | {item.price}/шт)"
             for item in self.items
-            if item != "Монеты"]
+            if item != "Монеты"
+        ]
         return available_items
 
 
@@ -82,19 +81,22 @@ def shop():
 
     elif choice == "Купить":
         clear()
-        item_choice = prompt([inquirer.List(
-            "item",
-            message="Выберите предмет для покупки:",
-            choices=available_items,
-        )
-        ]
+        item_choice = prompt(
+            [
+                inquirer.List(
+                    "item",
+                    message="Выберите предмет для покупки:",
+                    choices=available_items,
+                )
+            ]
         )
         item_name = item_choice["item"].split(" ")[0]  # pyright: ignore
         clear()
         try:
             quantity = int(
                 input(
-                    f"Введите количество (у вас {game.player.get_or_add_item('монета').quantity}): ")
+                    f"Введите количество (у вас {game.player.get_or_add_item('монета').quantity}): "
+                )
             )  # Можно также использовать inquirer для ввода количества
         except ValueError:
             quantity = 1
@@ -102,19 +104,22 @@ def shop():
 
     elif choice == "Продать":
         clear()
-        item_choice = prompt([inquirer.List(
-            "item",
-            message="Выберите предмет для покупки:",
-            choices=available_items,
-        )
-        ]
+        item_choice = prompt(
+            [
+                inquirer.List(
+                    "item",
+                    message="Выберите предмет для покупки:",
+                    choices=available_items,
+                )
+            ]
         )
         item_name = item_choice["item"].split(" ")[0]  # pyright: ignore
         clear()
         try:
             quantity = int(
                 input(
-                    f"Введите количество (у вас {game.player.get_or_add_item('монета').quantity}): ")
+                    f"Введите количество (у вас {game.player.get_or_add_item('монета').quantity}): "
+                )
             )  # Можно также использовать inquirer для ввода количества
         except ValueError:
             quantity = 1

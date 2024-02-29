@@ -45,8 +45,8 @@ def die(message: Union[str, None] = None):
     game.player.hunger = 0
     game.player.fatigue = 0
     game.player.thirst = 0
-    
-    game.player.get_or_add_item("монета").quantity -= 100 # pyright: ignore
+
+    game.player.get_or_add_item("монета").quantity -= 100  # pyright: ignore
 
     clear()
 
@@ -136,6 +136,6 @@ def get_item(name: str) -> Union[Item, NoReturn]:
 def prompt(questions, choice: str = "choice") -> Union[Any, NoReturn]:
     try:
         answers = inquirer.prompt(questions)
-        return answers[choice] # pyright: ignore
+        return answers[choice]  # pyright: ignore
     except TypeError:
         game.trigger("exit_game")

@@ -14,11 +14,11 @@ def profile():
 
     player_status = (
         f'{"[bright_red]Здоровье:[/bright_red]" if game.player.health <= 10 else "Здоровье:"} {game.player.health}/{game.player.health_max}\n'
-        f'Голод: {game.player.hunger}/{game.player.hunger_max}\n'
-        f'Жажда: {game.player.thirst}/{game.player.thirst_max}\n'
-        f'Усталость: {game.player.fatigue}/{game.player.fatigue_max}\n'
-        f'Уровень: {game.player.level}\n'
-        f'Опыт: {game.player.xp:.1f}%/100%\n'
+        f"Голод: {game.player.hunger}/{game.player.hunger_max}\n"
+        f"Жажда: {game.player.thirst}/{game.player.thirst_max}\n"
+        f"Усталость: {game.player.fatigue}/{game.player.fatigue_max}\n"
+        f"Уровень: {game.player.level}\n"
+        f"Опыт: {game.player.xp:.1f}%/100%\n"
     )
 
     print(

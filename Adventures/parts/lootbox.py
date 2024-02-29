@@ -15,7 +15,13 @@ def open_lootbox():
     item = game.player.get_or_add_item("лутбокс")
     item.quantity -= 1
 
-    rarity_weights = {"Обычный": 6, "Редкий": 4, "легендарный": 3, "Необычный": 2, "Эпический": 1}
+    rarity_weights = {
+        "Обычный": 6,
+        "Редкий": 4,
+        "легендарный": 3,
+        "Необычный": 2,
+        "Эпический": 1,
+    }
 
     num_items_to_get = random.randint(1, 10)
 
@@ -83,7 +89,7 @@ def lootbox_menu():
 
     clear()
     if choice == "1":
-        if game.player.get_or_add_item('лутбокс').quantity >= 1:
+        if game.player.get_or_add_item("лутбокс").quantity >= 1:
             game.trigger("open_lootbox")
         else:
             alert("У тебя нет лутбокса", "error")

@@ -11,14 +11,13 @@ class Craft:
     def __init__(self):
         pass
 
-    def craft(
-        self, item_name: str, progress_range: tuple):
+    def craft(self, item_name: str, progress_range: tuple):
         clear()
-        
+
         item = get_item(item_name)
         if not item.craft:
             raise ValueError
-        
+
         if all(get_item(i["name"]).quantity >= i["quantity"] for i in item.craft):
             alert(f"Вы создали {item_name.lower()}", "success")
             item.quantity += 1
@@ -32,7 +31,6 @@ class Craft:
             game.save()
         else:
             alert(f"Недостаточно материалов для создания {item_name.lower()}", "error")
-
 
 
 @game.on("craft")
@@ -54,7 +52,7 @@ def craft():
             ],
         ),
     ]
-    
+
     choice = prompt(questions)
 
     crafting = Craft()

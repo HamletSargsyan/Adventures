@@ -26,7 +26,7 @@ class Config(DictSerializable):
         self.theme = inquirer.themes.load_theme_from_dict(self.theme)
         return self.theme
 
+
 config = Config()
 
 game = Game(config)
-

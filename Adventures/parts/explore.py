@@ -10,6 +10,7 @@ from config import game
 if TYPE_CHECKING:
     from core import Item
 
+
 @game.on("explore")
 @check_all
 def explore():
@@ -135,7 +136,7 @@ def forest():
         game.player.fatigue += random.randint(5, 15)
         game.player.hunger += random.randint(5, 10)
         game.player.thirst += random.randint(5, 15)
-        player_item.strength -= random.uniform(5, 10) #pyright: ignore
+        player_item.strength -= random.uniform(5, 10)  # pyright: ignore
 
         loot_table = {
             "Монеты": (1, 5),
@@ -192,7 +193,7 @@ def mineshaft():
             game.player.fatigue += random.randint(10, 20)
             game.player.hunger += random.randint(10, 15)
             game.player.thirst += random.randint(10, 15)
-            player_item.strength -= random.randint(5, 10) #pyright: ignore
+            player_item.strength -= random.randint(5, 10)  # pyright: ignore
 
             loot_table = {
                 "Монеты": (1, 8),
@@ -221,7 +222,7 @@ def well():
     if game.player.level >= 5 and player_item.quantity >= 1:
         progress_count = random.uniform(10.0, 15.0)
         game.player.xp += progress_count
-        player_item.strength -= random.randint(10, 15) # pyright: ignore
+        player_item.strength -= random.randint(10, 15)  # pyright: ignore
         game.player.hunger += random.randint(10, 20)
         game.player.thirst += random.randint(10, 20)
         game.player.fatigue += random.randint(5, 15)
@@ -245,14 +246,11 @@ def lake():
 
     boat = game.player.get_equiped_item("лодка")
     fishing_rod = game.player.get_equiped_item("удочка")
-    if (game.player.level >= 10
-        and boat.quantity >= 1
-        and fishing_rod.quantity >= 1
-    ):
+    if game.player.level >= 10 and boat.quantity >= 1 and fishing_rod.quantity >= 1:
         progress_count = random.uniform(10.0, 20.0)
         game.player.xp += progress_count
-        boat.strength -= 5 #pyright: ignore
-        fishing_rod.strength -= 10 #pyright: ignore
+        boat.strength -= 5  # pyright: ignore
+        fishing_rod.strength -= 10  # pyright: ignore
         game.player.hunger += random.randint(10, 20)
         game.player.thirst += random.randint(10, 20)
         game.player.fatigue += random.randint(5, 15)
