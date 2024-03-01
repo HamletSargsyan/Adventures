@@ -100,19 +100,19 @@ class Game:
             "player": self.player.to_dict(),
         }
 
-        with open(self.save_dir, "wb") as f:
+        with open(self.save_dir  + "/" + self.player.name, "wb") as f:
             pickle.dump(game_data, f)
 
     def load(self):
         self._create_save_dir()
 
-        if os.path.exists(self.save_dir):
+        if os.path.exists(self.save_dir  + "/" + self.player.name):
             from utils import alert
 
             alert("Файл сохранения не найден.", "error")
             return
 
-        with open(self.save_dir, "rb") as f:
+        with open(self.save_dir  + "/" + self.player.name, "rb") as f:
             game_data = pickle.load(f)
             self.player.from_dict(game_data["player"])
 

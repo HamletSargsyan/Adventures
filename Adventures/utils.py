@@ -75,8 +75,8 @@ def check_all(func):
             game.save()
             alert("Выход из игры", "warning", enter=False)
             exit()
-        except Exception:
-            ...  # TODO
+        except Exception as e:
+            raise e # TODO
 
     return wrapper
 
