@@ -45,7 +45,7 @@ class Mob:
             mob_damage = random.randint(1, self.damage - game.player.protection)
             damage = random.randint(1, game.player.damage)
 
-            if game.player.get_or_add_item("меч").quantity > 0:
+            if game.player.get_item("меч").quantity > 0:
                 damage += 10
 
             self.health -= damage
@@ -66,7 +66,7 @@ class Mob:
                 alert(f"Ты одолел {self.name}!", "success")
                 for loot_item in self.loot:
                     quantity = random.randint(1, 5)
-                    game.player.get_or_add_item(loot_item).quantity += quantity
+                    game.player.get_item(loot_item).quantity += quantity
 
                     alert(f"+ {quantity} {loot_item}", "success", enter=False)
                 alert("", enter=True)

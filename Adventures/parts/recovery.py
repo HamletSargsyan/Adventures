@@ -57,7 +57,7 @@ def food():
         game.trigger("profile")
     elif choice == "1":
         if game.player.hunger >= 1:
-            apple = game.player.get_or_add_item("яблоко")
+            apple = game.player.get_item("яблоко")
             if apple.quantity >= 1:
                 game.player.hunger -= int(apple.effects[0].value)  # TODO edit
                 alert(f"-{int(apple.effects[0].value)} голода", "success")
@@ -67,7 +67,7 @@ def food():
             alert("Ты не голоден", "warning")
     elif choice == "2":
         if game.player.hunger >= 1:
-            fish = game.player.get_or_add_item("рыба")
+            fish = game.player.get_item("рыба")
             if fish.quantity >= 1:
                 game.player.hunger -= int(fish.effects[0].value)  # TODO edit
                 alert(f"-{int(fish.effects[0].value)} голода", "success")
@@ -77,7 +77,7 @@ def food():
             alert("Ты не голоден", "warning")
     elif choice == "3":
         if game.player.thirst >= 1:
-            wather = game.player.get_or_add_item("вода")
+            wather = game.player.get_item("вода")
             if wather.quantity >= 1:
                 game.player.thirst -= int(wather.effects[0].value)  # TODO edit
                 alert(f"-{int(wather.effects[0].value)} жажды", "success")

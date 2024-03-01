@@ -46,7 +46,7 @@ def die(message: Union[str, None] = None):
     game.player.fatigue = 0
     game.player.thirst = 0
 
-    game.player.get_or_add_item("монета").quantity -= 100  # pyright: ignore
+    game.player.get_item("монета").quantity -= 100  # pyright: ignore
 
     clear()
 
@@ -66,8 +66,9 @@ def check_all(func):
             from parts.checks import check
 
             check()
-            func(*args, **kwargs)
+            result = func(*args, **kwargs)
             game.save()
+            return result
         except RecursionError:
             pass
         except KeyboardInterrupt:
@@ -126,6 +127,7 @@ def level_up():
 
 @check_all
 def get_item(name: str) -> Union[Item, NoReturn]:
+    name = name.lower()
     for item in items.value:
         if name == item.name:
             return item

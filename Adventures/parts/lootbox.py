@@ -12,7 +12,7 @@ from config import game
 @game.on("open_lootbox")
 @check_all
 def open_lootbox():
-    item = game.player.get_or_add_item("лутбокс")
+    item = game.player.get_item("лутбокс")
     item.quantity -= 1
 
     rarity_weights = {
@@ -89,7 +89,7 @@ def lootbox_menu():
 
     clear()
     if choice == "1":
-        if game.player.get_or_add_item("лутбокс").quantity >= 1:
+        if game.player.get_item("лутбокс").quantity >= 1:
             game.trigger("open_lootbox")
         else:
             alert("У тебя нет лутбокса", "error")

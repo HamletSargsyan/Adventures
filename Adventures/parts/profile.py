@@ -18,7 +18,7 @@ def profile():
         f"Жажда: {game.player.thirst}/{game.player.thirst_max}\n"
         f"Усталость: {game.player.fatigue}/{game.player.fatigue_max}\n"
         f"Уровень: {game.player.level}\n"
-        f"Опыт: {game.player.xp:.1f}%/100%\n"
+        f"Опыт: {game.player.xp:.1f}%/100%"
     )
 
     print(

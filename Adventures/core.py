@@ -193,23 +193,22 @@ class Player(DictSerializable):
     ) -> Union[NoReturn, Item]:
         _items = self.inventory if where == "inventory" else self.equiped_items
 
+        from utils import get_item
+        if not get_item(name):
+            raise ValueError
+
+        getattr(self, where).append(get_item(name))
         for item in _items:
             if item.name == name:
+                print(1)
                 return item
-        raise ValueError
+            else:
+                if where == "inventory":
+                    print(2)
+                    self.inventory.append(get_item(name))
+        return self._get_item(name, where)
+        # raise ValueError
 
-    def get_or_add_item(self, name: str) -> Union[NoReturn, Item]:
-        from utils import get_item
-
-        if not get_item(name):
-            raise ValueError
-        if not self._get_item(name, "inventory"):
-            self.inventory.append(get_item(name))  # pyright: ignore
+    def get_item(self, name: str) -> Union[NoReturn, Item]:
         return self._get_item(name, "inventory")
 
-    def get_equiped_item(self, name: str) -> Union[NoReturn, Item]:
-        from utils import get_item
-
-        if not get_item(name):
-            raise ValueError
-        return self._get_item(name, "equiped_items")

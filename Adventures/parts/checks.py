@@ -41,7 +41,7 @@ def check():
         game.player.level += 1
         game.player.xp = 0.0
         lootbox_quantity = random.randint(1, 3)
-        game.player.get_or_add_item("лутбокс").quantity += lootbox_quantity
+        game.player.get_item("лутбокс").quantity += lootbox_quantity
         clear()
         alert(
             f"[bright_green]Поздравляем! Ваш уровень повышен до {game.player.health}[/bright_green]",

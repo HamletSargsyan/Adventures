@@ -55,7 +55,7 @@ def generate_random_loot(loot_table: dict, multiplier=1.0):
             random.uniform(quantity_range[0], quantity_range[1]) * multiplier
         )
         if quantity > 0:
-            item = game.player.get_or_add_item(item_name)
+            item = game.player.get_item(item_name)
             item.quantity += quantity
             alert(f"+ {quantity} {item_name}", "success", enter=False)
     alert("", enter=True)
@@ -115,7 +115,7 @@ def forest():
 
     game.player.xp += random.uniform(0.1, 5.0)
 
-    player_item = game.player.get_equiped_item("топор")
+    player_item = game.player.get_item("топор")
 
     if player_item.quantity <= 0:
         game.player.fatigue += random.randint(5, 15)
@@ -176,7 +176,7 @@ def mineshaft():
         progress_count = random.uniform(2.0, 5.0)
         game.player.xp += progress_count
 
-        player_item = game.player.get_equiped_item("кирка")
+        player_item = game.player.get_item("кирка")
 
         if player_item.quantity <= 0:
             game.player.fatigue += random.randint(10, 20)
@@ -217,7 +217,7 @@ def mineshaft():
 def well():
     clear()
 
-    player_item = game.player.get_equiped_item("ведро")
+    player_item = game.player.get_item("ведро")
 
     if game.player.level >= 5 and player_item.quantity >= 1:
         progress_count = random.uniform(10.0, 15.0)
@@ -244,8 +244,8 @@ def well():
 def lake():
     clear()
 
-    boat = game.player.get_equiped_item("лодка")
-    fishing_rod = game.player.get_equiped_item("удочка")
+    boat = game.player.get_item("лодка")
+    fishing_rod = game.player.get_item("удочка")
     if game.player.level >= 10 and boat.quantity >= 1 and fishing_rod.quantity >= 1:
         progress_count = random.uniform(10.0, 20.0)
         game.player.xp += progress_count

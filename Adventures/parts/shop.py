@@ -16,7 +16,7 @@ class Shop:
     def buy(self, item_name, quantity):
         if get_item(item_name) in self.items:
             item: Item = self.items[item_name]
-            coin = game.player.get_or_add_item("монета")
+            coin = game.player.get_item("монета")
             if item.price * quantity <= coin.quantity:
                 # Проверяем, хватает ли денег у игрока
                 coin.quantity -= item.price * quantity  # Уменьшаем Монеты игрока
@@ -33,7 +33,7 @@ class Shop:
             if item.quantity >= quantity:
                 # Рассчитываем цену продажи немного ниже цены покупки
                 sell_price = item.price * quantity / 2
-                coin = game.player.get_or_add_item("монета")
+                coin = game.player.get_item("монета")
                 coin.quantity += sell_price
                 item.quantity -= quantity
                 alert(
@@ -95,7 +95,7 @@ def shop():
         try:
             quantity = int(
                 input(
-                    f"Введите количество (у вас {game.player.get_or_add_item('монета').quantity}): "
+                    f"Введите количество (у вас {game.player.get_item('монета').quantity}): "
                 )
             )  # Можно также использовать inquirer для ввода количества
         except ValueError:
@@ -118,7 +118,7 @@ def shop():
         try:
             quantity = int(
                 input(
-                    f"Введите количество (у вас {game.player.get_or_add_item('монета').quantity}): "
+                    f"Введите количество (у вас {game.player.get_item('монета').quantity}): "
                 )
             )  # Можно также использовать inquirer для ввода количества
         except ValueError:
