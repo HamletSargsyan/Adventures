@@ -1,4 +1,5 @@
 import inquirer.themes
+from icecream import ic
 
 from core import Game, DictSerializable, Const
 
@@ -22,3 +23,5 @@ class Config(DictSerializable):
 config = Config()
 
 game = Game(config)
+
+
